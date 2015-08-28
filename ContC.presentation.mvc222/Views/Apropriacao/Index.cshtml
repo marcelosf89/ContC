@@ -1,0 +1,179 @@
+@using System.Web.UI.WebControls
+@model ContC.presentation.mvc.Models.EmpresaViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Apropriacao de Horas";
+}
+
+<script type="text/javascript">
+
+    function OnEndCallback(s, e) {
+        if (s.cpError === "1") {
+            mostrarAviso(s.cpMessage, s.cpError);
+        }
+    }
+
+    function CustomButtonClick(s, e) {
+        var key = s.GetRowKey(e.visibleIndex);
+        var apropriacaoDiv = $("#apropriacaoDiv");
+        if (e.buttonID === "btnGetInfo") {
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("CapturaPartial", "Apropriacao")?id=" + key,
+                data: { "id": key },
+                success: function(data) {
+                    apropriacaoDiv.html('');
+                    apropriacaoDiv.html(data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+
+        }
+    }
+
+    $(document).ready(function() {
+        $("#EmpresaId").change(function() {
+            var id = $("#EmpresaId").val();
+            var apropriacaoDiv = $("#apropriacaoDiv");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("ApropriacaoPartial", "Apropriacao")?empresaId=" + id,
+                data: { "empresaId": id },
+                success: function (data) {
+                    var gridDiv = $("#gridDiv");
+                    if (gridDiv != null) {
+                        gridDiv.html('');
+                    }
+                    apropriacaoDiv.html('');
+                    apropriacaoDiv.html(data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $('#EmpresaId').qtip({
+            // Grab some elements to apply the tooltip to
+            content: {
+                text: 'Selecione a empresa onde você deseja registrar sua atividade.'
+            },
+            style: {
+                classes: 'qtip-youtube qtip-shadow qtip-rounded'
+            }
+        });
+        $('#Profissional').qtip({
+            // Grab some elements to apply the tooltip to
+            content: {
+                text: 'Sou eu! :)'
+            },
+            style: {
+                classes: 'qtip-youtube qtip-shadow qtip-rounded'
+            }
+        });
+
+        $('#Lider').qtip({
+            // Grab some elements to apply the tooltip to
+            content: {
+                text: 'Este é o seu Líder, que poderá APROVAR ou REJEITAR as atividades que você registrar no sistema.'
+            },
+            style: {
+                classes: 'qtip-youtube qtip-shadow qtip-rounded'
+            }
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        // Handle the form submit event, and make the Ajax request:
+        $("#incluirAtividade").on("submit", function (event) {
+            event.preventDefault();
+
+            // Show the "busy" Gif:
+            $(".jquery-waiting-base-container").showing({ modo: "slow" });
+            var url = $(this).attr("action");
+            var formData = $(this).serialize();
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (resp) {
+                    //Aguarda um segundo para exibir a mensagem
+                    if ($("#gvApropriacao").length > 0) {
+                        gvApropriacao.PerformCallback({ empresaId: $("#EmpresaId").val(), competenciaId: $("#CompetenciaId").val() });
+                    }
+                    setTimeout(function () { mostrarAviso(resp.Texto, resp.Tipo); }, 1000);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    setTimeout(function () { mostrarAviso("Failed to Process Ajax Request.", "1"); }, 1000);
+                },
+                complete: function (){ 
+                    $(".jquery-waiting-base-container").closing({ modo: "slow" });
+                }
+            });
+        });
+    });
+
+</script>
+
+@* Obrigatório essa declaração devido ao devexpress *@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>ViewBag.Title</title>
+</head>
+
+<body>
+    @using (Html.BeginForm("IncluirAtividade", "Apropriacao", FormMethod.Post, new { id = "incluirAtividade" }))
+    {
+        <br/>
+        <input type="hidden" name="incluirAtividade" value="false" id="incluirAtividade" />
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Empresas)
+                    @Html.DropDownListFor(model => model.EmpresaId, Model.Empresas, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Profissional)
+                    @Html.TextBoxFor(model => model.Profissional, new {@readonly = "readonly", @class = "form-control"})
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Lider)
+                    @Html.TextBoxFor(model => model.Lider, new {@readonly = "readonly", @class = "form-control"})
+                </div>
+            </div>
+        </div>
+
+        @*if (Model.EmpresaId != null && Model.EmpresaId != "0")
+        {
+            <hr />
+            @Html.Partial("ApropriacaoPartial")
+        }*@
+
+    <div id="apropriacaoDiv"></div>
+
+    }
+    
+    <div class="row">
+        <div id="gridDiv" class="col-md-12">
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\Service.Pattern.dll.config
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\Service.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\Service.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\EntityFramework.dll
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\EntityFramework.SqlServer.dll
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\Repository.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\System.Net.Http.dll
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\Repository.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\EntityFramework.xml
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\bin\Debug\EntityFramework.SqlServer.xml
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\obj\Debug\Service.Pattern.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\obj\Debug\Service.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\Architecture\Service.Pattern\obj\Debug\Service.Pattern.pdb

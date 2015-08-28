@@ -1,0 +1,260 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using ContC.domain.entities.DTO;
+using ContC.domain.entities.Models;
+using ContC.domain.repositories;
+using ContC.domain.services.ContraContC;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
+using Service.Pattern;
+
+namespace ContC.domain.services
+{
+    public class ApontamentoService : Service<Apontamento>, IApontamentoService
+    {
+
+        private readonly IRepositoryAsync<Apontamento> _repository;
+
+        public ApontamentoService(IRepositoryAsync<Apontamento> repository)
+            : base(repository)
+        {
+            _repository = repository;
+        }
+
+        public IList<Apontamento> ObterApontamentosPorUsuarioEmpresaCompetencia(Usuario usuario, Empresa empresa,
+            Competencia competencia)
+        {
+            return _repository.ObterApontamentosPorUsuarioEmpresaCompetencia(usuario, empresa, competencia);
+        }
+
+        public IList<ApontamentoDTO> ObterApontamentosDTOPorUsuarioEmpresaCompetencia(Usuario usuario, Empresa empresa,
+                Competencia competencia)
+        {
+            return _repository.ObterApontamentosDTOPorUsuarioEmpresaCompetencia(usuario, empresa, competencia);
+        }
+
+        public void RegistrarAtividades(Usuario usuario, Empresa empresa, Competencia competencia, Localidade localidade,
+            CentroDeCusto centroDeCusto, Categoria categoria, Relacao relacao, DateTime dataInicialApropriacao, DateTime dataFinalApropriacao,
+            decimal qtdeHhDiario, string descricaoAtividade, bool incluiFeriados, bool incluiFinaisDeSemana, Localidade nacional)
+        {
+            
+            var dataApropriacao = dataInicialApropriacao;
+
+            //Loop com o período informado pelo usuário
+            while (dataApropriacao <= dataFinalApropriacao)
+            {
+                //Verifica se é feriado em ambito nacional
+                bool isHolyday = nacional.Feriados.Where(f => f.Data == dataApropriacao).ToList().Any();
+                
+                //obtem se a informação de feriados na localidade da apropriação da atividade
+                if (!isHolyday)
+                    isHolyday = localidade.Feriados.Where(f => f.Data == dataApropriacao).ToList().Any();
+                
+                bool okForTimesheet;
+
+                //verifica se a data da apropriação é um final de semana
+                if (dataApropriacao.DayOfWeek == DayOfWeek.Saturday || dataApropriacao.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    //Habilita a data para Timesheet, se for (feriado e o usuário deseja incluir feriados) ou se o usuario (deseja incluir finais de semana) 
+                    okForTimesheet = (isHolyday && incluiFeriados) || (incluiFinaisDeSemana);
+                }
+                else
+                {
+                    //Habilita a data para Timesheet, se for (feriado em dia de semana e o usuario deseja incluir feriados) ou (dia de semana útil)
+                    okForTimesheet = (isHolyday && incluiFeriados) || (!isHolyday);
+                }
+
+                if (okForTimesheet)
+                {
+                    //Verifica a consistência da apropriação de horas
+                    ValidarQtdeHorasApropriadas(usuario, empresa, competencia, localidade, centroDeCusto, categoria,
+                        dataApropriacao, qtdeHhDiario, relacao.QtdeMaximaHorasDiarias);
+                    //Apropria horas
+                    ApropriarHoras(usuario, empresa, competencia, localidade, centroDeCusto, categoria, dataApropriacao, qtdeHhDiario, descricaoAtividade);
+                   
+                }
+
+                //próxima data de apropriação
+                dataApropriacao = dataApropriacao.AddDays(1);
+            }
+
+        }
+
+        public Apontamento ObterApropriacaoDiariaPorPropriedadesChave(Usuario usuario, Empresa empresa,
+            Competencia competencia, Localidade localidade,
+            CentroDeCusto centroDeCusto, Categoria categoria, DateTime dataApropriacao)
+        {
+            return _repository.ObterApropriacaoDiariaPorPropriedadesChave(usuario, empresa, competencia, localidade,
+                centroDeCusto, categoria, dataApropriacao);
+        }
+
+        public decimal ObterTotalDiarioDeHorasApropriadas(Usuario usuario, Empresa empresa, DateTime dataApropriacao)
+        {
+            return _repository.ObterTotalDiarioDeHorasApropriadas(usuario, empresa, dataApropriacao);
+        }
+
+        private void ValidarQtdeHorasApropriadas(Usuario usuario, Empresa empresa, Competencia competencia, Localidade localidade,
+            CentroDeCusto centroDeCusto, Categoria categoria, DateTime dataApropriacao, decimal qtdeHhDiario, decimal qtdeMaximaPermitida)
+        {
+            //Obtem o total de horas já apropriados para este dia
+            var totalDiarioApropriado = ObterTotalDiarioDeHorasApropriadas(usuario, empresa, dataApropriacao);
+
+            //Obtem o saldo diário da atividade apropriada
+            var saldo = ObterSaldoDiarioPorPropriedadeChave(usuario, empresa, competencia, localidade, centroDeCusto, categoria, dataApropriacao, qtdeHhDiario);
+            
+            //Se o total diário da atividade somando com o saldo for maior que a quantidade permitida de hh diário, então gera uma exceção  
+            if (totalDiarioApropriado + saldo > qtdeMaximaPermitida)
+            {
+                throw new Exception(string.Format("A quantidade de Hh diário informada de {0} horas, na data {1}, excedeu o limite diário de {2} horas. A quantidade acumulada nesta data até o momento é de {3} horas.", qtdeHhDiario, dataApropriacao.ToShortDateString(), qtdeMaximaPermitida, totalDiarioApropriado ));
+            }
+            
+        }
+
+        private decimal ObterSaldoDiarioPorPropriedadeChave(Usuario usuario, Empresa empresa, Competencia competencia,
+            Localidade localidade, CentroDeCusto centroDeCusto, Categoria categoria, DateTime dataApropriacao,
+            decimal qtdeHhDiario)
+        {
+            decimal qtdeAtividadeApropriada = 0;
+
+            //Verifica pela chave, se já existe algum registro de atividade já apropriado
+            var atividadeApropriada = ObterApropriacaoDiariaPorPropriedadesChave(usuario, empresa, competencia,
+                localidade, centroDeCusto, categoria, dataApropriacao);
+
+            //Se já existir um registro de atividade, então obtem a quantidade de horas da atividade já apropriada
+            if (atividadeApropriada != null)
+                qtdeAtividadeApropriada = Convert.ToDecimal(Math.Round(atividadeApropriada.Hh, 2));
+
+            //Obtem o saldo diario da atividade (Novo valor de Hh diário contra o valor de Hh diário já computado no banco de dados)
+            var saldo = qtdeHhDiario - qtdeAtividadeApropriada;
+            return saldo;
+        }
+
+        private void ApropriarHoras(Usuario usuario, Empresa empresa, Competencia competencia, Localidade localidade,
+            CentroDeCusto centroDeCusto, Categoria categoria, DateTime dataApropriacao,
+            decimal qtdeHhDiario, string descricaoAtividade)
+        {
+            //Obtem o objeto apropriação, que representa o apontamento de atividades
+            var apropriacao = ObterApropriacaoDiariaPorPropriedadesChave(usuario, empresa, competencia,
+                localidade, centroDeCusto, categoria, dataApropriacao);
+
+            //Verifica se o usuário que está apropriando as horas está no topo da hierarquia de aprovação
+            var usuarioTop = (usuario.Lider == null || usuario.Lider.Id == usuario.Id);
+
+            //Obtem o saldo diário da atividade apropriada            
+            var saldo = ObterSaldoDiarioPorPropriedadeChave(usuario, empresa, competencia, localidade, centroDeCusto, categoria, dataApropriacao, qtdeHhDiario);
+            //Se o saldo for diferente de zero e existe atividade apropriada, então houve alteração de horas apropriadas
+            if (saldo != 0 && apropriacao != null)
+            {
+                apropriacao.ObjectState = ObjectState.Modified;
+                apropriacao.Lider = usuario.Lider; //Se houve mudança de liderança, as horas serão encaminhadas ao novo líder
+                apropriacao.Descricao = descricaoAtividade; //Se houver alteração no descritivo da atividade, este será registrado
+                apropriacao.Hh = qtdeHhDiario; //Se houve alteração na quantidade de horas, esta deverá ser registrada
+                apropriacao.DataRegistro = DateTime.Now; //Altera a data do registro da atividade
+                //Houve alteração da atividade, então cancela as aprovações já realizadas, o aprovador deverá novamente reaprovar
+                //as atividades cadastradas
+
+                //Se o usuário for o proprio líder, então aprovação é automática
+                if (usuarioTop)
+                {
+                    apropriacao.DataAprovacao = DateTime.Now;
+                    apropriacao.Status = true;
+                }
+                else
+                {
+                    apropriacao.DataAprovacao = null;
+                    apropriacao.Status = false;
+                }
+
+                //Atualiza o objeto
+                Update(apropriacao);
+
+            }
+            //se o saldo for maior do que zero e não existe atividade apropriada, então é inclusão de horas apropriadas
+            else if (saldo > 0 && apropriacao == null)
+            {
+                apropriacao = new Apontamento
+                {
+                    Categoria = categoria,
+                    CentroDeCusto = centroDeCusto,
+                    Competencia = competencia,
+                    Data = dataApropriacao,
+                    DataRegistro = DateTime.Now,
+                    Descricao = descricaoAtividade,
+                    DataAprovacao = (usuarioTop ? DateTime.Now : (DateTime?)null), //Aprovação automática caso o usuário estiver no topo da hierarquia
+                    Empresa = empresa,
+                    Hh = qtdeHhDiario,
+                    Localidade = localidade,
+                    Status = usuarioTop, //Aprovação automática caso o usuário estiver no topo da hierarquia
+                    Lider = usuario.Lider,
+                    Usuario = usuario,
+                    ObjectState = ObjectState.Added
+                };
+                Insert(apropriacao);
+            }
+            //Se o saldo for zero e existe atividade apropriada, então não há nem alteração e nem inclusão de dados
+            else if (saldo == 0 && apropriacao != null)
+            {
+                apropriacao.ObjectState = ObjectState.Unchanged;
+            }
+
+        }
+
+<<<<<<< HEAD
+
+        public IList<AprovacaoDTO> ObterApontamentosAprovacaoPorLider(Usuario lider)
+        {
+            return _repository.ObterApontamentosAprovacaoPorLider(lider);
+        }
+
+        public IList<AprovacaoDTO> ObterApontamentosAprovacaoPorLider(Usuario lider, Usuario profissional)
+        {
+            return _repository.ObterApontamentosAprovacaoPorLider(lider, profissional);
+        }
+
+
+        public IList<AprovacaoDTO> ObterApontamentosDesaprovadoPorLider(Usuario lider)
+        {
+            return _repository.ObterApontamentosDesaprovadoPorLider(lider);
+        }
+
+
+        public void AprovarApontamento(int p)
+        {
+            Apontamento apontamento = this.Query(a => a.Id == p).Select().FirstOrDefault();
+            if (apontamento == null)
+            {
+                throw new Exception("O Apontamento não existe");
+            }
+            apontamento.Status = true;
+            apontamento.DataAprovacao = DateTime.Now;
+
+            Update(apontamento);
+        }
+
+        public void DesaprovarApontamento(int p)
+        {
+            Apontamento apontamento = this.Query(a => a.Id == p).Select().FirstOrDefault();
+            if (apontamento == null)
+            {
+                throw new Exception("O Apontamento não existe");
+            }
+            apontamento.Status = false;
+            apontamento.DataAprovacao = DateTime.Now;
+
+            Update(apontamento);
+        }
+
+        public IList<Usuario> ObterProfissionaisApontamentosPorLider(Usuario lider)
+        {
+            return _repository.ObterProfissionaisApontamentosPorLider(lider);
+=======
+        public override void Delete(Apontamento entity)
+        {
+            if (entity.StatusAprovacao == "APROVADO" || entity.StatusAprovacao == "REJEITADO")
+                throw new Exception(string.Format("Para fins de histórico, apontamento de horas com o status {0}, não podem ser excluídos.", entity.StatusAprovacao));
+            base.Delete(entity.Id);
+>>>>>>> ca0afa28c169a67e2bfe7c6060881974d8b347c0
+        }
+    }
+}

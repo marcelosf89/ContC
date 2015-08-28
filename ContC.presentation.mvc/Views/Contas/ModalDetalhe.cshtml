@@ -1,0 +1,102 @@
+﻿@using ContC.domain.entities.Models
+@model ContC.domain.entities.Models.Boleto
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Boleto Numero @Model.Id.ToString("00000") </h4>
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(p => p.Id)
+                @if (Model.DataPagamento.HasValue )
+                {
+                    <div class="alert alert-info fade in">
+                        <i class="fa-fw fa fa-info"></i>
+                        <strong>Pago !</strong> Esta conta foi paga no dia <strong>@Model.DataPagamento.Value.ToShortDateString()</strong>
+                    </div>
+                }
+                else if (!Model.DataPagamento.HasValue && Model.DataVencimento < DateTime.Now.Date)
+                {
+                    <div class="alert alert-danger fade in">
+                        <i class="fa-fw fa fa-times"></i>
+                        <strong>Atrasado !</strong> O pagamento dessa conta está atrasada à <strong>@( (DateTime.Now.Date - Model.DataVencimento).Days) dia(s)</strong>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Fornecedor :</label>
+                    </div>
+                    <div class="col-md-9">
+                        <b>@Model.Fornecedor.RazaoSocial</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Vencimento :</label>
+                    </div>
+                    <div class="col-md-9">
+                        <b>@Model.DataVencimento.ToShortDateString()</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Valor :</label>
+                    </div>
+                    <div class="col-md-9">
+                        <b>@Model.Valor.ToString("R$ ###,###.00")</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Data Pagamento :</label>
+                    </div>
+                    <div class="col-md-9">
+                        @if (Model.DataPagamento.HasValue)
+                        {
+                            <b>@Model.DataPagamento.Value.ToShortDateString()</b>
+                        }
+                        else
+                        {
+                            <b>-------</b>
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <label class="control-label">Downloads </label>
+                    <div class="col-md-12">
+                        aaaa
+                    </div>
+                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="progress progress-xs" style="visibility:hidden">
+                                    <div class="progress-bar bg-color-purple" style="width:100%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="status"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#myModal").modal();
+    });
+
+    function fecharModal() {
+        debugger;
+        $("#myModal").modal('hide');
+        $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+    }
+</script>

@@ -1,0 +1,123 @@
+<script>
+    $('#myTab a').click(function (e) {
+        debugger;
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
+    $(document).ready(function () {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@Url.Action("AprovacaoPartial", "Aprovacao")",
+            success: function (data) {
+                $("#divAprovacao").html('');
+                $("#divAprovacao").html(data);
+                $("#divCarregado").attr("dt-val", "true");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            }
+        });
+
+        $('a[aria-controls="semAcao"]').on('show.bs.tab', function (e) {
+            var divDesaprovado = $("#divAprovacao");
+            if ($("#divCarregado").attr("dt-val") != "true") {
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("AprovacaoPartial", "Aprovacao")",
+                    success: function (data) {
+                        divDesaprovado.html('');
+                        divDesaprovado.html(data);
+                        $("#divCarregado").attr("dt-val", "true");
+                    },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        } else {
+                try {
+                    gvAprovacao.PerformCallback();
+    } catch (err) { }
+        }
+
+            
+        });
+
+        $('a[aria-controls="desaprovados"]').on('show.bs.tab', function (e) {
+            var divDesaprovado = $("#divDesaprovado");
+            if ($("#divCarregadoDesaprovado").attr("dt-val") != "true") {
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("DesaprovadoPartial", "Aprovacao")",
+                    success: function (data) {
+                        divDesaprovado.html('');
+                        divDesaprovado.html(data);
+                        $("#divCarregadoDesaprovado").attr("dt-val", "true");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve.');
+                    }
+                });
+            } else {
+                try {
+                    gvDesaprovado.PerformCallback();
+                } catch (err) { }
+            }
+
+        });
+
+        $('a[aria-controls="aprovados"]').on('show.bs.tab', function (e) {
+
+            var divAprovado = $("#divAprovado");
+            if ($("#divCarregadoAprovado").attr("dt-val") != "true") {
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("AprovadoPartial", "Aprovacao")",
+                    success: function (data) {
+                        divAprovado.html('');
+                        divAprovado.html(data);
+                        $("#divCarregadoAprovado").attr("dt-val", "true");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve.');
+                    }
+                });
+            } else {
+                try {
+                    gvAprovado.PerformCallback();
+                } catch (err) { }
+            }
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="mensagemDiv"></div>
+    </div>
+</div>
+
+<div role="tabpanel">
+
+    <!-- Nav tabs -->
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#semAcao" aria-controls="semAcao" role="tab" data-toggle="tab">Faltando Ação</a></li>
+        <li role="presentation"><a href="#desaprovados" aria-controls="desaprovados" role="tab" data-toggle="tab">Desaprovados</a></li>
+        <li role="presentation"><a href="#aprovados" aria-controls="aprovados" role="tab" data-toggle="tab">Aprovados</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="semAcao"><div id="divAprovacao"></div></div>
+        <div role="tabpanel" class="tab-pane" id="desaprovados"><div id="divDesaprovado"></div></div>
+        <div role="tabpanel" class="tab-pane" id="aprovados"><div id="divAprovado"></div></div>
+    </div>
+
+</div>
+
+
+

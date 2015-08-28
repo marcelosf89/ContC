@@ -1,0 +1,109 @@
+@using ContC.presentation.mvc.Controllers
+@using DevExpress.Web.ASPxEditors
+@using DevExpress.Web.ASPxGridView
+@model IList<ContC.presentation.mvc.Models.CentroDeCustoViewModel>
+
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "gridView";
+        settings.KeyFieldName = "Id";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "CentroDeCusto", Action = "BatchEditingPartial" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "CentroDeCusto", Action = "BatchEditingUpdateModel" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.SettingsCommandButton.NewButton.ButtonType = GridViewCommandButtonType.Image;
+        settings.SettingsCommandButton.NewButton.Image.Url = Url.Content("../Content/images/icons/editar.png");
+        settings.SettingsCommandButton.DeleteButton.ButtonType = GridViewCommandButtonType.Image;
+        settings.SettingsCommandButton.DeleteButton.Image.Url = Url.Content("../Content/images/icons/deletar.png");
+        settings.CommandColumn.Width = Unit.Pixel(50);
+
+        settings.SettingsBehavior.AllowGroup = true;
+        settings.SettingsBehavior.FilterRowMode = GridViewFilterRowMode.Auto;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsPopup.HeaderFilter.Height = 200;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EmpresaId";
+            column.Caption = "Empresa";
+            column.Width = Unit.Pixel(150);
+            
+            column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.DataSource = ListProvider.GetEmpresas();
+            comboBoxProperties.TextField = "RazaoSocial";
+            comboBoxProperties.ValueField = "Id";
+            comboBoxProperties.ValueType = typeof(int);
+            
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Sigla";
+            column.Caption = "Sigla";
+            column.Width = Unit.Pixel(100);
+        });
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Descricao";
+            column.Caption = "Descrição";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Tipo";
+            column.Caption = "Tipo";
+            column.Width = Unit.Pixel(150);
+
+            column.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.DataSource = ListProvider.GetTiposCentroDeCustoViewModel();
+            comboBoxProperties.TextField = "Descricao";
+            comboBoxProperties.ValueField = "Sigla";
+            comboBoxProperties.ValueType = typeof(string);
+
+        });
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Situacao";
+            column.Caption = "Ativo ?";
+            column.ColumnType = MVCxGridViewColumnType.CheckBox;
+            column.Width=Unit.Pixel(70);
+        });
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["Situacao"] = "True";
+        };
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.None;
+        };
+
+        foreach (GridViewDataColumn column in settings.Columns)
+        {
+            column.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        }
+
+    }).Bind(Model).GetHtml()
+
+

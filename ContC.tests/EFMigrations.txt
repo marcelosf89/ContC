@@ -1,0 +1,15 @@
+sql.dev.emm.cloud.teewe.com.br
+ContC/ContC2015
+
+MIGRATIONS(Executar Package Manager sempre no projeto host/startup):
+Para habilitar
+Enable-Migrations -ProjectName ContC.domain.entities -StartUpProjectName ContC.tests -EnableAutomaticMigrations -Force
+
+Para gerar a classe de atualiza��o
+Add-Migration -ProjectName ContC.domain.entities -StartUpProjectName ContC.tests AtualizaDB
+
+Para atualizar o banco de dados com as altera��es do modelo
+Update-Database -ProjectName ContC.domain.entities -StartUpProjectName ContC.tests -Verbose
+
+Para limpar o banco de dados, excluindo todas as tabelas (CUIDADO)
+Update-Database -ProjectName ContC.domain.entities -StartUpProjectName ContC.tests -Verbose -targetmigration 0

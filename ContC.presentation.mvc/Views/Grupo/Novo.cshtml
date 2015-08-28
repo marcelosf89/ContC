@@ -1,0 +1,42 @@
+﻿@model ContC.domain.entities.Models.Grupo
+
+@{    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<div class="jarviswidget jarviswidget-sortable jarviswidget-color-dark" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Criar Grupo</h2>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+            @using (Ajax.BeginForm("Salvar", "Grupo", new { }, ao, new { @class = "smart-form", role = "form" }))
+            {
+                <fieldset>
+                    <section>
+                        <label class="input">
+                            <label>Nome do Grupo</label>
+                            @Html.TextBoxFor(p => p.Nome)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <label>Sigla</label>
+                            @Html.TextBoxFor(p => p.Sigla)
+                        </label>
+                    </section>
+                </fieldset>
+                <footer>
+                    @Ajax.ActionLink("Voltar", "Index", new { }, ao, new { @class = "btn btn-default" })
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </footer>
+            }
+        </div>
+    </div>
+</div>

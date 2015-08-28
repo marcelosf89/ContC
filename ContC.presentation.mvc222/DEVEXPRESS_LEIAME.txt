@@ -1,0 +1,10 @@
+*** Se o nuget atualizar os pacotes do DevExpress e a solução começar a reclamar de referências ambíguas, é necessários executar as ações:
+1) Remover a referencia: DevExpress.Web.v14.1
+2) Deletar o arquivo DevExpress.Web.v14.1 na pasta \bin
+3) Deletar o arquivo DevExpress.Web.v14.1 na pasta \packages\DevExpress.14.1.7\lib
+4) Recompilar a solução com Clean/Rebuild
+
+*** Todas as páginas que usam a suite Devexpress devem ter anotaçao na página:
+<!DOCTYPE html>
+
+

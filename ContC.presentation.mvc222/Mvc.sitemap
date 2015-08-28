@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    <mvcSiteMapNode title="Apropriação" controller="Apropriacao" action="Index" roles="APROV, APROP, CONFIG, ADMIN"/>
+    <mvcSiteMapNode title="Aprovação" controller="Aprovacao" action="Index" roles="APROV, CONFIG, ADMIN"/>
+    <mvcSiteMapNode title="Configurações" controller="Home" action="Index" roles="CONFIG, ADMIN">
+      <mvcSiteMapNode title="Competências" controller="Competencia" action="Index" roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Tipos de Categoria" controller="TipoCategoria" action="Index"  roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Categorias" controller="Categoria" action="Index"  roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Empresas" controller="Empresa" action="Index"  roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Centros de Custos" controller="CentroDeCusto" action="Index"  roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Localidades" controller="Localidade" action="Index" roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Feriados" controller="Feriado" action="Index" roles="CONFIG, ADMIN"/>
+      <mvcSiteMapNode title="Relações" controller="Relacao" action="Index" roles="CONFIG, ADMIN"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Relatórios" controller="Home" action="Index" roles="REPORTS">
+      <mvcSiteMapNode title="Analítico de Atividades por Período" controller="Report" action="ApontamentoAnalitico" roles="REPORTS"/>
+      <mvcSiteMapNode title="Sintético de Atividades por Período" controller="Report" action="ApontamentoSintetico" roles="REPORTS"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Administração" controller="Home" action="Index" roles="ADMIN">
+      <mvcSiteMapNode title="Usuários" controller="Usuario" action="Index" roles="ADMIN"/>
+      <mvcSiteMapNode title="Papéis de Usuário" controller="UserRole" action="Index" roles="ADMIN"/>
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

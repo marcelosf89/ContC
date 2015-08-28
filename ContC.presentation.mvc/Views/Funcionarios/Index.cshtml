@@ -1,0 +1,90 @@
+﻿@using ContC.domain.entities.DTO
+@model FuncionariosDTO
+@{
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<div class="row well">
+    <div class="col-md-4 form-group">
+        <label class="col-lg-3 control-label">Lider:</label>
+        <select id="slLider" class="col-lg-3 form-control">
+            <option value="0" selected="selected">Todos</option>
+            <option value="-">Sem Liderança</option>
+            @foreach (FuncionarioLiderDTO func in @Model.Lideres)
+            {
+                <option value="@func.Id">@func.Nome</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 form-group">
+        <label class="col-lg-3 control-label">Tipo Pagamento:</label>
+        <select id="slTipoPagamento" class="col-lg-3 form-control">
+            @foreach (FuncionarioTipoPagamentoDTO tp in @Model.TipoPagamentos)
+            {
+                <option value="@tp.Id">@tp.Nome</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group">
+            <button id="btnFiltrar" class="btn btn-default"><i class="fa fa-filter"></i> Filtrar</button>
+            <a class="btn btn-primary" data-ajax="true"
+               data-ajax-begin="$('.jquery-waiting-base-container').showing({ modo: 'slow' });"
+               data-ajax-complete="$('.jquery-waiting-base-container').closing({ modo: 'slow' });"
+               data-ajax-mode="replace" data-ajax-update="#content" href="@Url.Action("Novo", "Funcionarios", new { empresaId = Model.EmpresaId})"><i class="fa fa-plus"></i> Novo</a>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="gridFuncionarios"></div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            var gridFuncionarios = $("#gridFuncionarios");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("CarregarGridFuncionarios", "Funcionarios")",
+                data: {
+                    "empresaId": @Model.EmpresaId,
+                    "tipoPagamento": $("#slTipoPagamento").val(),
+                    "liderId" : "0"
+                },
+                success: function (data) {
+                    gridFuncionarios.html('');
+                    gridFuncionarios.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+
+            $("#btnFiltrar").click(function (){
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "@Url.Action("CarregarGridFuncionarios", "Funcionarios")" ,
+                    data: {
+                        "empresaId": @Model.EmpresaId,
+                        "tipoPagamento": $("#slTipoPagamento").val(),
+                        "liderId" : $("#slLider").val()
+                    },
+                    success: function (data) {
+                        gridFuncionarios.html('');
+                        gridFuncionarios.html(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve.');
+                    }
+                });
+            });
+        });
+    </script>

@@ -1,0 +1,53 @@
+@model ContC.presentation.mvc.Models.EmpresaCategoriaViewModel
+<!DOCTYPE html>
+@{
+    ViewBag.Title = "Lista de Categorias";
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#EmpresaId").change(function () {
+            gridView.PerformCallback();
+        });
+    });
+
+    function OnBeginCallback(s, e) {
+        e.customArgs["empresaId"] = $("#EmpresaId").val();
+    }
+
+    function encodeHtml(text) {
+            if(text === undefined || text === null)
+                return "";
+            var replacements = [
+                [ /&amp;/g, '&ampx;' ], [ /&/g, '&amp;' ], [ /&quot;/g, '&quotx;' ], [ /"/g, '&quot;' ],
+                [ /&lt;/g, '&ltx;' ], [ /</g, '&lt;' ], [ /&gt;/g, '&gtx;' ], [ />/g, '&gt;' ]
+            ];
+            for(var i = 0; i < replacements.length; i++) {
+                var repl = replacements[i];
+                text = text.replace(repl[0], repl[1]);
+            }
+            return text;
+    }
+
+</script>
+
+<h2>Lista de Categorias</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-4">
+                @Html.LabelFor(model => model.Empresas)
+                @Html.DropDownListFor(model => model.EmpresaId, Model.Empresas, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div id="gridDiv" class="col-lg-12">
+                @Html.Partial("CategoriaGridPartial", Model)
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title> ContC </title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css-smart")
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Scripts.Url("~/Scripts/jquery.zclip.js")"></script>
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/splash/touch-icon-ipad-retina.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-startup-image" href="img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+</head>
+<body class=" desktop-detected pace-done smart-style-1 fixed-header pace-done minified">
+    <div class="jquery-waiting-base-container">Por favor aguarde o final do processamento...</div>
+    <header id="header">
+        <div id="logo-group">
+            <span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
+            <span id="activity" class="activity-dropdown"> <i class="fa fa-globe"></i> <!-- <b class="badge"> 21 </b>--> </span>
+            <div class="ajax-dropdown">
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label class="btn btn-default">
+                        <input type="radio" name="activity" id="ajax/notify/mail.html">
+                        Msgs
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="activity" id="ajax/notify/notifications.html">
+                        notify
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="activity" id="ajax/notify/tasks.html">
+                        Tasks
+                    </label>
+                </div>
+
+                <div class="ajax-notifications custom-scroll">
+
+                    <div class="alert alert-transparent">
+                        <h4>Click a button to show messages here</h4>
+                        This blank page message helps protect your privacy, or you can show the first message here automatically.
+                    </div>
+
+                    <i class="fa fa-lock fa-4x fa-border"></i>
+
+                </div>
+                <span>
+                    Last updated on: 12/12/2013 9:43AM
+                    <button type="button" data-loading-text="" class="btn btn-xs btn-default pull-right">
+                        <i class='fa fa-refresh fa-spin'></i> Loading...
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                </span>
+
+            </div>
+        </div>
+        @{Html.RenderAction("ProjectsPartial");}
+        <div class="pull-right">
+
+            <div id="hide-menu" class="btn-header pull-right">
+                <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+            </div>
+            <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
+                <li class="">
+                    <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
+                        <img src="img/avatars/sunny.png" alt="John Doe" class="online" />
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> Setting</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="profile.html" class="padding-10 padding-top-0 padding-bottom-0"> <i class="fa fa-user"></i> <u>P</u>rofile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> <u>S</u>hortcut</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="launchFullscreen"><i class="fa fa-arrows-alt"></i> Full <u>S</u>creen</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Action("Login","Account")" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div id="logout" class="btn-header transparent pull-right">
+                <span> <a href="@Url.Action("LogOff", "Account")" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+            </div>
+            <div id="search-mobile" class="btn-header transparent pull-right">
+                <span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
+            </div>
+            <form action="search.html" class="header-search pull-right">
+                <input id="search-fld" type="text" name="param" placeholder="Find reports and more" data-autocomplete='[
+					"ActionScript",
+					"AppleScript",
+					"Asp",
+					"BASIC",
+					"C",
+					"C++",
+					"Clojure",
+					"COBOL",
+					"ColdFusion",
+					"Erlang",
+					"Fortran",
+					"Groovy",
+					"Haskell",
+					"Java",
+					"JavaScript",
+					"Lisp",
+					"Perl",
+					"PHP",
+					"Python",
+					"Ruby",
+					"Scala",
+					"Scheme"]'>
+                <button type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
+            </form>
+            <div id="fullscreen" class="btn-header transparent pull-right">
+                <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
+            </div>
+            <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
+                <div>
+                    <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a>
+                    <div class="popover bottom">
+                        <div class="arrow"></div>
+                        <div class="popover-content">
+                            <h4 class="vc-title">Voice command activated <br><small>Please speak clearly into the mic</small></h4>
+                            <h4 class="vc-title-error text-center">
+                                <i class="fa fa-microphone-slash"></i> Voice command failed
+                                <br><small class="txt-color-red">Must <strong>"Allow"</strong> Microphone</small>
+                                <br><small class="txt-color-red">Must have <strong>Internet Connection</strong></small>
+                            </h4>
+                            <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">See Commands</a>
+                            <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">Close Popup</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="header-dropdown-list hidden-xs">
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-br" alt="United States"> <span> Portugues (BR) </span> <i class="fa fa-angle-down"></i> </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li class="active">
+                            <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-br" alt="United States"> Portugues (BR)</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+    <aside id="left-panel">
+        <div class="login-info">
+            <span>
+                <!-- User image size is adjusted inside CSS, it should stay as is -->
+
+                <a href="#" id="show-shortcut" data-action="toggleShortcut">
+                    <img src="img/avatars/male.png" alt="me" class="online">
+                    <span>
+                        @User.Identity.Name
+                    </span>
+                </a>
+
+            </span>
+        </div>
+        <nav>
+            <ul>
+                <li class="active">
+                    <a href="index.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-lg fa-fw fa-cog"></i> <span class="menu-item-parent">Administrativo</span></a>
+                    <ul>
+                        <li>
+                            @Ajax.ActionLink("Grupo", "Index", "Grupo", new { }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Empresas", "Index", "Empresas", new { }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Financeiro</span></a>
+                    <ul>
+                        <li>
+                            @Ajax.ActionLink("Fornecedor", "Index", "Fornecedores", new { grupoId = 3 }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })
+                        </li>
+                        <li>
+                            <a href="#">
+                                Contas
+                            </a>
+                            <ul>
+                                <li>
+                                    @Ajax.ActionLink("Dashboard", "Dashboard", "Contas", new { empresaId = 4 }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink("Consulta", "Index", "Contas", new { empresaId = 4 }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Recursos Humanos</span></a>
+                    <ul>
+                        <li>
+                            @Ajax.ActionLink("Funcionarios", "Index", "Funcionarios", new { empresaId = 4 }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <span class="minifyme" data-action="minifyMenu">
+            <i class="fa fa-arrow-circle-left hit"></i>
+        </span>
+
+    </aside>
+
+    <div id="main" role="main">
+        <div id="content">
+            @{Html.RenderPartial("_Index");}
+        </div>
+    </div>
+    <div class="page-footer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="txt-color-white">ContC WebApp © 2015</span>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+            </div>
+        </div>
+    </div>
+    <!--script data-pace-options='{ "restartOnRequestAfter": true }' src="@Scripts.Url("Scripts/plugin/pace/pace.min.js")"></!--script-->
+    @Scripts.Render("~/bundles/contc")
+    <script>
+        $(document).ready(function () {
+            $(".jquery-waiting-base-container").closing({ modo: "slow" });
+        });
+    </script>
+</body>
+
+</html>

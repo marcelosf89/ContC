@@ -1,0 +1,8 @@
+@model ContC.presentation.mvc.Models.CompetenciaSelectionViewModel
+
+<script>
+    SetActionsOnChangeCompetencia();
+</script>
+
+@Html.LabelFor(model => model.Competencias)
+@Html.DropDownListFor(model => model.CompetenciaId, Model.Competencias, new { @class = "form-control" })

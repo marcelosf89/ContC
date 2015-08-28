@@ -1,0 +1,5 @@
+C:\Temp\ContC\ContC.crosscutting.utilities\bin\Debug\ContC.crosscutting.utilities.dll
+C:\Temp\ContC\ContC.crosscutting.utilities\bin\Debug\ContC.crosscutting.utilities.pdb
+C:\Temp\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.csprojResolveAssemblyReference.cache
+C:\Temp\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.dll
+C:\Temp\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.pdb

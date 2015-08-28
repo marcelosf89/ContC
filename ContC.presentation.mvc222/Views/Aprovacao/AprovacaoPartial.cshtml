@@ -1,0 +1,147 @@
+@model ContC.presentation.mvc.Models.AprovadoViewModel
+<script type="text/javascript">
+
+    function gvAprovacaoOnBeginCallback(s, e) {
+        e.customArgs["profissionalId"] = $("#ProfissionalAprovacaoId").val();
+        e.customArgs["empresaId"] = $("#EmpresaAprovacaoId").val();
+    }
+
+    $(document).ready(function () {
+
+        $("#bntRefreshAprovacao").click(function () {
+            var divDesaprovado = $("#divAprovacao");
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("AprovacaoPartial", "Aprovacao")",
+                    success: function (data) {
+                        divDesaprovado.html('');
+                        divDesaprovado.html(data);
+                        $("#divCarregado").attr("dt-val", "true");
+                    },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+
+        });
+
+        $("#ProfissionalAprovacaoId").change(function () {
+            var profissionalId = $("#ProfissionalAprovacaoId").val();
+            var empresaDiv = $("#empresaDiv");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("EmpresaAprovacaoPartial", "Aprovacao")?profissionalId=" + profissionalId,
+                data: { "profissionalId": profissionalId },
+                success: function (data) {
+                    empresaDiv.html('');
+                    empresaDiv.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+    });
+
+    function CustomButtonClick(s, e) {
+        var key = s.GetRowKey(e.visibleIndex);
+        var mensagemDiv = $("#mensagemDiv");
+        if (e.buttonID === "btnAprovacao") {
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("Aprovar", "Aprovacao")?id=" + key,
+                data: { "id": key },
+                success: function (data) {
+                    mensagemDiv.html('');
+                    mensagemDiv.html('<div class="alert alert-info" > <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + data + '</div>');
+                    ReloadGridAprovacao();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        }
+
+        if (e.buttonID === "btnNaoAprovado") {
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("Desaprovar", "Aprovacao")?id=" + key,
+                data: { "id": key },
+                success: function (data) {
+                    mensagemDiv.html('');
+                    mensagemDiv.html('<div class="alert alert-info" > <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + data + '</div>');
+                    gvAprovacao.PerformCallback();
+                    gvDesaprovado.PerformCallback();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        }
+    }
+
+    function ReloadGridDesaprovado() {
+        var gridDivNA = $("#gridDivNA");
+        var profissionalId = $("#ProfissionalDesaprovadoId").val();
+        var empresaId = $("#EmpresaDesaprovadoId").val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '@Url.Action("GetDesaprovados", "Aprovacao")?profissionalId=' + profissionalId + "&empresaId=" + empresaId,
+            data: { "profissionalId": profissionalId, "empresaId": empresaId },
+            success: function (data) {
+                gridDivNA.html('');
+                gridDivNA.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            }
+        });
+    }
+
+    function ReloadGridAprovacao() {
+        var gridDiv = $("#gridDiv");
+        var profissionalId = $("#ProfissionalAprovacaoId").val();
+        var empresaId = $("#EmpresaAprovacaoId").val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '@Url.Action("GetAprovacao", "Aprovacao")?profissionalId=' + profissionalId + "&empresaId=" + empresaId,
+            data: { "profissionalId": profissionalId, "empresaId": empresaId },
+            success: function (data) {
+                gridDiv.html('');
+                gridDiv.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            }
+        });
+    }
+</script>
+
+<div id="divCarregado"></div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-4">
+            <label>Selecione um Profissional :</label>
+            @Html.DropDownListFor(model => model.ProfissionalId, Model.Profissionais, new { id = "ProfissionalAprovacaoId", @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            <div id="empresaDiv"></div>
+        </div>
+        <div class="col-md-4">
+            <br />
+            <button id="bntRefreshAprovacao" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i></button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="gridDiv" class="col-md-12">
+        </div>
+    </div>
+</div>

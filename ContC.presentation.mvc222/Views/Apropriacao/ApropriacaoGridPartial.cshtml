@@ -1,0 +1,171 @@
+@using DevExpress.Web.ASPxGridView
+@model IList<ContC.domain.entities.DTO.ApontamentoDTO>
+@{
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "gvApropriacao";
+            settings.KeyFieldName = "Id";
+            settings.CallbackRouteValues = new { Controller = "Apropriacao", Action = "ApropriacaoGridPartial" };
+            settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+            settings.ClientSideEvents.EndCallback = "OnEndCallback";
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Apropriacao", Action = "ApropriacaoGridDeletePartial" };
+            settings.SettingsBehavior.AllowGroup = true;
+            settings.SettingsBehavior.FilterRowMode = GridViewFilterRowMode.Auto;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.CommandColumn.ShowClearFilterButton = true;
+            settings.Settings.ShowHeaderFilterButton = true;
+            settings.SettingsPopup.HeaderFilter.Height = 200;
+            settings.CommandColumn.ShowEditButton = false;
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowUpdateButton = false;
+            settings.CommandColumn.ShowCancelButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.Visible = true;
+            settings.SettingsCommandButton.DeleteButton.ButtonType = GridViewCommandButtonType.Image;
+            settings.SettingsCommandButton.DeleteButton.Image.Url = Url.Content("../Content/images/icons/deletar.png");
+            settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnGetInfo", Text = "Capturar" });
+            settings.ClientSideEvents.CustomButtonClick = "function(s, e) {{ CustomButtonClick(s, e); }}";
+            settings.CommandColumn.ButtonType = GridViewCommandButtonType.Image;
+            settings.CommandColumn.CustomButtons[0].Image.Url = Url.Content("../Content/images/icons/magnet.png");
+            settings.CommandColumn.Width = Unit.Pixel(50);
+            settings.Width = Unit.Percentage(100);
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Id";
+                column.Caption = "Id";
+                column.Visible = false;
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Empresa";
+                column.Caption = "Empresa";
+                column.Width = Unit.Pixel(100);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Localidade";
+                column.Caption = "Local";
+                column.Width = Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "CentroDeCusto";
+                column.Caption = "Centro de Custo";
+                column.Width = Unit.Pixel(80);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Categoria";
+                column.Caption = "Categoria";
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Hh";
+                column.Caption = "Hh";
+                column.Width = Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DataApropriacao";
+                column.Caption = "Data";
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+                column.PropertiesEdit.DisplayFormatString = "d";
+                column.Width = Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Dia";
+                column.Caption = "Dia";
+                column.Width = Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Feriado";
+                column.ColumnType = MVCxGridViewColumnType.CheckBox;
+                column.Caption = "Feriado ?";
+                column.Width = Unit.Pixel(50);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Aprovador";
+                column.Caption = "Aprovador";
+                column.Width = Unit.Pixel(50);
+            });            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Aprovado";
+                column.ColumnType = MVCxGridViewColumnType.CheckBox;
+                column.Caption = "Aprovado ?";
+                column.Width = Unit.Pixel(50);
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DescricaoAtividade";
+                column.Caption = "Descrição da Atividade";
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "StatusAprovacao";
+                column.Caption = "Status Aprovação";
+                column.Visible = false;
+            });
+
+            settings.HtmlRowPrepared = (s, e) =>
+            {
+                if (e.RowType != GridViewRowType.Data) return;
+                string statusAprovacao = Convert.ToString(e.GetValue("StatusAprovacao"));
+                if (statusAprovacao == "REJEITADO")
+                {
+                    e.Row.ForeColor = System.Drawing.Color.DarkRed;
+                    e.Row.Font.Strikeout = true;
+                }
+                if (statusAprovacao == "APROVADO")
+                {
+                    e.Row.ForeColor = System.Drawing.Color.DarkGreen;
+                }
+            };
+
+            settings.CustomJSProperties = (sender, e) =>
+            {
+                MVCxGridView g = sender as MVCxGridView;
+                if (ViewData["EditError"] != null)
+                {
+                    g.JSProperties["cpError"] = "1";
+                    g.JSProperties["cpMessage"] = ViewData["EditError"] as string;
+                }
+                else
+                {
+                    g.JSProperties["cpError"] = "0";
+                    g.JSProperties["cpMessage"] = "Processamento realizado com sucesso!";
+                }
+            };
+
+            foreach (GridViewDataColumn column in settings.Columns)
+            {
+                column.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
+                column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+            }
+
+            settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Hh");
+            settings.Settings.ShowFooter = true;
+
+            settings.SummaryDisplayText = (s, e) =>
+            {
+                if (e.Item.FieldName == "Hh")
+                {
+                    e.Text = string.Format("{0}Hh", e.Value);
+                }
+            };
+            
+        });
+        
+}
+@grid.Bind(Model).GetHtml()

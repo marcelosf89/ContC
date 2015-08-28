@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    AjaxOptions ao = new AjaxOptions()
+   {
+       OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+       OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+       UpdateTargetId = "content"
+   };
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Ajax.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null,
+                ajaxOptions: ao, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Ajax.ActionLink("Register", "Register", "Account", routeValues: null, ajaxOptions: ao, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Ajax.ActionLink("Log in", "Login", "Account", routeValues: null, ajaxOptions: ao, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

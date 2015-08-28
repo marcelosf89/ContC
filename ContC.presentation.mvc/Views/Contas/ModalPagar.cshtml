@@ -1,0 +1,135 @@
+﻿@using ContC.domain.entities.Models
+@model Boleto
+@{
+    ViewBag.Title = "Log in";
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "fecharModal();",
+        UpdateTargetId = "content",
+    };
+
+}
+@using (Ajax.BeginForm("Pagar", "Contas", new { }, ao, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Boleto Numero @Model.Id.ToString("00000") </h4>
+                </div>
+                <div class="modal-body">
+                    @Html.HiddenFor(p => p.Id)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.AntiForgeryToken()
+                                <label class="control-label">Carregar Comprovante</label>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input type="file" id="fuPDFAdd" class="form-control" name="file">
+                                        <span class="input-group-addon">
+                                            <i id="iconSuccess" class="fa fa-lg fa-check"></i>
+                                            <i id="iconLoad" class="fa fa-lg fa-cloud-upload"></i>
+                                            <i id="iconErro" class="fa fa-lg fa-times"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="progress progress-xs" style="visibility:hidden">
+                                <div class="progress-bar bg-color-purple" style="width:100%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="status"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <input id="btnPagar" type="submit" class="btn btn-primary" value="Pagar!" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#myModal").modal();
+
+            $("#btnPagar").hide();
+            $("#iconSuccess").hide();
+            $("#iconErro").hide();
+
+            $("#fuPDFAdd").change(function () {
+                $("#iconSuccess").hide();
+                $("#iconErro").hide();
+                $("#iconLoad").show();
+                var file = this.files[0];
+                fileName = file.name;
+                size = file.size;
+                type = file.type;
+                if (type.toLowerCase() == "application/pdf") { //I just want pdf files and only want to show
+                    SendFile(file);
+                }
+                else {
+                    //$("#txtuploadedMsgAdd").text("Error: Please select pdf file.");
+                    $("#iconLoad").hide();
+                    $("#iconErro").show();
+                    $("#btnPagar").hide();
+                }
+            });
+
+
+            function SendFile(file) {
+                $(".progress").css("visibility", "visible");
+                var formData = new FormData($('#frmPagar')[0]);
+                formData.append("FileUpload", file);
+                $.ajax({
+                    url: "@Url.Action("UploadFile", "Contas")?boletoId=@Model.Id",  //Server script to process data
+                    data: { boletoId: "@Model.Id" },
+                    type: 'POST',
+                    xhr: function () {  // Custom XMLHttpRequest
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) { // Check if upload property exists
+                            myXhr.upload.addEventListener('progress',
+                            progressHandlingFunction, false); // For handling the progress of the upload
+                        }
+                        return myXhr;
+                    },
+                    data: formData,
+                    //Options to tell jQuery not to process data or worry about content-type.
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+
+            //If file is successfully uploaded, label is updated with message
+            function progressHandlingFunction(e) {
+                if (e.lengthComputable) {
+                    //    $("#txtuploadedMsgAdd").text("  " + fileName + " uploaded successfully");
+                    $(".progress").css("visibility", "hidden");
+                    $("#iconLoad").hide();
+                    $("#iconSuccess").show();
+                    $("#btnPagar").show();
+                }
+            }
+        });
+
+        function fecharModal() {
+            debugger;
+            $("#myModal").modal('hide');
+            refreshConta("@Model.Id");
+            $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+        }
+    </script>
+}

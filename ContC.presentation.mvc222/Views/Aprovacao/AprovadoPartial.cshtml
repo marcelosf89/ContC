@@ -1,0 +1,70 @@
+@model ContC.presentation.mvc.Models.AprovadoViewModel
+<script>
+
+    function gvAprovadoOnBeginCallback(s, e) {
+        e.customArgs["profissionalId"] = $("#ProfissionalId").val();
+        e.customArgs["empresaId"] = $("#EmpresaId").val();
+    }
+
+    $(document).ready(function () {
+        $("#bntRefreshAprovado").click(function () {
+            var divAprovado = $("#divAprovado");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("AprovadoPartial", "Aprovacao")",
+                success: function (data) {
+                    divAprovado.html('');
+                    divAprovado.html(data);
+                    $("#divCarregadoAprovado").attr("dt-val", "true");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+        $("#ProfissionalId").change(function () {
+            var profissionalId = $("#ProfissionalId").val();
+            var empresaDiv = $("#empresaAprovadoDiv");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("EmpresaAprovadoPartial", "Aprovacao")?profissionalId=" + profissionalId,
+                data: { "profissionalId": profissionalId },
+                success: function (data) {
+                    empresaDiv.html('');
+                    empresaDiv.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+
+
+    });
+
+</script>
+<div id="divCarregadoAprovado"></div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-4">
+            <label>Selecione um Profissional :</label>
+            @Html.DropDownListFor(model => model.ProfissionalId, Model.Profissionais, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            <div id="empresaAprovadoDiv"></div>
+        </div>
+        <div class="col-md-4">
+            <br />
+            <button id="bntRefreshAprovado" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i></button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="gridDivAP"></div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+﻿@using ContC.domain.entities.DTO
+@model IList<ContasDTO>
+
+<script src="@Scripts.Url("~/Scripts/plugin/datatables/jquery.dataTables.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/plugin/datatables/dataTables.colVis.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/plugin/datatables/dataTables.tableTools.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/plugin/datatables/dataTables.bootstrap.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/plugin/ion-slider/ion.rangeSlider.min.js")"></script>
+<style>
+    .dt-toolbar span.input-group-addon {
+        height: 34px;
+    }
+</style>
+<div class="row hidden">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <input id="range-slider-1" type="text" name="range_1" value="">
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered " id="tbConta">
+        <thead>
+            <tr>
+                <th>Fornecedor</th>
+                <th>Vencimento</th>
+                <th>Valor</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4">
+                        <div class="alert alert-warning fade in">
+                            <i class="fa-fw fa fa-warning"></i>
+                            <strong>Não Existe nenhum registro nesse periodo</strong>
+                        </div>
+                    </td>
+                </tr>
+            }
+            @foreach (ContasDTO conta in Model.OrderBy(p => p.DataVencimento))
+            {
+                string css = "";
+                if (conta.DataPagamento.HasValue)
+                {
+                    css = "success";
+                }
+                else if (!conta.DataPagamento.HasValue && conta.DataVencimento < DateTime.Now.Date)
+                {
+                    css = "danger";
+                }
+
+                <tr id="@conta.Id" class="@css">
+                    <td>@conta.Fornecedor</td>
+                    <td>@conta.DataVencimento.ToShortDateString()</td>
+                    <td>@conta.Valor.ToString("R$ ###,###.00")</td>
+                    <td>
+                        <a href="#" id="aDetalhe" data-boleto="@conta.Id"
+                           class="btn btn-default aDetalhe">
+                            <i class="fa fa-edit"></i>
+                            Detalhes
+                        </a>
+                        @if (!conta.DataPagamento.HasValue)
+                        {
+                            <a href="#" id="aRemover" data-boleto="@conta.Id"
+                               class="btn btn-danger aRemover">
+                                <i class="fa fa-edit"></i>
+                                Remover
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="dvModalContasDetalhe"></div>
+<script>
+    $(document).ready(function () {
+
+        var dvContas = $("#dvModalContasDetalhe");
+
+        $('#tbConta').DataTable({
+            "bFilter": true,
+            //"bInfo": false,
+            //"bLengthChange": false
+            //"bAutoWidth": false,
+            //"bPaginate": false,
+            //"bStateSave": true // saves sort state using localStorage
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+            "autoWidth": true
+        });
+
+        $("#range-slider-1").ionRangeSlider({
+            min: @Model.Min(p => p.Valor).ToString().Replace(",","."),
+            max: @Model.Max(p => p.Valor).ToString().Replace(",", "."),
+            from: @Model.Min(p => p.Valor).ToString().Replace(",", "."),
+            to: @Model.Max(p => p.Valor).ToString().Replace(",", "."),
+            type: 'double',
+            step: 1,
+            prefix: "R$ ",
+            prettify: false,
+            hasGrid: true
+        });
+
+        $(".aDetalhe").click( function () {
+            var boletoId = $(this).attr("data-boleto");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("ModalDetalhe", "Contas")?boletoId=" + boletoId,
+                data: { "boletoId": boletoId },
+                success: function (data) {
+                    dvContas.html('');
+                    dvContas.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+        $(".aRemover").click( function () {
+            debugger;
+            var boletoId = $(this).attr("data-boleto");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("ModalRemover", "Contas")?boletoId=" + boletoId,
+                data: { "boletoId": boletoId },
+            success: function (data) {
+                dvContas.html('');
+                dvContas.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            }
+        });
+    });
+    });
+
+
+
+
+</script>

@@ -1,0 +1,278 @@
+﻿@using ContC.domain.entities.DTO
+@model List<ContC.domain.entities.DTO.ContasDTO>
+@if (Model.Any(p => p.DataVencimento < DateTime.Now.Date && !p.DataPagamento.HasValue))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning fade in">
+                <button class="close" data-dismiss="alert">
+                    ×
+                </button>
+                <i class="fa-fw fa fa-warning"></i>
+                <strong>Atrasados</strong> Existem contas atrazadas totalizando o valor de
+                <strong>@Model.Where(p => p.DataVencimento < DateTime.Now.Date && !p.DataPagamento.HasValue).Sum(p => p.Valor).ToString("R$ ###,###.00")</strong>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="jarviswidget jarviswidget-sortable" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget">
+    <header role="heading">
+        <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+        <h2>Live Feeds </h2>
+
+        <ul class="nav nav-tabs pull-right in" id="myTab">
+            <li class="">
+                <a data-toggle="tab" href="#s1" aria-expanded="false">
+                    <i class="fa fa-clock-o"></i>
+                    <span class="hidden-mobile hidden-tablet">
+                        Vencidas
+                    </span>
+                    <span class="badge bg-color-red txt-color-white">
+                        @Model.Count(p => p.DataVencimento < DateTime.Now.Date)
+                    </span>
+                </a>
+            </li>
+
+            <li class="active">
+                <a data-toggle="tab" href="#s2" aria-expanded="false">
+                    <i class="fa fa-facebook"></i>
+                    <span class="hidden-mobile hidden-tablet">
+                        Hoje
+                    </span>
+                    <span class="badge bg-color-blue txt-color-white">
+                        @Model.Count(p => p.DataVencimento == DateTime.Now.Date)
+                    </span>
+                </a>
+            </li>
+
+            <li class="">
+                <a data-toggle="tab" href="#s3" aria-expanded="true">
+                    <i class="fa fa-dollar"></i>
+                    <span class="hidden-mobile hidden-tablet">A vencer</span>
+                </a>
+            </li>
+        </ul>
+
+        <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+    </header>
+
+    <!-- widget div-->
+    <div class="no-padding" role="content">
+        <!-- widget edit box -->
+        <div class="jarviswidget-editbox">
+        </div>
+        <!-- end widget edit box -->
+
+        <div class="widget-body">
+            <!-- content -->
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade" id="s1">
+                    <p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fornecedor</th>
+                                        <th>Numero</th>
+                                        <th>Valor</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (!Model.Any(p => p.DataVencimento < DateTime.Now.Date && !p.DataPagamento.HasValue))
+                                    {
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="alert alert-warning fade in">
+                                                    <i class="fa-fw fa fa-warning"></i>
+                                                    <strong>Não Existe nenhum registro de contas atrasadas</strong>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @foreach (ContasDTO conta in Model.Where(p => p.DataVencimento < DateTime.Now.Date && !p.DataPagamento.HasValue))
+                                    {
+                                        <tr id="@conta.Id">
+                                            <td>@conta.Fornecedor</td>
+                                            <td>@conta.Numero</td>
+                                            <td>@conta.Valor.ToString("R$ ###,###.00")</td>
+                                            <td>
+                                                <a href="#" id="aPagar" data-boleto="@conta.Id"
+                                                   data-tipo="vencida" class="btn btn-default aPagar">
+                                                    <i class="fa fa-money"></i>
+                                                    Pagar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th><strong>@Model.Where(p => p.DataVencimento < DateTime.Now.Date && !p.DataPagamento.HasValue).Sum(p => p.Valor).ToString("R$ ###,##0.00")</strong></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+                <div class="tab-pane fade in active" id="s2">
+                    <p>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fornecedor</th>
+                                        <th>Numero</th>
+                                        <th>R$ Valor</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (!Model.Any(p => p.DataVencimento == DateTime.Now.Date && !p.DataPagamento.HasValue))
+                                    {
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="alert alert-warning fade in">
+                                                    <i class="fa-fw fa fa-warning"></i>
+                                                    <strong>Não Existe nenhum registro de contas para hoje</strong>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                    @foreach (ContasDTO conta in Model.Where(p => p.DataVencimento == DateTime.Now.Date))
+                                    {
+                                        String css = "";
+                                        if (conta.DataPagamento.HasValue)
+                                        {
+                                            css = "success";
+                                        }
+
+                                        <tr id="@conta.Id" class="@css">
+                                            <td>@conta.Fornecedor</td>
+                                            <td>@conta.Numero</td>
+                                            <td>@conta.Valor.ToString("R$ ###,###.00")</td>
+                                            <td>
+                                                @if (!conta.DataPagamento.HasValue)
+                                                {
+                                                    <a href="#" id="aPagar" data-boleto="@conta.Id" data-tipo="atual"
+                                                       class="btn btn-default aPagar">
+                                                        <i class="fa fa-money"></i>
+                                                        Pagar
+                                                    </a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th><strong>@Model.Where(p => p.DataVencimento == DateTime.Now.Date).Sum(p => p.Valor).ToString("R$ ###,##0.00")</strong></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+
+                <div class="tab-pane fade" id="s3">
+                    <p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fornecedor</th>
+                                        <th>Numero</th>
+                                        <th>R$ Valor</th>
+                                        <th>Vencimento</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (!Model.Any(p => p.DataVencimento > DateTime.Now.Date && !p.DataPagamento.HasValue))
+                                    {
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="alert alert-warning fade in">
+                                                    <i class="fa-fw fa fa-warning"></i>
+                                                    <strong>Não Existe nenhum registro de contas futuras</strong>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                    @foreach (ContasDTO conta in Model.Where(p => p.DataVencimento > DateTime.Now.Date).OrderBy(p => p.DataVencimento))
+                                    {
+                                        <tr id="@conta.Id">
+                                            <td>@conta.Fornecedor</td>
+                                            <td>@conta.Numero</td>
+                                            <td>@conta.Valor.ToString("R$ ###,###.00")</td>
+                                            <td>@conta.DataVencimento.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                <a href="#" id="aPagar" data-boleto="@conta.Id" data-tipo="atual"
+                                                   class="btn btn-default aPagar">
+                                                    <i class="fa fa-money"></i>
+                                                    Pagar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th><strong>@Model.Where(p => p.DataVencimento > DateTime.Now.Date).Sum(p => p.Valor).ToString("R$ ###,##0.00")</strong></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+            </div>
+
+            <!-- end content -->
+        </div>
+
+    </div>
+    <!-- end widget div -->
+</div>
+<div id="dvModalContas"></div>
+<input type="hidden" id="txtCopy" />
+<script>
+    $(document).ready(function () {
+        $(".aPagar").click(function () {
+            var dvContas = $("#dvModalContas");
+            var boletoId = $(this).attr("data-boleto")
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("ModalPagar", "Contas")?boletoId=" + boletoId,
+                data: { "boletoId": boletoId },
+                success: function (data) {
+                    dvContas.html('');
+                    dvContas.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+    });
+    function refreshConta(id) {
+        $("tr#" + id).addClass("success");
+        $("a[data-boleto=" + id + "]").remove();
+    }
+</script>

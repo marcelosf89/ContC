@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+
+</head>
+<body>
+    <div class="jquery-waiting-base-container">Por favor aguarde o final do processamento...</div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Ajax.ActionLink("Grupo", "Index", "Grupo", new { }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })</li>
+                    <li>@Ajax.ActionLink("Empresas", "Index", "Empresas", new { }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })</li>
+                    <li>@Ajax.ActionLink("About", "About", "Home", new { }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })</li>
+                    <li>@Ajax.ActionLink("Contact", "Contact", "Home", new { }, new AjaxOptions() { OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });", OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });", UpdateTargetId = "content" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div id="content">
+            @{Html.RenderPartial("_Index");}
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        $(".jquery-waiting-base-container").closing({ modo: "slow" });
+    });
+    </script>
+</body>
+</html>
+
