@@ -1,0 +1,37 @@
+﻿@model ContC.presentation.mvc.Models.CompraModels.CompraNovoModel
+
+@{
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<script src="@Scripts.Url("~/Scripts/plugin/select2/select2.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/plugin/masked-input/jquery.maskedinput.min.js")"></script>
+
+<div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Cadastro de Boleto</h2>
+        </span>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+@using (Ajax.BeginForm("Agendar", "Contas", new { }, ao, new { @class = "smart-form", role = "form", novalidate = "novalidate" }))
+{
+    @Html.HiddenFor(m => m.EmpresaId)
+    @Html.HiddenFor(m => m.Id)
+            <footer>
+                @Ajax.ActionLink("Voltar", "Index", new { empresaId = Model.EmpresaId }, ao, new { @class = "btn btn-default" })
+                <button type="submit" class="btn btn-primary">
+                    Agendar
+                </button>
+            </footer>
+            }
+        </div>
+    </div>
+</div>
