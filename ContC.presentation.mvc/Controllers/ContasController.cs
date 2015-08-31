@@ -7,6 +7,7 @@ using ContC.presentation.mvc.Models.ContasModels;
 using ContC.presentation.mvc.Models.ExceptionModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -194,6 +195,18 @@ namespace ContC.presentation.mvc.Controllers
             {
                 throw new StatusException(ex.Message);
             }
-        }        
+        }
+
+        public String GetDateBoleto(string numeroDias)
+        {
+            try
+            {
+                DateTime dt = Convert.ToDateTime("07/10/1997", new CultureInfo("pt-BR"));
+                dt = dt.AddDays(Convert.ToInt32(numeroDias));
+                return dt.ToString("dd/MM/yyyy");
+            }
+            catch (Exception) { return ""; }
+
+        }
     }
 }
