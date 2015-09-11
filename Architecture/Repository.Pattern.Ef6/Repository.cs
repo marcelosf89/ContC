@@ -50,6 +50,7 @@ namespace Repository.Pattern.Ef6
         {
             entity.ObjectState = ObjectState.Added;
             SessaoAtual.Save(entity);
+            SessaoAtual.Flush();
             //SessaoAtual.syn.SyncObjectState(entity);
         }
 
@@ -69,6 +70,14 @@ namespace Repository.Pattern.Ef6
             //_context.SyncObjectState(entity);
         }
 
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                Update(entity);
+            }
+        }
+
         public virtual void Delete(object id)
         {
             var entity = SessaoAtual.Get<TEntity>(id);
@@ -79,6 +88,7 @@ namespace Repository.Pattern.Ef6
         {
             entity.ObjectState = ObjectState.Deleted;
             SessaoAtual.Delete(entity);
+            SessaoAtual.Flush();
             //_context.SyncObjectState(entity);
         }
     }

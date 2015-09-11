@@ -11,7 +11,7 @@
             </div>
             <div class="modal-body">
                 @Html.HiddenFor(p => p.Id)
-                @if (Model.DataPagamento.HasValue )
+                @if (Model.DataPagamento.HasValue)
                 {
                     <div class="alert alert-info fade in">
                         <i class="fa-fw fa fa-info"></i>
@@ -66,32 +66,62 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <label class="control-label">Downloads </label>
+                    <h4>Downloads</h4>
+                    <hr />
                     <div class="col-md-12">
-                        aaaa
+                        @{
+                            bool ExisteComprovante = File.Exists(Path.Combine(ContC.presentation.mvc.Config.ConfigurationFactory.Instance.PastaComprovante, Model.Id.ToString() + ".pdf"));
+                            bool ExisteBoleto = File.Exists(Path.Combine(ContC.presentation.mvc.Config.ConfigurationFactory.Instance.PastaBoleto, Model.Id.ToString() + ".pdf"));
+                        }
+                        @if (ExisteComprovante)
+                        {
+                            <a href="#" class="btn btn-default dow" data-down="@Model.Id" data-type="com"><i class="fa fa-download"></i> Comprovante </a>
+                        }
+                        @if (ExisteBoleto)
+                        {
+                            <a href="#" class="btn btn-default" data-down="@Model.Id" data-type="bol"><i class="fa fa-download"></i> Boleto </a>
+                        }
+                        <a href="#" class="btn btn-default hidden"><i class="fa fa-download"></i> Nota </a>
                     </div>
                 </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="progress progress-xs" style="visibility:hidden">
-                                    <div class="progress-bar bg-color-purple" style="width:100%"></div>
-                                </div>
-                            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="progress progress-xs" style="visibility:hidden">
+                            <div class="progress-bar bg-color-purple" style="width:100%"></div>
                         </div>
-
-                        <div id="status"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Cancelar
-                        </button>
                     </div>
                 </div>
+
+                <div id="status"></div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
         $("#myModal").modal();
+
+        $(".dow").click(function () {
+
+            $('.jquery-waiting-base-container').showing({ modo: 'slow' });
+
+            window.location = "@Url.Action("GetFile","Contas")?boletoId=" + $(this).attr("data-down") 
+            $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+
+            @*$.ajax({
+                async: true,
+                url:"@Url.Action("GetFile","Contas")",
+                data: { boletoId: $(this).attr("data-down") },
+                success: function (data) {
+                    $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                }
+            });*@
+        });
     });
 
     function fecharModal() {

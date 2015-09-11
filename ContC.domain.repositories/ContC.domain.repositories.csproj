@@ -66,6 +66,9 @@
     <Compile Include="Contracts\IGrupoRepository.cs" />
     <Compile Include="Contracts\IFuncionarioRepository.cs" />
     <Compile Include="Contracts\IBancoRepository.cs" />
+    <Compile Include="Contracts\ICompraRepository.cs" />
+    <Compile Include="Contracts\IPagamentoDiretoRepository.cs" />
+    <Compile Include="Contracts\IProdutoCompraRepository.cs" />
     <Compile Include="Contracts\IUsuarioRepository.cs" />
     <Compile Include="Contracts\IEmpresaRepository.cs" />
     <Compile Include="Contracts\IProdutoRepository.cs" />
@@ -78,6 +81,9 @@
     <Compile Include="Implementations\BoletoRepository.cs" />
     <Compile Include="Implementations\FuncionarioRepository.cs" />
     <Compile Include="Implementations\BancoRepository.cs" />
+    <Compile Include="Implementations\CompraRepository.cs" />
+    <Compile Include="Implementations\PagamentoDiretoRepository.cs" />
+    <Compile Include="Implementations\ProdutoCompraRepository.cs" />
     <Compile Include="Implementations\UsuarioRepository.cs" />
     <Compile Include="Implementations\ProdutoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -33,7 +33,7 @@ namespace ContC.presentation.mvc.Models.FuncionarioModels
         [Required(ErrorMessage = "O Tipo de Regime é obrigatório")]
         public virtual int TipoRegimeFuncionarioId { get; set; }
         [Required(ErrorMessage = "O Valor de pagamento é obrigatório")]
-        public virtual double Valor { get; set; }
+        public virtual decimal Valor { get; set; }
 
         public virtual string Sigla { get; set; }
         public virtual bool Situacao { get; set; }

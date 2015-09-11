@@ -16,6 +16,7 @@ namespace Service.Pattern
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
+        void UpdateRange(IEnumerable<TEntity> entities);
         void Delete(object id);
         void Delete(TEntity entity);
 

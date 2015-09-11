@@ -21,6 +21,7 @@ namespace ContC.presentation.mvc.Controllers
             _es = es;
         }
 
+        [Authorize(Roles = "USR")]
         public ActionResult Index()
         {
             

@@ -1,0 +1,324 @@
+﻿@model ContC.presentation.mvc.Models.CompraModels.CompraNovoModel
+
+@{
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<script src="@Scripts.Url("~/Scripts/plugin/select2/select2.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/plugin/masked-input/jquery.maskedinput.min.js")"></script>
+<script src="@Scripts.Url("~/Scripts/jquery.tabletojson.min.js")"></script>
+
+
+<div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Cadastro de Compra</h2>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+            @using (Ajax.BeginForm("Incluir", "Compras", new { }, ao, new { @class = "smart-form", role = "form", novalidate = "novalidate", id = "frmAction" }))
+            {
+                @Html.HiddenFor(m => m.EmpresaId)
+                @Html.HiddenFor(m => m.Id)
+                <div id="dvErro"></div>
+                <fieldset>
+                    <h4>Nota</h4>
+
+                    <div class="row">
+                        <section class="col col-10">
+                            <label class="label-control">Fornecedor :</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-group"></i>
+                                @Html.TextBoxFor(m => m.Fornecedor, new { @class = "form-control", placeholder = "Fornecedor...", id = "fornecedor" })
+                                @Html.ValidationMessageFor(model => model.Fornecedor)
+                                @Html.HiddenFor(p => p.FornecedorId)
+                                @Html.ValidationMessageFor(model => model.FornecedorId)
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Entrega:</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-calendar"></i>
+                                @{
+                if (!Model.Entrega.HasValue) { Model.Entrega = DateTime.Now.Date; }
+                                }
+
+                                @Html.TextBoxFor(p => p.Entrega, new { placeholder = "Entrega", data_dateformat = "dd/mm/yy" })
+                                @Html.ValidationMessageFor(model => model.Entrega)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-2">
+                            <label class="label-control">Numero:</label>
+                            <label class="input">
+                                @Html.TextBoxFor(p => p.NumeroNota, new { placeholder = "Numero Nota" })
+                                @Html.ValidationMessageFor(model => model.NumeroNota)
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Categoria:</label>
+                            <label class="select">
+                                @Html.DropDownListFor(p => p.CategoriaId, Model.Categorias, new { placeholder = "Categoria", @class = "form-control col-md-12" })
+                                @Html.ValidationMessageFor(model => model.CategoriaId)
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Valor Frete:</label>
+                            <label class="input">
+                                <i class="icon-append-left fa fa-dollar"></i>
+                                @Html.TextBoxFor(p => p.ValorFrete, new { @*type = "number",*@ placeholder = "", @class = "valT", data_old = Model.ValorFrete.ToString(), value = "0" })
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Valor Seguro:</label>
+                            <label class="input">
+                                <i class="icon-append-left fa fa-dollar"></i>
+                                @Html.TextBoxFor(p => p.ValorSeguro, new { @*type = "number",*@ placeholder = "", @class = "valT", data_old = Model.ValorFrete.ToString(), value = "0" })
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Valor DA:</label>
+                            <label class="input">
+                                <i class="icon-append-left fa fa-dollar"></i>
+                                @Html.TextBoxFor(p => p.ValorDespesaAdministrativa, new { @*type = "number",*@ placeholder = "", @class = "valT", data_old = Model.ValorDespesaAdministrativa.ToString(), value = "0" })
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Desconto:</label>
+                            <label class="input">
+                                <i class="icon-append-left fa fa-dollar"></i>
+                                @Html.TextBoxFor(p => p.Desconto, new { @*type = "number",*@ placeholder = "", step = "0.01", @class = "valS", data_old = Model.Desconto.ToString(), pattern = "." })
+                                @Html.ValidationMessageFor(model => model.Desconto)
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <h4>Pagamento</h4>
+                    <div class="row">
+                        <section class="col col-4">
+                            <label class="label-control">Tipo Pagamento:</label>
+                            <label class="select">
+                                @Html.DropDownListFor(p => p.TipoPagamentoId, Model.TipoPagamentos, new { placeholder = "Tipo Pagamentos", @class = "form-control col-md-12" })
+                                @Html.ValidationMessageFor(model => model.TipoPagamentoId)
+                            </label>
+                        </section>
+                        <section class="col col-2 hidden">
+                            <label class="label-control">Qtd Vezes:</label>
+                            <label class="input">
+                                <i class="icon-append glyphicon glyphicon-remove"></i>
+                                @Html.TextBoxFor(p => p.QuantidadeVezes, new { type = "number", placeholder = "Tipo Pagamentos", disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.QuantidadeVezes)
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Valor Total:</label>
+                            <label class="input">
+                                <i class="icon-append-left fa fa-dollar"></i>
+                                @Html.TextBoxFor(p => p.Valor, new { placeholder = "Tipo Pagamentos", disabled = "disabled" })
+                            </label>
+                        </section>
+
+                        <section class="col col-2">
+                            <label class="label-control">Valor Total ICMS:</label>
+                            <label class="input">
+                                R$<label id="lblValTotICMS">@Model.ValorICMSNota.ToString("###,###,##0.00")</label>
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Valor Total IPI:</label>
+                            <label class="input">
+                                R$<label id="lblValTotIPI">@Model.ValorIPINota.ToString("###,###,##0.00")</label>
+                            </label>
+                        </section>
+                        <section class="col col-2">
+                            <label class="label-control">Valor Total da Nota:</label>
+                            <label class="input">
+                                <strong>R$<label id="lblValTotNota">@Model.ValorTotalNota.ToString("###,###,##0.00")</label></strong>
+                            </label>
+                        </section>
+
+                    </div>
+                </fieldset>
+                <fieldset>
+                    @{Html.RenderPartial("AddProdutos");}
+                </fieldset>
+                <fieldset id="fsBoleto" class="hidden">
+                    @{Html.RenderPartial("AddBoletos");}
+                </fieldset>
+                <footer>
+                    @Ajax.ActionLink("Voltar", "Index", new { empresaId = Model.EmpresaId }, ao, new { @class = "btn btn-default", id = "btnVoltar" })
+                    <a href="#" class="btn btn-warning disabled hidden" id="aSuccessErr">
+                        Incluir ( O Valor do boleto excede o valor da nota )
+                    </a>
+                    <a href="#" class="btn btn-primary" id="aSuccess">
+                        Incluir
+                    </a>
+                </footer>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if($("#TipoPagamentoId" ).val() == "1"){
+            $("#fsBoleto").removeClass("hidden");
+        }
+        else{
+            $("#fsBoleto").addClass("hidden");
+        }
+
+        var crurl = sessionStorage.getItem("compraReturnUrl");
+        if(crurl != null){
+            $("#btnVoltar").attr("href",crurl);
+            sessionStorage.removeItem("compraReturnUrl");
+        }
+
+        $("#fornecedor").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetFornecedor","Contas")",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        startsWith: request.term,
+                        empresaId: @Model.EmpresaId,
+                        categoriaId: 0
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.RazaoSocial,
+                                value: item.RazaoSocial,
+                                id:item.Id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                $("#FornecedorId").val(ui.item.id);
+                //log(ui.item ? "Selected: " + ui.item.label : "Nothing selected, input was " + this.value);
+            }
+        });
+
+        $("#aSuccess").click(function (){
+            var frmAction = $("#frmAction");
+            var dev = frmAction.serialize();
+            $('.jquery-waiting-base-container').showing({ modo: 'slow' });
+
+            var tab = $("#tbProdutos").tableToJSON().splice(1,$("#tbProdutos").tableToJSON().length-1);
+            var tabBol = $("#tbBoleto").tableToJSON().splice(1,$("#tbBoleto").tableToJSON().length-1);
+            dev += "&produtosJson=" + JSON.stringify(tab);
+            dev += "&boletosJson=" + JSON.stringify(tabBol);
+
+            $.ajax({
+                url: "@Url.Action("Incluir","Compras")",
+                type: 'post',
+                data:dev,
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var err = '<div id="dvErro" class="alert alert-danger fade in">';
+                    err = err+'<button class="close" data-dismiss="alert">';
+                    err = err+'×';
+                    err = err+'</button>';
+                    err = err+'<i class="fa-fw fa fa-times"></i>';
+                    err = err+'<strong>Error!</strong> ' + thrownError;
+                    err = err+'</div>';
+
+                    $("#dvErro").html('');
+                    $("#dvErro").html(err);
+                    $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                },
+                success: function(data){
+                    $("#content").html('');
+                    $("#content").html(data);
+                    $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                }
+            });
+        });
+
+        $("#Entrega").datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'pt-BR',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>'
+        });
+
+        $("#TipoPagamentoId").change(function(){
+            debugger;
+            if($("#TipoPagamentoId" ).val() == "1"){
+                $("#fsBoleto").removeClass("hidden");
+            }
+            else{
+                $("#fsBoleto").addClass("hidden");
+            }
+        });
+
+        $(".valT").focusout(function(){
+            debugger;
+            var a = parseFloat($(this).val());
+            var b =parseFloat($(this).attr('data-old'));
+
+            var c = parseFloat($("#lblValTotNota").text());
+            $("#lblValTotNota").text((c-b)+a);
+            $(this).attr('data-old', a);
+        });
+
+        $(".valS").focusout(function(){
+            var a = parseFloat($(this).val());
+            var b =parseFloat($(this).attr('data-old'));
+
+            var c = parseFloat($("#lblValTotNota").text());
+            $("#lblValTotNota").text((c+b)-a);
+            $(this).attr('data-old', a);
+        });
+
+        $("#fornecedor").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetFornecedor","Contas")",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        startsWith: request.term,
+                        empresaId: @Model.EmpresaId,
+                        categoriaId: 0
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.RazaoSocial,
+                                value: item.RazaoSocial,
+                                id:item.Id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                $("#FornecedorId").val(ui.item.id);
+                //log(ui.item ? "Selected: " + ui.item.label : "Nothing selected, input was " + this.value);
+            }
+        });
+    });
+
+    function Validate(){
+        return;
+        if( parseFloat($("#hdValor").val()) >  parseFloat($("#Valor").val())){
+            $("#aSuccess").addClass("hidden");
+            $("#aSuccessErr").removeClass("hidden");
+        }else{
+            $("#aSuccessErr").addClass("hidden");
+            $("#aSuccess").removeClass("hidden");
+        }
+    }
+</script>

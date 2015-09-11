@@ -12,8 +12,8 @@ namespace ContC.domain.entities.Models
 
         public virtual int Id { get; set; }
         public virtual decimal Quantidade { get; set; }
-        public virtual double ValorMedio { get; set; }
-        public virtual double ValorVenda { get; set; }
+        public virtual decimal ValorMedio { get; set; }
+        public virtual decimal ValorVenda { get; set; }
         public virtual Produto Produto { get; set; }
         public virtual Estoque Estoque { get; set; }
 

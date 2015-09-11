@@ -1,0 +1,171 @@
+﻿@model int
+<h4>Compra > Consulta</h4>
+
+@{    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<fieldset>
+    <div class="well">
+        <div class="row">
+            <div class="col-sm-12">
+                <label> Selecione um Periodo: </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" id="startdate" type="text" placeholder="De" value="@DateTime.Now.AddDays(-5).ToShortDateString()" data-dateformat="dd/mm/yy">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" id="finishdate" type="text" placeholder="Ate" value="@DateTime.Now.AddDays(10).ToShortDateString()" data-dateformat="dd/mm/yy">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="btn-group">
+                    <button id="btnFiltrar" class="btn btn-default"><i class="fa fa-filter"></i> Filtrar</button>
+                    @Ajax.ActionLink("Nova", "Novo", "Compras", new { empresaId = Model }, ao, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <input type="text" id="txtFornecedor" placeholder="Fornecedor.." class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false">
+                <header role="heading">
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2></h2>
+                    </span>
+                </header>
+                <div role="content">
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div id="dvContasLoad"><h1 class="ajax-loading-animation" style="text-align: center"><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>
+                        <div id="dvContasContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<script>
+    $(document).ready(function () {
+        $("#finishdate").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            language: 'pt-BR',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            minDate:"@DateTime.Now.AddDays(10).ToShortDateString()",
+            onClose: function (selectedDate) {
+                $("#startdate").datepicker("option", "maxDate", selectedDate);
+            }
+
+        });
+        $("#startdate").datepicker({
+            defaultDate: "-1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            language: 'pt-BR',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            maxDate:"@DateTime.Now.AddDays(-5).ToShortDateString()",
+            onClose: function (selectedDate) {
+                $("#finishdate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+
+        var dvContas = $("#dvContasContent");
+        var dvContasLoad = $("#dvContasLoad");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("FiltrarConsulta", "Compras")",
+            data: {
+                "empresaId": @Model ,
+                "dataInicio":"@DateTime.Now.AddDays(-5).ToShortDateString()",
+                "dataFinal": "@DateTime.Now.AddDays(10).ToShortDateString()",
+                "fornecedor": ''
+            },
+            success: function (data) {
+                dvContas.html('');
+                dvContas.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            },
+            complete: function(){
+                dvContasLoad.html('');
+            }
+        });
+
+        $("#btnFiltrar").click(function (){
+            dvContasLoad.html('<h1 class="ajax-loading-animation" style="text-align: center"><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
+            debugger;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("FiltrarConsulta", "Compras")" ,
+                data: {
+                    "empresaId": @Model,
+                    "dataInicio": $("#startdate").val(),
+                    "dataFinal": $("#finishdate").val(),
+                    "fornecedor":$("#txtFornecedor").val()
+                },
+                success: function (data) {
+                    dvContas.html('');
+                    dvContas.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                },
+                complete: function(){
+                    dvContasLoad.html('');
+                }
+            });
+        });
+
+        $("#txtFornecedor").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetFornecedor","Contas")",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        startsWith: request.term,
+                        empresaId: @Model,
+                        categoriaId: 0
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.RazaoSocial,
+                                value: item.RazaoSocial,
+                                id:item.Id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
+</script>

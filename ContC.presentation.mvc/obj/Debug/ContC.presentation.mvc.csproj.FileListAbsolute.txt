@@ -101,3 +101,9 @@ C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\ja\Npgsql.resources.dll
 C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\zh-CN\Npgsql.resources.dll
 C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\obj\Debug\ContC.presentation.mvc.dll
 C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\obj\Debug\ContC.presentation.mvc.pdb
+C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\Npgsql.EntityFramework.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\Npgsql.EntityFramework.xml
+C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\System.Data.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\System.Data.SqlClient.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\ContC.CorssCutting.Exceptions.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.presentation.mvc\bin\ContC.CorssCutting.Exceptions.pdb

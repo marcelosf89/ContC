@@ -36,3 +36,5 @@ C:\Desenvolvimento\MaSF\ContC\ContC.domain.services\bin\Debug\FluentNHibernate.p
 C:\Desenvolvimento\MaSF\ContC\ContC.domain.services\bin\Debug\FluentNHibernate.xml
 C:\Desenvolvimento\MaSF\ContC\ContC.domain.services\obj\Debug\ContC.domain.services.dll
 C:\Desenvolvimento\MaSF\ContC\ContC.domain.services\obj\Debug\ContC.domain.services.pdb
+C:\Desenvolvimento\MaSF\ContC\ContC.domain.services\bin\Debug\ContC.CorssCutting.Exceptions.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.domain.services\bin\Debug\ContC.CorssCutting.Exceptions.pdb

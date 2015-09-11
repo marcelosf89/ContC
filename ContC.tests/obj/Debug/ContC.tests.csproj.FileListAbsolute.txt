@@ -33,3 +33,5 @@ C:\Desenvolvimento\MaSF\ContC\ContC.tests\bin\Debug\NHibernate.xml
 C:\Desenvolvimento\MaSF\ContC\ContC.tests\bin\Debug\Iesi.Collections.xml
 C:\Desenvolvimento\MaSF\ContC\ContC.tests\obj\Debug\ContC.tests.dll
 C:\Desenvolvimento\MaSF\ContC\ContC.tests\obj\Debug\ContC.tests.pdb
+C:\Desenvolvimento\MaSF\ContC\ContC.tests\bin\Debug\ContC.CorssCutting.Exceptions.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.tests\bin\Debug\ContC.CorssCutting.Exceptions.pdb

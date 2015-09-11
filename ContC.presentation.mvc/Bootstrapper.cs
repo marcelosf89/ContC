@@ -51,6 +51,7 @@ namespace ContC.presentation.mvc
             container.RegisterType<IContaService, ContaService>();
             container.RegisterType<IBancoService, BancoService>();
             container.RegisterType<ICategoriaService, CategoriaService>();
+            container.RegisterType<ICompraService, CompraService>();
             
 
 

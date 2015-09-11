@@ -24,7 +24,7 @@ namespace ContC.domain.entities.Models
 
         public virtual TipoPagamento TipoPagamento { get; set; }
         public virtual TipoRegimeFuncionario TipoRegimeFuncionario { get; set; }
-        public virtual double Valor { get; set; }
+        public virtual decimal Valor { get; set; }
 
 
         public virtual string Identificacao2 { get; set; }

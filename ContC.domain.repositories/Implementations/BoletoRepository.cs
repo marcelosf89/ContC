@@ -30,7 +30,9 @@ namespace ContC.domain.services.Implementations
                         Numero = a.Numero,
                         Valor = a.Valor,
                         DataPagamento = a.DataPagamento,
-                        DataVencimento = a.DataVencimento
+                        DataVencimento = a.DataVencimento,
+                        TemCompra = a.Compra != null,
+                        CompraId = a.Compra != null ? a.Compra.Id : 0
                     }).ToList();
 
         }
@@ -53,7 +55,9 @@ namespace ContC.domain.services.Implementations
                         Numero = a.Numero,
                         Valor = a.Valor,
                         DataPagamento = a.DataPagamento,
-                        DataVencimento = a.DataVencimento
+                        DataVencimento = a.DataVencimento,
+                        TemCompra = a.Compra != null,
+                        CompraId = a.Compra != null ? a.Compra.Id : 0
                     }).ToList();
         }
     }

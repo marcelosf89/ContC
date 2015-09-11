@@ -145,7 +145,7 @@ namespace ContC.presentation.mvc.Controllers
                 b.Empresa = new Empresa() { Id = model.EmpresaId };
                 b.Fornecedor = new Fornecedor() { Id = model.FornecedorId };
                 b.Numero = model.NumeroConta.Replace(".", "").Replace(" ", "");
-                b.Valor = Convert.ToDecimal(model.Valor);
+                b.Valor = model.Valor;
 
                 if (!model.UploadFile)
                 {
@@ -168,7 +168,7 @@ namespace ContC.presentation.mvc.Controllers
 
         public ActionResult FiltrarConsulta(int empresaId, string dataInicio, string dataFinal)
         {
-            IList<ContasDTO> boletos = _boletoService.GetContasByEmpresaPeriodo(empresaId, 
+            IList<ContasDTO> boletos = _boletoService.GetContasByEmpresaPeriodo(empresaId,
                 Convert.ToDateTime(dataInicio), Convert.ToDateTime(dataFinal));
 
             return View(boletos);
@@ -203,10 +203,22 @@ namespace ContC.presentation.mvc.Controllers
             {
                 DateTime dt = Convert.ToDateTime("07/10/1997", new CultureInfo("pt-BR"));
                 dt = dt.AddDays(Convert.ToInt32(numeroDias));
-                return dt.ToString("dd/MM/yyyy");
+                return dt.ToShortDateString();
             }
             catch (Exception) { return ""; }
 
         }
+
+        public ActionResult GetFile(int boletoId)
+        {
+            String sourceFileName = "comprovante_boleto_" + boletoId.ToString("00000") + ".pdf";
+            string fp = Path.Combine(ConfigurationFactory.Instance.PastaComprovante, boletoId + ".pdf");
+            byte[] b = System.IO.File.ReadAllBytes(fp);
+            HttpContext.Response.BinaryWrite(b);
+            return File(b, "text/octet-stream", sourceFileName);
+        }
+
+
+
     }
 }

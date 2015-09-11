@@ -14,9 +14,23 @@ namespace ContC.domain.entities.Models
 
         public virtual int Id { get; set; }
         public virtual DateTime Validade { get; set; }
-        public virtual double Valor { get; set; }
+        public virtual decimal Valor { get; set; }
+        public virtual decimal Quantidade { get; set; }
+        public virtual string TipoQuantidade { get; set; }
         public virtual Produto Produto { get; set; }
         public virtual Compra Compra { get; set; }
+
+        public virtual decimal IPI { get; set; }
+        public virtual decimal ICMS { get; set; }
+
+        public override int GetHashCode()
+        {
+            return (Id.ToString() + Validade + Valor + Quantidade + TipoQuantidade + Produto.Id).GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            return GetHashCode().Equals(obj.GetHashCode());
+        }
 
     }
 }

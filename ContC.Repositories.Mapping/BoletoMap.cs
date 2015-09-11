@@ -8,25 +8,49 @@ using System.Threading.Tasks;
 
 namespace ContC.Repositories.Mapping
 {
-    public class BoletoMap : ClassMap<Boleto>
+
+    public class PagamentoMap : ClassMap<Pagamento>
+    {
+        public PagamentoMap()
+        {
+            Table("boletos");
+            DiscriminateSubClassesOnColumn("discriminator");
+
+            Id(p => p.Id).Column("id_boleto").GeneratedBy.Identity();
+
+
+            Map(p => p.Data);
+            Map(p => p.DataPagamento);
+            Map(p => p.Valor);
+            References(p => p.Empresa).Column(Constantes.ID_EMPRESA);
+
+            Where(Constantes.ID_USUARIO_CANCELAMENTO + " is null");
+        }
+    }
+
+    public class PagamentoDiretoMap : SubclassMap<PagamentoDireto>
+    {
+        public PagamentoDiretoMap()
+        {
+            DiscriminatorValue("PGD");
+            References(p => p.Compra).Column(Constantes.ID_COMPRA);
+
+        }
+    }
+
+    public class BoletoMap : SubclassMap<Boleto>
     {
 
         public BoletoMap()
         {
-            Id(p => p.Id).GeneratedBy.Identity();
+            DiscriminatorValue("BOL");
             Map(p => p.Numero);
             Map(p => p.DataVencimento);
-            Map(p => p.Data);
-            Map(p => p.DataPagamento);
-            Map(p => p.Valor);
             Map(p => p.MotivoCancelamento);
             Map(p => p.DataCancelamento);
-            References(p => p.Compra).Column(Constantes.ID_COMPRA);
-            References(p => p.Empresa).Column(Constantes.ID_EMPRESA);
             References(p => p.Fornecedor).Column(Constantes.ID_FORNECEDOR);
+            References(p => p.Compra).Column(Constantes.ID_COMPRA);
             References(p => p.UsuarioCancelamento).Column(Constantes.ID_USUARIO_CANCELAMENTO);
-
-            Where(Constantes.ID_USUARIO_CANCELAMENTO + " is null");
         }
     }
 }

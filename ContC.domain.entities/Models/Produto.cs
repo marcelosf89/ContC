@@ -16,7 +16,7 @@ namespace ContC.domain.entities.Models
         public virtual string Numero { get; set; }
         public virtual string Nome { get; set; }
         public virtual string Descricao { get; set; }
-        public virtual double ValorMedio { get; set; }
+        public virtual decimal ValorMedio { get; set; }
         public virtual Grupo Grupo { get; set; }
 
     }

@@ -25,6 +25,11 @@ namespace ContC.domain.services
             container.RegisterType<IBancoRepository, BancoRepository>();
             container.RegisterType<IContaRepository, ContaRepository>();
             container.RegisterType<ICategoriaRepository, CategoriaRepository>();
+            container.RegisterType<ICompraRepository, CompraRepository>();
+            container.RegisterType<IProdutoCompraRepository, ProdutoCompraRepository>();
+            container.RegisterType<IPagamentoDiretoRepository, PagamentoDiretoRepository>();
+
+            
             
         }
 

@@ -3,3 +3,8 @@ C:\Temp\ContC\ContC.crosscutting.utilities\bin\Debug\ContC.crosscutting.utilitie
 C:\Temp\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.csprojResolveAssemblyReference.cache
 C:\Temp\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.dll
 C:\Temp\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.pdb
+C:\Desenvolvimento\MaSF\ContC\ContC.crosscutting.utilities\bin\Debug\ContC.crosscutting.utilities.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.crosscutting.utilities\bin\Debug\ContC.crosscutting.utilities.pdb
+C:\Desenvolvimento\MaSF\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.dll
+C:\Desenvolvimento\MaSF\ContC\ContC.crosscutting.utilities\obj\Debug\ContC.crosscutting.utilities.pdb

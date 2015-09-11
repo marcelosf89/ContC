@@ -11,5 +11,7 @@ namespace Entity.Pattern
     {
         
         public virtual ObjectState ObjectState { get; set; }
+
+
     }
 }

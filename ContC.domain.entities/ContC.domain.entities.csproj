@@ -49,12 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\CompraDTO.cs" />
     <Compile Include="DTO\FuncionariosDTO.cs" />
     <Compile Include="DTO\ContasDTO.cs" />
     <Compile Include="Models\Banco.cs" />
     <Compile Include="Models\EstoqueProduto.cs" />
     <Compile Include="Models\Estoque.cs" />
     <Compile Include="Models\Funcionario.cs" />
+    <Compile Include="Models\Pagamento.cs" />
+    <Compile Include="Models\PagamentoDireto.cs" />
     <Compile Include="Models\Receita.cs" />
     <Compile Include="Models\ProdutoCompra.cs" />
     <Compile Include="Models\Produto.cs" />

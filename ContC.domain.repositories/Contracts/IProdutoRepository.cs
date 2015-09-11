@@ -11,5 +11,9 @@ namespace ContC.domain.services.Contracts
     public interface IProdutoRepository : IRepository<Produto>
     {
         void teste();
+
+        IList<Produto> GetAllByEmpresaCategoria(string startsWith, int empresaId, int categoriaId, int maxRows);
+
+        Produto GetByName(string produto, int empresaId);
     }
 }

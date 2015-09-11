@@ -77,6 +77,7 @@
                                         <th>Fornecedor</th>
                                         <th>Numero</th>
                                         <th>Valor</th>
+                                        <th>Vencimento</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -98,6 +99,7 @@
                                             <td>@conta.Fornecedor</td>
                                             <td>@conta.Numero</td>
                                             <td>@conta.Valor.ToString("R$ ###,###.00")</td>
+                                            <td>@conta.DataVencimento.ToShortDateString()</td>
                                             <td>
                                                 <a href="#" id="aPagar" data-boleto="@conta.Id"
                                                    data-tipo="vencida" class="btn btn-default aPagar">
@@ -113,6 +115,7 @@
                                         <th></th>
                                         <th></th>
                                         <th><strong>@Model.Where(p => p.DataVencimento < DateTime.Now.Date && !p.DataPagamento.HasValue).Sum(p => p.Valor).ToString("R$ ###,##0.00")</strong></th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -216,7 +219,7 @@
                                             <td>@conta.Fornecedor</td>
                                             <td>@conta.Numero</td>
                                             <td>@conta.Valor.ToString("R$ ###,###.00")</td>
-                                            <td>@conta.DataVencimento.ToString("dd/MM/yyyy")</td>
+                                            <td>@conta.DataVencimento.ToShortDateString()</td>
                                             <td>
                                                 <a href="#" id="aPagar" data-boleto="@conta.Id" data-tipo="atual"
                                                    class="btn btn-default aPagar">

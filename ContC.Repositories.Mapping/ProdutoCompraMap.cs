@@ -16,6 +16,11 @@ namespace ContC.Repositories.Mapping
             Id(p => p.Id).GeneratedBy.Identity();
             Map(p => p.Validade);
             Map(p => p.Valor);
+            Map(p => p.Quantidade);
+            Map(p => p.TipoQuantidade);
+            Map(p => p.IPI);
+            Map(p => p.ICMS);
+
             References(p => p.Produto).Column(Constantes.ID_PRODUTO);
             References(p => p.Compra).Column(Constantes.ID_COMPRA);
         }

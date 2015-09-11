@@ -61,6 +61,7 @@
     <Compile Include="Contracts\IBoletoService.cs" />
     <Compile Include="Contracts\IFuncionarioService.cs" />
     <Compile Include="Contracts\IContaService.cs" />
+    <Compile Include="Contracts\ICompraService.cs" />
     <Compile Include="Contracts\IUsuarioService.cs" />
     <Compile Include="Contracts\IProdutoService.cs" />
     <Compile Include="Implementations\CategoriaService.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Implementations\FuncionarioService.cs" />
     <Compile Include="Implementations\BancoService.cs" />
     <Compile Include="Implementations\ContaService.cs" />
+    <Compile Include="Implementations\CompraService.cs" />
     <Compile Include="Implementations\UsuarioService.cs" />
     <Compile Include="Implementations\ProdutoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +90,10 @@
     <ProjectReference Include="..\Architecture\Service.Pattern\Service.Pattern.csproj">
       <Project>{86f86650-ee3c-4372-8fec-40c2fe015022}</Project>
       <Name>Service.Pattern</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ContC.CorssCutting.Exception\ContC.CorssCutting.Exceptions.csproj">
+      <Project>{cfbeb365-611e-4f98-b556-50035b30a645}</Project>
+      <Name>ContC.CorssCutting.Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\ContC.crosscutting.utilities\ContC.crosscutting.utilities.csproj">
       <Project>{40bd6a2e-ca96-45a3-bb86-d51f08d57d25}</Project>

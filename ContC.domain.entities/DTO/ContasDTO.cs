@@ -18,5 +18,8 @@ namespace ContC.domain.entities.DTO
         public DateTime DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
         public string Aprovador { get; set; }
+        public bool TemCompra { get; set; }
+
+        public int CompraId { get; set; }
     }
 }

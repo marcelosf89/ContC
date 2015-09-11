@@ -1,4 +1,5 @@
-﻿using ContC.presentation.mvc.Models.ExceptionModels;
+﻿using ContC.CorssCutting.Exceptions;
+using ContC.presentation.mvc.Models.ExceptionModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ContC.presentation.mvc.Extension
 
             Type exceptionType = filterContext.Exception.GetType();
 
-            if (exceptionType == typeof(StatusException))
+            if (exceptionType == typeof(StatusException) || exceptionType == typeof(ExceptionMessage))
             {
 
                 filterContext.ExceptionHandled = true;

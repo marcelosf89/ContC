@@ -257,3 +257,28 @@ input[type=number].form-control {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+
+.smart-form .btn {
+    float: right;
+    height: 31px;
+    margin: 10px 0 0 5px;
+    padding: 0 22px;
+    font: 300 15px/29px 'Open Sans',Helvetica,Arial,sans-serif;
+    cursor: pointer;
+}
+
+.smart-form table .btn {
+    float: right;
+    height: 31px;
+    margin: 10px 0 0 5px;
+    padding: 0 8px;
+    font: 300 15px/29px 'Open Sans',Helvetica,Arial,sans-serif;
+    cursor: pointer;
+}
+
+.disabled-with-tooltip {
+    cursor: not-allowed; 
+    filter: alpha(opacity=65); 
+    opacity: .65;
+}

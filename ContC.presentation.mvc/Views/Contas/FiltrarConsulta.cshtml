@@ -62,7 +62,19 @@
                             <i class="fa fa-edit"></i>
                             Detalhes
                         </a>
-                        @if (!conta.DataPagamento.HasValue)
+                        @if (conta.TemCompra && !conta.DataPagamento.HasValue)
+                        {
+                            <a href="#" id="aRemoverDis" class="btn btn-danger disabled-with-tooltip" data-toggle="tooltip" title="Esse boleto está associado a uma conta">
+                                <i class="fa fa-edit"></i>
+                                Remover
+                            </a>
+    <a href="#" id="aCompra" data-compra="@conta.CompraId" data-empresa="@conta.EmpresaId"
+       class="btn btn-default aCompra">
+        <i class="fa fa-edit"></i>
+        Compra
+    </a>
+                        }
+                        else if (!conta.DataPagamento.HasValue)
                         {
                             <a href="#" id="aRemover" data-boleto="@conta.Id"
                                class="btn btn-danger aRemover">
@@ -70,6 +82,7 @@
                                 Remover
                             </a>
                         }
+
                     </td>
                 </tr>
             }
@@ -81,38 +94,65 @@
     $(document).ready(function () {
 
         var dvContas = $("#dvModalContasDetalhe");
+        var dvContent = $("#content");
 
         $('#tbConta').DataTable({
             "bFilter": true,
-            //"bInfo": false,
-            //"bLengthChange": false
-            //"bAutoWidth": false,
-            //"bPaginate": false,
-            //"bStateSave": true // saves sort state using localStorage
             "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
                     "t" +
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
             "autoWidth": true
         });
 
-        $("#range-slider-1").ionRangeSlider({
-            min: @Model.Min(p => p.Valor).ToString().Replace(",","."),
-            max: @Model.Max(p => p.Valor).ToString().Replace(",", "."),
-            from: @Model.Min(p => p.Valor).ToString().Replace(",", "."),
-            to: @Model.Max(p => p.Valor).ToString().Replace(",", "."),
-            type: 'double',
-            step: 1,
-            prefix: "R$ ",
-            prettify: false,
-            hasGrid: true
+
+        $(".aCompra").click(function () {
+            var compraId = $(this).attr("data-compra");
+            var empresaId = $(this).attr("data-empresa");
+
+            $('.jquery-waiting-base-container').showing({ modo: 'slow' });
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("Editar", "Compras")?compraId=" + compraId,
+                data: { "compraId": compraId },
+                success: function (data) {
+                    sessionStorage.setItem("compraReturnUrl", "@Url.Action("Index","Contas")?empresaId="+empresaId);
+                    $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                    dvContent.html('');
+                    dvContent.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
         });
 
-        $(".aDetalhe").click( function () {
+        $(".aDetalhe").click(function () {
             var boletoId = $(this).attr("data-boleto");
+            
             $.ajax({
                 cache: false,
                 type: "GET",
                 url: "@Url.Action("ModalDetalhe", "Contas")?boletoId=" + boletoId,
+                data: { "boletoId": boletoId },
+                success: function (data) {
+                    
+                    dvContas.html('');
+                    dvContas.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+        $(".aRemover").click(function () {
+            debugger;
+            var boletoId = $(this).attr("data-boleto");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("ModalRemover", "Contas")?boletoId=" + boletoId,
                 data: { "boletoId": boletoId },
                 success: function (data) {
                     dvContas.html('');
@@ -123,24 +163,6 @@
                 }
             });
         });
-
-        $(".aRemover").click( function () {
-            debugger;
-            var boletoId = $(this).attr("data-boleto");
-            $.ajax({
-                cache: false,
-                type: "GET",
-                url: "@Url.Action("ModalRemover", "Contas")?boletoId=" + boletoId,
-                data: { "boletoId": boletoId },
-            success: function (data) {
-                dvContas.html('');
-                dvContas.html(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve.');
-            }
-        });
-    });
     });
 
 

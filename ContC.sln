@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.Console", "ContC.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity.Pattern", "Entity.Pattern\Entity.Pattern.csproj", "{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.CorssCutting.Exceptions", "ContC.CorssCutting.Exception\ContC.CorssCutting.Exceptions.csproj", "{CFBEB365-611E-4F98-B556-50035B30A645}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,12 @@ Global
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}.Release|x86.ActiveCfg = Release|Any CPU
+		{CFBEB365-611E-4F98-B556-50035B30A645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFBEB365-611E-4F98-B556-50035B30A645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFBEB365-611E-4F98-B556-50035B30A645}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CFBEB365-611E-4F98-B556-50035B30A645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFBEB365-611E-4F98-B556-50035B30A645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFBEB365-611E-4F98-B556-50035B30A645}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +153,7 @@ Global
 		{808E8808-7D38-46C7-98DC-26122D4461F1} = {5D7D043C-D6FD-451E-B8FE-CE630821297A}
 		{3FCA8CF1-A4F1-41C6-87B4-FC5D88FBAB6A} = {50BEA947-88A6-409A-B008-B9C68DC828C4}
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A} = {5B0EEB88-4198-4E94-82B5-84A9A925B50B}
+		{CFBEB365-611E-4F98-B556-50035B30A645} = {69CBBD12-A320-40BB-B96C-4090B881D4D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45

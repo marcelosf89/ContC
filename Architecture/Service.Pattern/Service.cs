@@ -25,6 +25,8 @@ namespace Service.Pattern
 
         public virtual void Update(TEntity entity) { _repository.Update(entity); }
 
+        public virtual void UpdateRange(IEnumerable<TEntity> entities) { _repository.UpdateRange(entities); }
+
         public virtual void Delete(object id) { _repository.Delete(id); }
 
         public virtual void Delete(TEntity entity) { _repository.Delete(entity); }

@@ -24,6 +24,16 @@ namespace ContC.domain.entities.Models
         public virtual Categoria Categoria { get; set; }
         public virtual Empresa Empresa { get; set; }
         public virtual Fornecedor Fornecedor { get; set; }
+        public virtual int TipoPagamento { get; set; }
 
+        public virtual decimal ValorFrete { get; set; }
+        public virtual decimal ValorDespesaAdministrativa { get; set; }
+        public virtual decimal ValorSeguro { get; set; }
+        public virtual decimal Desconto { get; set; }
+
+
+        public virtual decimal ValorIPINota { get; set; }
+        public virtual decimal ValorICMSNota { get; set; }
+        public virtual decimal ValorTotalNota { get; set; }
     }
 }

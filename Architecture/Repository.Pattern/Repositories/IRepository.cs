@@ -15,5 +15,7 @@ namespace Repository.Pattern.Repositories
         void Update(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entity);
+
+        void UpdateRange(IEnumerable<TEntity> entities);
     }
 }

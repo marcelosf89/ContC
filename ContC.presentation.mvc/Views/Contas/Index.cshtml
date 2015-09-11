@@ -1,6 +1,5 @@
 ﻿@model int
 <h4>Contas > Consulta</h4>
-<script src="@Scripts.Url("~/Scripts/datepicker-pt-BR.js")"></script>
 
 @{    AjaxOptions ao = new AjaxOptions()
     {
@@ -20,7 +19,7 @@
             <div class="col-sm-5">
                 <div class="form-group">
                     <div class="input-group">
-                        <input class="form-control" id="startdate" type="text" placeholder="From" value="@DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy")" data-dateformat="dd/mm/yy">
+                        <input class="form-control" id="startdate" type="text" placeholder="De" value="@DateTime.Now.AddDays(-5).ToShortDateString()" data-dateformat="dd/mm/yy">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -28,7 +27,7 @@
             <div class="col-sm-5">
                 <div class="form-group">
                     <div class="input-group">
-                        <input class="form-control" id="finishdate" type="text" placeholder="Select a date" value="@DateTime.Now.AddDays(10).ToString("dd/MM/yyyy")" data-dateformat="dd/mm/yy">
+                        <input class="form-control" id="finishdate" type="text" placeholder="Ate" value="@DateTime.Now.AddDays(10).ToShortDateString()" data-dateformat="dd/mm/yy">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -70,7 +69,7 @@
             language: 'pt-BR',
             prevText: '<i class="fa fa-chevron-left"></i>',
             nextText: '<i class="fa fa-chevron-right"></i>',
-            minDate:"@DateTime.Now.AddDays(10).ToString("dd/MM/yyyy")",
+            minDate:"@DateTime.Now.AddDays(10).ToShortDateString()",
             onClose: function (selectedDate) {
                 $("#startdate").datepicker("option", "maxDate", selectedDate);
             }
@@ -83,7 +82,7 @@
             language: 'pt-BR',
             prevText: '<i class="fa fa-chevron-left"></i>',
             nextText: '<i class="fa fa-chevron-right"></i>',
-            maxDate:"@DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy")",
+            maxDate:"@DateTime.Now.AddDays(-5).ToShortDateString()",
             onClose: function (selectedDate) {
                 $("#finishdate").datepicker("option", "minDate", selectedDate);
             }
@@ -97,8 +96,8 @@
             url: "@Url.Action("FiltrarConsulta", "Contas")",
         data: {
             "empresaId": @Model ,
-            "dataInicio":"@DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy")",
-            "dataFinal": "@DateTime.Now.AddDays(10).ToString("dd/MM/yyyy")"
+            "dataInicio":"@DateTime.Now.AddDays(-5).ToShortDateString()",
+            "dataFinal": "@DateTime.Now.AddDays(10).ToShortDateString()"
         },
         success: function (data) {
             dvContas.html('');

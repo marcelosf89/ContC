@@ -19,7 +19,17 @@ namespace ContC.Repositories.Mapping
             Map(p => p.Data);
             Map(p => p.ValorTotalProdutos);
             Map(p => p.NotaFiscal);
+            Map(p => p.TipoPagamento);
+            
+            Map(p => p.ValorFrete);
+            Map(p => p.ValorDespesaAdministrativa);
+            Map(p => p.ValorSeguro);
+            Map(p => p.Desconto);
 
+            Map(p => p.ValorIPINota);
+            Map(p => p.ValorICMSNota);
+            Map(p => p.ValorTotalNota);
+            
             References(p => p.Usuario).Column(Constantes.ID_USUARIO);
             References(p => p.Categoria).Column(Constantes.ID_CATEGORIA);
             References(p => p.Empresa).Column(Constantes.ID_EMPRESA);
