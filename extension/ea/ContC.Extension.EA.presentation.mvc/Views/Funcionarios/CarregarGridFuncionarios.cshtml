@@ -1,0 +1,50 @@
+@using ContC.Extension.EA.presentation.mvc.Models.FuncionarioModels
+@using ContC.Extension.EA.domain.entities.Models
+@model CarregarGridFuncionarioModel
+@{
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<table class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Lider</th>
+            <th>Regime</th>
+            <th>Tipo Pagamento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Funcionarios.Any())
+        {
+            <tr>
+                <td colspan="4">
+                    <div class="alert alert-warning fade in">
+                        <i class="fa-fw fa fa-warning"></i>
+                        <strong>Não Existe nenhum registro com esses filtros !</strong>
+                    </div>
+                </td>
+            </tr>
+        }
+        @foreach (Funcionario fun in Model.Funcionarios)
+        {
+            <tr>
+                <td>@Ajax.ActionLink(fun.Nome, "Editar", new { funcionarioId = fun.Id, empresaId = Model.EmpresaId }, ao, new { })</td>
+                @if (fun.Lider != null)
+                {
+                    <td>@fun.Lider.Nome</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+                <td>@fun.TipoPagamento.Nome</td>
+                <td>@fun.TipoRegimeFuncionario.Nome</td>
+            </tr>
+        }
+    </tbody>
+</table>

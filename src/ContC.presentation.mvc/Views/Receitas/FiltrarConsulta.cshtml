@@ -1,0 +1,18 @@
+﻿@model IList<ContC.domain.entities.DTO.ReceitasDTO>
+    <table class="table table-bordered table-hover">
+        <tbody>
+            @foreach (ContC.domain.entities.DTO.ReceitasDTO item in Model)
+            {
+                <tr>
+                    <td>@item.Tipo</td>
+                    <td>@item.Valor.ToString("R$ ###,###,##0.00")</td>
+                </tr>                
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="col-md-9"></td>
+                <td class="col-md-3"><strong>@Model.Sum(c => c.Valor).ToString("R$ ###,###,##0.00")</strong></td>
+            </tr>
+        </tfoot>
+    </table>

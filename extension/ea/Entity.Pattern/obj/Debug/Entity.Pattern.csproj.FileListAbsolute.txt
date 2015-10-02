@@ -1,0 +1,7 @@
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\bin\Debug\Entity.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\bin\Debug\Entity.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\bin\Debug\Repository.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\bin\Debug\Repository.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\obj\Debug\Entity.Pattern.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\obj\Debug\Entity.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Entity.Pattern\obj\Debug\Entity.Pattern.pdb

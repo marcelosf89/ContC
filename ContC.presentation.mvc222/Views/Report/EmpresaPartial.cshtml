@@ -1,7 +1,0 @@
-@model ContC.presentation.mvc.Models.EmpresaSelectionViewModel
-<script>
-    SetActionsOnChangeEmpresa();
-</script>
-@Html.LabelFor(model => model.Empresas)
-@Html.DropDownListFor(model => model.EmpresaId, Model.Empresas, new { @class = "form-control" })
-

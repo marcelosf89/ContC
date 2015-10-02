@@ -1,5 +1,0 @@
-C:\Desenvolvimento\MaSF\ContC\Repository.Pattern.Principal\bin\Debug\Repository.Pattern.Principal.dll
-C:\Desenvolvimento\MaSF\ContC\Repository.Pattern.Principal\bin\Debug\Repository.Pattern.Principal.pdb
-C:\Desenvolvimento\MaSF\ContC\Repository.Pattern.Principal\obj\Debug\Repository.Pattern.Principal.csprojResolveAssemblyReference.cache
-C:\Desenvolvimento\MaSF\ContC\Repository.Pattern.Principal\obj\Debug\Repository.Pattern.Principal.dll
-C:\Desenvolvimento\MaSF\ContC\Repository.Pattern.Principal\obj\Debug\Repository.Pattern.Principal.pdb

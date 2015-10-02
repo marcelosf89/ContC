@@ -1,0 +1,120 @@
+@model ContC.Extension.EA.presentation.mvc.Models.EmpresaModels.EmpresaNovoModel
+@{
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+
+}
+<div class="jarviswidget jarviswidget-sortable jarviswidget-color-dark" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Criar Empresa</h2>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+            @using (Ajax.BeginForm("Salvar", "Empresas", null, ao, new { @class = "smart-form", role = "form" }))
+            {
+                @Html.HiddenFor(m => m.GroupId)
+                @Html.HiddenFor(m => m.EnderecoId)
+                @Html.HiddenFor(m => m.EmpresaId)
+                <fieldset>
+                    <section>
+                        <label class="input">
+                            @Html.LabelFor(m => m.Codigo, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control" })
+                        </label>
+                    </section>
+                    <div class="row">
+                        <section class="col-md-8">
+                            <label class="input">
+                                @Html.LabelFor(m => m.RazaoSocial, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.RazaoSocial)
+                            </label>
+                        </section>
+                        <section class="col-md-3">
+                            <label class="input">
+                                @Html.LabelFor(m => m.CNPJ)
+                                @Html.TextBoxFor(m => m.CNPJ)
+                            </label>
+                        </section>
+                    </div>
+                    <section>
+                        <label class="input">
+                            @Html.LabelFor(m => m.NomeFantasia)
+                            @Html.TextBoxFor(m => m.NomeFantasia)
+                        </label>
+                    </section>
+                </fieldset>
+                <fieldset>
+                    <h4>Endereco</h4>
+                    <hr />
+                    <div class="row">
+                        <section class="col-md-1">
+                            <label class="input">
+                                @Html.LabelFor(m => m.CodigoPostal)
+                                @Html.TextBoxFor(m => m.CodigoPostal)
+                            </label>
+                        </section>
+                        <section class="col-md-10">
+                            <label class="input">
+                                @Html.LabelFor(m => m.Rua)
+                                @Html.TextBoxFor(m => m.Rua)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col-md-2">
+                            <label class="input">
+                                @Html.LabelFor(m => m.Numero)
+                                @Html.TextBoxFor(m => m.Numero)
+                            </label>
+                        </section>
+                        <section class="col-md-9">
+                            <label class="input">
+                                @Html.LabelFor(m => m.Complemento)
+                                @Html.TextBoxFor(m => m.Complemento)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+
+                        <section class="col-md-3">
+                            <label class="input">
+                                @Html.LabelFor(m => m.Cidade)
+                                @Html.TextBoxFor(m => m.Cidade)
+                            </label>
+                        </section>
+                        <section class="col-md-3">
+                            <label class="input">
+                                @Html.LabelFor(m => m.Bairro)
+                                @Html.TextBoxFor(m => m.Bairro)
+                            </label>
+                        </section>
+                        <section class="col-md-3">
+                            <label class="input">
+                                @Html.LabelFor(m => m.Pais)
+                                @Html.TextBoxFor(m => m.Pais, new { disabled = "disabled" })
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    @Ajax.ActionLink("Voltar", "Index", new { grupoId = @Model.GroupId }, ao, new { @class = "btn btn-default" })
+                    <input type="submit" class="btn btn-primary" value="Salvar" />
+                </footer>
+            }
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#CNPJ").mask("99.999.999/9999-99", { placeholder: "*" });
+    });
+</script>

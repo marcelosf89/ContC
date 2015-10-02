@@ -1,0 +1,19 @@
+@model IList<ContC.Extension.EA.domain.entities.Models.Empresa>
+<div class="project-context hidden-xs">
+
+    <span class="label">Projects:</span>
+    <span class="project-selector dropdown-toggle" data-toggle="dropdown">@Model.FirstOrDefault().NomeFantasia <i class="fa fa-angle-down"></i></span>
+
+    <ul class="dropdown-menu">
+        @foreach (ContC.Extension.EA.domain.entities.Models.Empresa emp in Model)
+        {
+            <li>
+                <a href="javascript:void(0);" class="active">@emp.NomeFantasia</a>
+            </li>
+        }
+        <li class="divider"></li>
+        <li>
+            <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
+        </li>
+    </ul>
+</div>

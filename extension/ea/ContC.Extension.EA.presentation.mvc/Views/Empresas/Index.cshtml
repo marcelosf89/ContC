@@ -1,0 +1,109 @@
+@model ContC.Extension.EA.presentation.mvc.Models.IndexModel
+
+
+<div class="jarviswidget jarviswidget-sortable jarviswidget-color-blue" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+
+        <div class="widget-toolbar smart-form" role="menu">
+
+            <label class="input" style="width: 200px; margin-right: 18px">
+                <select id="dllgrupo" class="form-control">
+                    @foreach (ContC.Extension.EA.domain.entities.Models.Grupo grupo in Model.Grupos)
+                    {
+                        if (Model.SelectedGroupId == grupo.Id)
+                        {
+                            <option value="@grupo.Id" selected="selected">@grupo.Nome</option>
+                        }
+                        else
+                        {
+                            <option value="@grupo.Id">@grupo.Nome</option>
+                        }
+                    }
+                </select>
+            </label>
+        </div>
+        <div class="jarviswidget-ctrls" role="menu">
+            <a id="btnNovo" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="Nova Empresa"
+               data-placement="bottom" data-original-title="Nova Empresa"
+               href="#"><i class="fa fa-plus "></i></a>
+        </div>
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Empresa</h2>
+        </span>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="empresasDiv"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#dllgrupo").ready(function () {
+            var id = $("#dllgrupo").val();
+            var empresasDiv = $("#empresasDiv");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("EmpresasPartial", "Empresas")?grupoId=" + id,
+                data: { "grupoId": id },
+                success: function (data) {
+                    empresasDiv.html('');
+                    empresasDiv.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+        $("#dllgrupo").change(function () {
+            var id = $("#dllgrupo").val();
+            var empresasDiv = $("#empresasDiv");
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("EmpresasPartial", "Empresas")?grupoId=" + id,
+                data: { "grupoId": id },
+                success: function (data) {
+                    empresasDiv.html('');
+                    empresasDiv.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+        $("#btnNovo").click(function () {
+            var id = $("#dllgrupo").val();
+            if (id <= 0) {
+                return;
+            }
+
+            var empresasDiv = $("#content");
+            $('.jquery-waiting-base-container').showing({ modo: 'slow' });
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("Novo", "Empresas")?grupoId=" + id,
+                data: { "grupoId": id },
+                success: function (data) {
+                    empresasDiv.html('');
+                    empresasDiv.html(data);
+                    $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                    $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                }
+            });
+        });
+    });
+</script>

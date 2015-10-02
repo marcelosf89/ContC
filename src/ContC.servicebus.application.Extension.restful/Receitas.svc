@@ -1,0 +1,4 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" 
+    Service="ContC.servicebus.application.Extension.restful.Receitas"
+    Factory="ContC.servicebus.application.Extension.restful.UnityServiceHostFactory"
+    CodeBehind="Receitas.svc.cs" %>

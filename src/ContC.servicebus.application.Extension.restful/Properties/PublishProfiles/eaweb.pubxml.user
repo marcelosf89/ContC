@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>c:\edmpublish</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/ContC.Communication.Model.dll">
+      <publishTime>09/26/2015 19:47:27</publishTime>
+    </File>
+    <File Include="bin/ContC.CorssCutting.Exceptions.dll">
+      <publishTime>09/03/2015 17:56:16</publishTime>
+    </File>
+    <File Include="bin/ContC.domain.entities.dll">
+      <publishTime>09/26/2015 19:47:30</publishTime>
+    </File>
+    <File Include="bin/ContC.domain.repositories.dll">
+      <publishTime>09/26/2015 19:47:38</publishTime>
+    </File>
+    <File Include="bin/ContC.domain.services.dll">
+      <publishTime>09/26/2015 19:47:41</publishTime>
+    </File>
+    <File Include="bin/ContC.Repositories.Mapping.dll">
+      <publishTime>09/26/2015 19:47:33</publishTime>
+    </File>
+    <File Include="bin/ContC.servicebus.application.Extension.restful.dll">
+      <publishTime>09/26/2015 19:47:45</publishTime>
+    </File>
+    <File Include="bin/de/Npgsql.resources.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/Entity.Pattern.dll">
+      <publishTime>09/03/2015 17:56:21</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>09/23/2015 21:44:29</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>09/23/2015 21:44:29</publishTime>
+    </File>
+    <File Include="bin/es/Npgsql.resources.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/fi/Npgsql.resources.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/FluentNHibernate.dll">
+      <publishTime>07/27/2015 14:09:08</publishTime>
+    </File>
+    <File Include="bin/fr/Npgsql.resources.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/Iesi.Collections.dll">
+      <publishTime>07/27/2015 14:09:08</publishTime>
+    </File>
+    <File Include="bin/Infrastructure.Unityprovider.dll">
+      <publishTime>09/25/2015 13:22:01</publishTime>
+    </File>
+    <File Include="bin/ja/Npgsql.resources.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.ServiceLocation.dll">
+      <publishTime>06/30/2015 23:29:59</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.Unity.Configuration.dll">
+      <publishTime>07/27/2015 20:14:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.Unity.dll">
+      <publishTime>07/27/2015 20:14:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.Unity.RegistrationByConvention.dll">
+      <publishTime>07/27/2015 20:14:50</publishTime>
+    </File>
+    <File Include="bin/Mono.Security.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/NHibernate.dll">
+      <publishTime>07/27/2015 21:00:17</publishTime>
+    </File>
+    <File Include="bin/Npgsql.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="bin/Npgsql.EntityFramework.dll">
+      <publishTime>09/23/2015 21:44:29</publishTime>
+    </File>
+    <File Include="bin/Repository.Pattern.dll">
+      <publishTime>09/03/2015 17:56:16</publishTime>
+    </File>
+    <File Include="bin/Repository.Pattern.Ef6.dll">
+      <publishTime>09/26/2015 19:47:35</publishTime>
+    </File>
+    <File Include="bin/Service.Pattern.dll">
+      <publishTime>09/03/2015 17:56:20</publishTime>
+    </File>
+    <File Include="bin/zh-CN/Npgsql.resources.dll">
+      <publishTime>09/23/2015 21:44:28</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>09/23/2015 21:44:40</publishTime>
+    </File>
+    <File Include="Receitas.svc">
+      <publishTime>09/23/2015 20:46:33</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>09/25/2015 13:22:40</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

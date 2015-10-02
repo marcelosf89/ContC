@@ -1,0 +1,278 @@
+<h4>Produtos</h4>
+<div id="dvErroProduto"></div>
+<div class="row">
+    <section class="col col-md-3">
+        <label class="label-control">Produto:</label>
+        <label class="input">
+            <input type="text" id="txtProduto" />
+        </label>
+    </section>
+    <section class="col col-md-1">
+        <label class="label-control">Qtq:</label>
+        <label class="input">
+            <input type="number" id="txtQtd" value="1" min="1" />
+        </label>
+    </section>
+    <section class="col col-md-1">
+        <label class="label-control">Tipo:</label>
+        <label class="select">
+            <select id="slTipo">
+                <option value="Un" selected="selected">Un</option>
+                <option value="Kg">Kg</option>
+                <option value="g">g</option>
+            </select>
+        </label>
+    </section>
+    <section class="col col-md-2">
+        <label class="label-control">Valor:</label>
+        <label class="input">
+            <i class="icon-append-left fa fa-dollar"></i>
+            <input type="number" id="txtValor"  value="0" min="0" />
+        </label>
+    </section>
+    <section class="col col-md-2">
+        <label class="label-control">ICMS:</label>
+        <label class="input">
+            <i class="icon-append">%</i>
+            <input type="number" id="txtICMS" value="0" min="0" />
+        </label>
+    </section>
+    <section class="col col-md-2">
+        <label class="label-control">IPI:</label>
+        <label class="input">
+            <i class="icon-append">%</i>
+            <input type="number" id="txtIPI" value="0" min="0" />
+        </label>
+    </section>
+    <section class="col col-md-1">
+        <a href="javascript:Add();" class="btn btn-primary" id="btnAdd"><i class="fa fa-plus"></i> Add</a>
+    </section>
+</div>
+<div class="row">
+    <section>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tbProdutos">
+                <thead>
+                    <tr>
+                        <th class="hidden" data-override="Id">Codigo</th>
+                        <th class="hidden" data-override="ProdutoId">#</th>
+                        <th class="col-md-3" data-override="Descricao">Descrição</th>
+                        <th class="col-md-1">Valor</th>
+                        <th class="col-md-1" data-override="Quantidade">Qtd.</th>
+                        <th class="col-md-1" data-override="TipoQuantidade">Tp.</th>
+                        <th class="col-md-1" data-override="ICMS">ICMS</th>
+                        <th class="col-md-1" data-override="IPI">IPI</th>
+                        <th class="col-md-2" data-override="ValorTotal">Valor Total</th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                    @if (Model.Produtos != null && Model.Produtos.Count > 0)
+                    {
+                        foreach (var item in Model.Produtos)
+                        {
+                            string id = item.Id.ToString();
+                            if (item.Id <= 0)
+                            {
+                                id = item.IdTemp.ToString();
+                            }
+                            <tr data-id='@id' data-ipi="@item.IPI.ToString().Replace(",", ".")" data-icms="@item.ICMS.ToString().Replace(",", ".")" data-valor-total="@item.ValorTotalComImposto.ToString().Replace(",", ".")">
+                                <td class="hidden">@item.Id</td>
+                                <td class="hidden">@item.ProdutoId</td>
+                                <td class="col-md-3" data-item='des'>@item.Descricao</td>
+                                <td class="col-md-1" data-item='val'>@item.Valor.ToString().Replace(",", ".")</td>
+                                <td class="col-md-1" data-item='qtd'>@item.Quantidade</td>
+                                <td class="col-md-1" data-item='tpQtd'>@item.TipoQuantidade</td>
+                                <td class="col-md-1" data-item='icms'>@item.ICMS.ToString().Replace(",", ".")</td>
+                                <td class="col-md-1" data-item='ipi'>@item.IPI.ToString().Replace(",", ".")</td>
+                                <td class="col-md-2" data-item='valTot'>@item.ValorTotal.ToString().Replace(",", ".")</td>
+                                <td class="col-md-1">
+                                    <a href='javascript:RemoverProduto("@id")' class='btn btn-danger'>
+                                        <i class='fa fa-remove'></i>
+                                    </a>
+                                    <a href='javascript:EditarProduto("@id")' class='btn btn-default'>
+                                        <i class='fa fa-edit'></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#txtProduto").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetProdutos","Compras")",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        startsWith: request.term,
+                        empresaId: @Model.EmpresaId,
+                        categoriaId: 0
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.Descricao,
+                                value: item.Descricao,
+                                id:item.Id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2
+        });
+
+    });
+    function Add(){
+
+        $.ajax({
+            url: "@Url.Action("AddProduto", "Compras")?produto="+$("#txtProduto").val()
+                +"&qtd="+parseFloat($("#txtQtd").val())
+                +"&valor="+parseFloat($("#txtValor").val())
+                +"&empresaId="+@Model.EmpresaId 
+                + "&tpqtd="+$("#slTipo").val()   
+                +"&icms="+parseFloat($("#txtICMS").val())
+                +"&ipi="+parseFloat($("#txtIPI").val()),  //Server script to process data
+            data: {
+                produto: $("#txtProduto").val(),
+                qtd: parseFloat($("#txtQtd").val()),
+                valor: parseFloat($("#txtValor").val()),
+                empresaId: @Model.EmpresaId
+                },
+            type: 'GET',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                var str = "<tr data-id='"+data.IdTemp+"' data-icms='"+data.ValorICMS+"' data-ipi='"+data.ValorIPI+"' data-valor-total='"+data.ValorTotalComImposto+"'>";
+                str += "<td class='hidden'>0</td>";
+                str += "<td class='hidden'>"+ data.ProdutoId +"</td>";
+                str += "<td data-item='des'>"+ data.Descricao +"</td>";
+                str += "<td data-item='val'>"+ data.Valor +"</td>";
+                str += "<td data-item='qtd'>"+ data.Quantidade +"</td>";
+                str += "<td data-item='tpQtd'>"+ data.TipoQuantidade +"</td>";
+                str += "<td data-item='icms'>"+ data.ICMS +"</td>";
+                str += "<td data-item='ipi'>"+ data.IPI +"</td>";
+                str += "<td data-item='valTot'>"+ data.ValorTotal +"</td>";
+                str += "<td><a href='javascript:RemoverProduto(\""+data.IdTemp+"\")' class='btn btn-danger'><i class='fa fa-remove'></i></a><a href='javascript:EditarProduto(\""+data.IdTemp+"\")' class='btn btn-default'><i class='fa fa-edit'></i></a></td>";
+                str += "</tr>";
+
+                var a = parseFloat($("#Valor").val());
+                a = a + data.ValorTotal;
+                $("#Valor").val(a);
+
+
+                a = parseFloat($("#lblValTotIPI").text());
+                a = a + data.ValorIPI;
+                $("#lblValTotIPI").text(a);
+
+                a = parseFloat($("#lblValTotICMS").text());
+                a = a + data.ValorICMS;
+                $("#lblValTotICMS").text(a);
+
+                a = parseFloat($("#lblValTotNota").text());
+                a = a + data.ValorTotalComImposto;
+                $("#lblValTotNota").text(a);
+
+                Validate();
+
+                $("#tbProdutos tr:last").after(str);
+                $("#txtProduto").val('');
+                $("#txtQtd").val('')
+                $("#txtValor").val('')
+                $("#txtProduto").focus();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError){
+                debugger;
+                var err = '<div id="dvErro" class="alert alert-danger fade in">';
+                err = err+'<button class="close" data-dismiss="alert">';
+                err = err+'×';
+                err = err+'</button>';
+                err = err+'<i class="fa-fw fa fa-times"></i>';
+                err = err+'<strong>Error!</strong> ' + thrownError;
+                err = err+'</div>';
+
+                $("#dvErroProduto").html('');
+                $("#dvErroProduto").html(err);
+            }
+        });
+    }
+
+    function RemoverProduto(id){
+        var tr = $('tr[data-id=' + id + ']');
+
+        var a = parseFloat($("#Valor").val());
+        var b = parseFloat($('tr[data-id=' + id + '] > td[data-item="valTot"]').html());
+        a = a - b;
+        $("#Valor").val(a);
+
+        a = parseFloat($("#lblValTotIPI").text());
+        b = parseFloat($('tr[data-id=' + id + ']').attr('data-ipi'));
+        a = a - b;
+        $("#lblValTotIPI").text(a);
+
+
+        a = parseFloat($("#lblValTotICMS").text());
+        b = parseFloat($('tr[data-id=' + id + ']').attr('data-icms'));
+        a = a - b;
+        $("#lblValTotICMS").text(a);
+
+        a = parseFloat($("#lblValTotNota").text());
+        b = parseFloat($('tr[data-id=' + id + ']').attr('data-valor-total'));
+        a = a - b;
+        $("#lblValTotNota").text(a);
+
+
+        tr.remove();
+    }
+
+    function EditarProduto(id){
+        var tr = $('tr[data-id=' + id + ']');
+
+        var a = parseFloat($("#Valor").val());
+        var b = parseFloat($('tr[data-id=' + id + '] > td[data-item="valTot"]').html());
+        a = a - b;
+        $("#Valor").val(a);
+
+        a = parseFloat($("#lblValTotIPI").text());
+        b = parseFloat($('tr[data-id=' + id + ']').attr('data-ipi'));
+        a = a - b;
+        $("#lblValTotIPI").text(a);
+
+
+        a = parseFloat($("#lblValTotICMS").text());
+        b = parseFloat($('tr[data-id=' + id + ']').attr('data-icms'));
+        a = a - b;
+        $("#lblValTotICMS").text(a);
+
+        a = parseFloat($("#lblValTotNota").text());
+        b = parseFloat($('tr[data-id=' + id + ']').attr('data-valor-total'));
+        a = a - b;
+        $("#lblValTotNota").text(a);
+
+
+        $("#txtProduto").val($('tr[data-id=' + id + '] > td[data-item="des"]').html());
+        $("#txtQtd").val($('tr[data-id=' + id + '] > td[data-item="qtd"]').html())
+        $("#txtValor").val($('tr[data-id=' + id + '] > td[data-item="val"]').html())
+        $("#slTipo").val($('tr[data-id=' + id + '] > td[data-item="tpQtd"]').html())
+
+        $("#txtIPI").val($('tr[data-id=' + id + '] > td[data-item="ipi"]').html());
+        $("#txtICMS").val($('tr[data-id=' + id + '] > td[data-item="icms"]').html())
+
+        
+        $("#txtProduto").focus();
+
+        tr.remove();
+    }
+
+</script>

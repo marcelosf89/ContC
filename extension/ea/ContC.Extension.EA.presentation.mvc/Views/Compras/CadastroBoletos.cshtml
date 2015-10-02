@@ -1,0 +1,105 @@
+@model IList<ContC.Extension.EA.domain.entities.Models.Boleto>
+    @{
+        ViewBag.Title = "Log in";
+        AjaxOptions ao = new AjaxOptions()
+        {
+            OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+            OnFailure = "ErroModal",
+            OnSuccess = "fecharModal();",
+        };
+
+    }
+    @using (Ajax.BeginForm("AddBoletos", "Comprar", new { }, ao, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Cadastrar Boleto</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dvErro">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-8">Numero</th>
+                                            <th class="col-md-2">Valor</th>
+                                            <th class="col-md-2">Vencimento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (ContC.Extension.EA.domain.entities.Models.Boleto item in Model)
+                                        {
+                                            <tr>
+                                                <td class="col-md-8">
+                                                    @Html.TextBoxFor(p => p.Numero, new { @class = "form-control" })
+                                                </td>
+                                                <td class="col-md-2">
+                                                    @Html.TextBoxFor(p => p.Valor, new { type = "number", @class = "form-control" })
+                                                </td>
+                                                <td class="col-md-2">
+                                                    @Html.TextBoxFor(p => p.DataVencimento, new { @class = "form-control dateVencimento" })
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*@Html.TextAreaFor(m => m.MotivoCancelamento, new { @class = "form-control col-md-12" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <input id="btnRemover" type="submit" class="btn btn-danger" value="Remover!" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#myModal").modal();
+                $("#btnRemover").hide();
+
+                $("#MotivoCancelamento").keyup(function () {
+                    if ($(this).val().length > 0) {
+                        $("#btnRemover").show();
+                    } else {
+                        $("#btnRemover").hide();
+                    }
+                });
+            });
+
+            function fecharModal() {
+                $("#myModal").modal('hide');
+                $("tr#@Model.Id").remove();
+                $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+            }
+            function ErroModal(data) {
+
+                var err = '<div id="dvErro" class="alert alert-danger fade in">';
+                err = err + '<button class="close" data-dismiss="alert">';
+                err = err + '×';
+                err = err + '</button>';
+                err = err + '<i class="fa-fw fa fa-times"></i>';
+                err = err + '<strong>Error!</strong> ' + data.statusText;
+                err = err + '</div>';
+
+                $("#dvErro").html('');
+                $("#dvErro").html(err);
+                $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+            }
+
+        </script>
+    }

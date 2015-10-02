@@ -1,0 +1,14 @@
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\ContC.Extension.EA.domain.entities.dll.config
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\ContC.Extension.EA.domain.entities.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\ContC.Extension.EA.domain.entities.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\Entity.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\EntityFramework.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\EntityFramework.SqlServer.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\Repository.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\Repository.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\Entity.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\EntityFramework.xml
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\bin\Debug\EntityFramework.SqlServer.xml
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\obj\Debug\ContC.Extension.EA.domain.entities.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\obj\Debug\ContC.Extension.EA.domain.entities.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.domain.entities\obj\Debug\ContC.Extension.EA.domain.entities.pdb

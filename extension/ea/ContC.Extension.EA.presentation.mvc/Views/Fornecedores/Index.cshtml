@@ -1,0 +1,52 @@
+@model ContC.Extension.EA.presentation.mvc.Models.FornecedorModels.FornecedorListaModel
+@{
+    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+
+<div class="jarviswidget jarviswidget-sortable jarviswidget-color-blue" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+        <div class="jarviswidget-ctrls" role="menu">
+            <a class="button-icon jarviswidget-toggle-btn" data-ajax="true" rel="tooltip" title="Novo Fornecedor"
+               data-placement="bottom" data-original-title="Novo Fornecedor"
+               data-ajax-begin="$('.jquery-waiting-base-container').showing({ modo: 'slow' });"
+               data-ajax-complete="$('.jquery-waiting-base-container').closing({ modo: 'slow' });"
+               data-ajax-mode="replace"
+               data-ajax-update="#content"
+               href="@Url.Action("Novo","Fornecedores", new {grupoId= Model.GrupoId})"><i class="fa fa-plus "></i></a>
+        </div>
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Fronecedor</h2>
+        </span>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+            <table class="table table-hover table-condensed table-responsive table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Nome</th>
+                        <th>Vendedor</th>
+                        <th>Telefone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ContC.Extension.EA.domain.entities.Models.Fornecedor emp in Model.Fornecedores)
+                    {
+                        <tr>
+                            <td>@Ajax.ActionLink(emp.RazaoSocial, "Editar", new { fornecedorId = emp.Id }, ao, null) </td>
+                            <td>@emp.Vendedor</td>
+                            <td>@emp.TelefoneVendedor</td>
+                            <td> </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

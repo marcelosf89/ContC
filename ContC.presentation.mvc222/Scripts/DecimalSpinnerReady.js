@@ -1,6 +1,0 @@
-    $(function () {
-
-        $(".decimalcontrol").spinner();
-
-    });
-

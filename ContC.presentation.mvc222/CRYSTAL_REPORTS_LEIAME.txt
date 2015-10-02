@@ -1,3 +1,0 @@
-Baixar e instalar o Crystal Reports for Visual Studio 2013
-http://downloads.businessobjeContC.com/akdlm/cr4vs2010/CRforVS_13_0_13.exe
-No final da instala��o, desmarque a op��o de instalar o runtime x64

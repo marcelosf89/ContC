@@ -1,0 +1,29 @@
+@model ContC.Extension.EA.presentation.mvc.Models.EmpresaModels.EmpresaPartialModel
+@{
+    AjaxOptions ao = new AjaxOptions()
+   {
+       OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+       OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+       UpdateTargetId = "content"
+   };
+}
+
+<table class="table table-hover table-condensed table-responsive table-bordered">
+    <thead>
+        <tr class="info">
+            <th>Nome</th>
+            <th>Responsavel</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ContC.Extension.EA.domain.entities.Models.Empresa emp in Model.Empresas)
+        {
+            <tr>
+                <td>@Ajax.ActionLink(emp.NomeFantasia, "Editar", new { empresaId = emp.Id }, ao, null) </td>
+                <td>@emp.Grupo.Responsavel.Nome</td>
+                <td> </td>
+            </tr>
+        }
+    </tbody>
+</table>

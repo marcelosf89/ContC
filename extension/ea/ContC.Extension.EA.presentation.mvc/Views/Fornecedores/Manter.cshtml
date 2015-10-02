@@ -1,0 +1,92 @@
+@model ContC.Extension.EA.presentation.mvc.Models.FornecedorModels.FornecedorManterModel
+@{    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false">
+    <header role="heading">
+        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+        <h2>Cadasto Fornecedor</h2>
+        </span>
+    </header>
+    <div role="content">
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body no-padding">
+            @using (Ajax.BeginForm("Salvar", "Fornecedores", new { }, ao, new { @class = "smart-form", role = "form", novalidate = "novalidate" }))
+            {
+                @Html.HiddenFor(m => m.GrupoId)
+                @Html.HiddenFor(m => m.Id)
+                <fieldset>
+                    <div class="row">
+                        <section class="col-md-7">
+                            <label class="control-label">Razão Social</label>
+                            <label class="input">                                
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.TextBoxFor(p => p.RazaoSocial, new { @class = "form-control" })
+                            </label>
+                        </section>
+                        <section class="col-md-4">
+                            <label class="control-label">CNPJ</label>
+                            <label class="input">       
+                                <i class="icon-append fa fa-globe"></i>                         
+                                @Html.TextBoxFor(p => p.CNPJ, new { @class = "form-control" })
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <section>
+                        <label class="control-label">Observacao</label>
+                        <label class="textarea">                            
+                            <i class="icon-append fa fa-comment"></i>
+                            @Html.TextAreaFor(p => p.Observacao, new { @class = "form-control" })
+                        </label>
+                    </section>
+                </fieldset>
+                <fieldset>
+                    <div class="row">
+                        <section> <label class="label"><h4>Vendedor</h4></label></section>
+                    </div>
+                    <div class="row">
+                        <section class="col-md-3">
+                            <label class="control-label">Nome</label>
+                            <label class="input">          
+                                <i class="icon-append fa fa-user"></i>                      
+                                @Html.TextBoxFor(p => p.Vendedor, new { @class = "form-control" })
+                            </label>
+                        </section>
+                        <section class="col-md-4">
+                            <label class="control-label">Email</label>
+                            <label class="input"> 
+                                <i class="icon-append fa fa-envelope-o"></i>                               
+                                @Html.TextBoxFor(p => p.EmailVendador, new { @class = "form-control" })
+                            </label>
+                        </section>
+                        <section class="col-md-4">
+                            <label class="control-label">Telefone</label>
+                            <label class="input">                                
+                                <i class="icon-append fa fa-phone"></i>
+                                @Html.TextBoxFor(p => p.TelefoneVendedor, new { @class = "form-control" })
+
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Voltar", "Index", new { grupoId = Model.GrupoId }, ao, new { @class = "btn btn-default" })
+                        <input type="submit" class="btn btn-primary" value="Salvar" />
+                    </div>
+                </footer>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#CNPJ").mask("99.999.999/9999-99", { placeholder: "*" });
+</script>

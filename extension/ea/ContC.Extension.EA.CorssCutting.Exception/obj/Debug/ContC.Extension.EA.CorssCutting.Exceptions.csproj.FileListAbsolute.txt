@@ -1,0 +1,5 @@
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.CorssCutting.Exception\bin\Debug\ContC.Extension.EA.CorssCutting.Exceptions.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.CorssCutting.Exception\bin\Debug\ContC.Extension.EA.CorssCutting.Exceptions.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.CorssCutting.Exception\obj\Debug\ContC.Extension.EA.CorssCutting.Exceptions.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.CorssCutting.Exception\obj\Debug\ContC.Extension.EA.CorssCutting.Exceptions.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.CorssCutting.Exception\obj\Debug\ContC.Extension.EA.CorssCutting.Exceptions.pdb

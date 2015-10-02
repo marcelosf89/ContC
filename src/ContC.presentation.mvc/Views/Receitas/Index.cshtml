@@ -1,0 +1,186 @@
+﻿@model ContC.presentation.mvc.Models.ReceitaModels.ReceitaEmpresaModel
+@{    AjaxOptions ao = new AjaxOptions()
+    {
+        OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
+        OnComplete = "$('.jquery-waiting-base-container').closing({ modo: 'slow' });",
+        UpdateTargetId = "content"
+    };
+}
+<div id="dvMessage"></div>
+<fieldset>
+    <div class="well">
+        <div class="row">
+            <div class="col-sm-12">
+                <label> Selecione um Periodo: </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" id="startdate" type="text" placeholder="De" value="@DateTime.Now.AddDays(-1).ToShortDateString()" data-dateformat="dd/mm/yy">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input class="form-control" id="timepickerStart" type="text" placeholder="Select time" value="12:00 AM">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" id="finishdate" type="text" placeholder="Ate" value="@DateTime.Now.ToShortDateString()" data-dateformat="dd/mm/yy">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input class="form-control" id="timepickerFinish" type="text" placeholder="Select time" value="11:59 PM">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="btn-group">
+                    <button id="btnFiltrar" class="btn btn-default"><i class="fa fa-filter"></i> Filtrar</button>
+                    @Ajax.ActionLink("Nova", "Nova", new { empresaId = Model.EmpresaId }, ao, new { @class = "btn btn-primary" })
+                    @if (Model.AtulizarReceitas)
+                    {
+                        <a href="#" id="btnAtualizarEx" class="btn btn-info"><i class="glyphicon glyphicon-refresh"></i>  Receitas (ex)</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false">
+                <header role="heading">
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2></h2>
+                    </span>
+                </header>
+                <div role="content">
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div id="dvReceitasLoad"><h1 class="ajax-loading-animation" style="text-align: center"><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>
+                        <div id="dvReceitasContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<script src="@Scripts.Url("~/Scripts/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js")"></script>
+<script>
+    $(document).ready(function () {
+        $("#finishdate").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            language: 'pt-BR',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            minDate:"@DateTime.Now.AddDays(10).ToShortDateString()",
+            onClose: function (selectedDate) {
+                $("#startdate").datepicker("option", "maxDate", selectedDate);
+            }
+
+        });
+        $("#startdate").datepicker({
+            defaultDate: "-1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            language: 'pt-BR',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            maxDate:"@DateTime.Now.AddDays(-5).ToShortDateString()",
+            onClose: function (selectedDate) {
+                $("#finishdate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+
+        var dvReceitas = $("#dvReceitasContent");
+        var dvReceitasLoad = $("#dvReceitasLoad");
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("FiltrarConsulta", "Receitas")",
+            data: {
+                "empresaId": @Model.EmpresaId ,
+                "dataInicio":"@DateTime.Now.AddDays(-1).ToShortDateString()",
+                "horaInicial":"00:00",
+                "dataFinal": "@DateTime.Now.ToShortDateString()",
+                "horaFinal":"23:59"
+            },
+            success: function (data) {
+                dvReceitas.html('');
+                dvReceitas.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            },
+            complete: function(){
+                dvReceitasLoad.html('');
+            }
+        });
+
+
+        var dvMessage = $("#dvMessage");
+        $("#btnAtualizarEx").click(function (){
+            $('.jquery-waiting-base-container').showing({ modo: 'slow' });
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("AtualizarReceitas", "Receitas")",
+            data: {
+                "empresaId": @Model.EmpresaId ,
+            },
+            success: function (data) {
+                dvMessage.html('');
+                var msg = '<div id="dvMessageMaster" class="alert alert-block alert-warning">';
+                msg += '<a class="close" data-dismiss="alert" href="#">×</a>';
+                msg += data +'</div>';
+                dvMessage.html(msg);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                dvMessage.html('');
+                var msg = '<div id="dvMessageMaster" class="alert alert-block alert-danger">';
+                msg += '<a class="close" data-dismiss="alert" href="#">×</a>';
+                msg += thrownError +'</div>';
+                dvMessage.html(msg);
+            },
+            complete: function(){
+                $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+            }
+        });
+    });
+
+    $("#btnFiltrar").click(function (){
+        dvReceitasLoad.html('<h1 class="ajax-loading-animation" style="text-align: center"><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("FiltrarConsulta", "Receitas")" ,
+            data: {
+                "empresaId": @Model.EmpresaId,
+                "dataInicio": $("#startdate").val(),
+                "horaInicial":$("#timepickerStart").val(),
+                "dataFinal": $("#finishdate").val(),
+                "horaFinal":$("#timepickerFinish").val()
+            },
+            success: function (data) {
+                dvReceitas.html('');
+                dvReceitas.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            },
+            complete: function(){
+                dvReceitasLoad.html('');
+            }
+        });
+    });
+
+    $("#timepickerStart").timepicker();
+    $("#timepickerFinish").timepicker();
+    });
+</script>

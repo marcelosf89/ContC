@@ -1,0 +1,6 @@
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Architecture\Repository.Pattern\bin\Debug\Repository.Pattern.dll.config
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Architecture\Repository.Pattern\bin\Debug\Repository.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Architecture\Repository.Pattern\bin\Debug\Repository.Pattern.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Architecture\Repository.Pattern\obj\Debug\Repository.Pattern.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Architecture\Repository.Pattern\obj\Debug\Repository.Pattern.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\Architecture\Repository.Pattern\obj\Debug\Repository.Pattern.pdb

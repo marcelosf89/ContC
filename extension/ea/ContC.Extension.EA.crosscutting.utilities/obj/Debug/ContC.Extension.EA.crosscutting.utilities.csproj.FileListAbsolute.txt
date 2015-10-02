@@ -1,0 +1,7 @@
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\bin\Debug\ContC.Extension.EA.crosscutting.utilities.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\bin\Debug\ContC.Extension.EA.crosscutting.utilities.pdb
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\bin\Debug\RabbitMQ.Client.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\bin\Debug\RabbitMQ.Client.xml
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\obj\Debug\ContC.Extension.EA.crosscutting.utilities.csprojResolveAssemblyReference.cache
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\obj\Debug\ContC.Extension.EA.crosscutting.utilities.dll
+C:\Desenvolvimento\MaSF\ContC\extension\ea\ContC.Extension.EA.crosscutting.utilities\obj\Debug\ContC.Extension.EA.crosscutting.utilities.pdb
