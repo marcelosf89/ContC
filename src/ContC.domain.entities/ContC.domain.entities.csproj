@@ -52,6 +52,7 @@
     <Compile Include="DTO\CompraDTO.cs" />
     <Compile Include="DTO\FuncionariosDTO.cs" />
     <Compile Include="DTO\ContasDTO.cs" />
+    <Compile Include="DTO\ReceitasDataChartDTO.cs" />
     <Compile Include="DTO\ReceitasDTO.cs" />
     <Compile Include="Models\Banco.cs" />
     <Compile Include="Models\EstoqueProduto.cs" />

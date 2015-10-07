@@ -41,5 +41,11 @@ namespace ContC.domain.services.Implementations
         {
             return ((IReceitaRepository)_repository).GetReceitasByEmpresaPeriodo(empresaId, inicio, final);
         }
+
+
+        public IList<entities.DTO.ReceitasDataChartDTO> GetReceitasDataChartByEmpresaPeriodo(int empresaId, DateTime inicio, DateTime final)
+        {
+            return ((IReceitaRepository)_repository).GetReceitasDataChartByEmpresaPeriodo(empresaId, inicio, final);
+        }
     }
 }

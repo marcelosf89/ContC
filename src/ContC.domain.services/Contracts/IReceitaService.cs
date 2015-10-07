@@ -12,5 +12,7 @@ namespace ContC.domain.services.Contracts
     public interface IReceitaService : IService<Receita>
     {
         IList<ReceitasDTO> GetReceitasByEmpresaPeriodo(int empresaId, DateTime inicio, DateTime final);
+
+        IList<ReceitasDataChartDTO> GetReceitasDataChartByEmpresaPeriodo(int empresaId, DateTime inicio, DateTime final);
     }
 }

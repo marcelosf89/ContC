@@ -13,5 +13,7 @@ namespace ContC.domain.services.Contracts
         bool HasByCommunicationId(string communicationId);
 
         IList<entities.DTO.ReceitasDTO> GetReceitasByEmpresaPeriodo(int empresaId, DateTime inicio, DateTime final);
+
+        IList<entities.DTO.ReceitasDataChartDTO> GetReceitasDataChartByEmpresaPeriodo(int empresaId, DateTime inicio, DateTime final);
     }
 }

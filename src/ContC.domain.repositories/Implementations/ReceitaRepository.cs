@@ -47,5 +47,18 @@ namespace ContC.domain.services.Implementations
                         Valor = g.Sum(x => x.Valor)
                     }).ToList();
         }
+
+
+        public IList<ReceitasDataChartDTO> GetReceitasDataChartByEmpresaPeriodo(int empresaId, DateTime inicio, DateTime final)
+        {
+            return (from a in this.SessaoAtual.Query<Receita>()
+                    where a.Endereco.Id == empresaId && a.DataCadastro > inicio && a.DataCadastro < final
+                    group a by new { a.DataCadastro } into g
+                    select new ReceitasDataChartDTO()
+                    {
+                        Data = g.Key.DataCadastro,
+                        Valor = g.Sum(x => x.Valor)
+                    }).ToList();
+        }
     }
 }

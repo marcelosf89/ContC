@@ -25,19 +25,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2015 19:32:39</publishTime>
     </File>
     <File Include="bin/ContC.domain.entities.dll">
-      <publishTime>10/01/2015 19:32:41</publishTime>
+      <publishTime>10/03/2015 16:18:31</publishTime>
     </File>
     <File Include="bin/ContC.domain.repositories.dll">
-      <publishTime>10/01/2015 19:32:51</publishTime>
+      <publishTime>10/03/2015 16:18:39</publishTime>
     </File>
     <File Include="bin/ContC.domain.services.dll">
-      <publishTime>10/01/2015 19:32:54</publishTime>
+      <publishTime>10/03/2015 16:18:43</publishTime>
     </File>
     <File Include="bin/ContC.presentation.mvc.dll">
-      <publishTime>10/01/2015 19:51:58</publishTime>
+      <publishTime>10/03/2015 16:18:47</publishTime>
     </File>
     <File Include="bin/ContC.Repositories.Mapping.dll">
-      <publishTime>10/01/2015 19:32:45</publishTime>
+      <publishTime>10/03/2015 16:18:34</publishTime>
     </File>
     <File Include="bin/de/Npgsql.resources.dll">
       <publishTime>09/01/2015 15:31:48</publishTime>
@@ -145,7 +145,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2015 17:56:16</publishTime>
     </File>
     <File Include="bin/Repository.Pattern.Ef6.dll">
-      <publishTime>10/01/2015 19:32:48</publishTime>
+      <publishTime>10/03/2015 16:18:37</publishTime>
     </File>
     <File Include="bin/Service.Pattern.dll">
       <publishTime>09/03/2015 17:56:20</publishTime>
@@ -2403,11 +2403,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Manage/VerifyPhoneNumber.cshtml">
       <publishTime>06/30/2015 23:37:41</publishTime>
     </File>
+    <File Include="Views/Receitas/Chart.cshtml">
+      <publishTime>10/03/2015 16:14:28</publishTime>
+    </File>
     <File Include="Views/Receitas/FiltrarConsulta.cshtml">
-      <publishTime>10/01/2015 19:23:29</publishTime>
+      <publishTime>10/03/2015 15:53:03</publishTime>
     </File>
     <File Include="Views/Receitas/Index.cshtml">
-      <publishTime>10/01/2015 19:30:58</publishTime>
+      <publishTime>10/03/2015 15:53:14</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>06/30/2015 23:37:41</publishTime>
