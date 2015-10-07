@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>c:\Publish\Contc</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\WebApp\ContC\Web\PRO</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -25,19 +25,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2015 19:32:39</publishTime>
     </File>
     <File Include="bin/ContC.domain.entities.dll">
-      <publishTime>10/03/2015 16:18:31</publishTime>
+      <publishTime>10/07/2015 18:05:45</publishTime>
     </File>
     <File Include="bin/ContC.domain.repositories.dll">
-      <publishTime>10/03/2015 16:18:39</publishTime>
+      <publishTime>10/07/2015 18:05:52</publishTime>
     </File>
     <File Include="bin/ContC.domain.services.dll">
-      <publishTime>10/03/2015 16:18:43</publishTime>
+      <publishTime>10/07/2015 18:05:55</publishTime>
     </File>
     <File Include="bin/ContC.presentation.mvc.dll">
-      <publishTime>10/03/2015 16:18:47</publishTime>
+      <publishTime>10/07/2015 18:06:00</publishTime>
     </File>
     <File Include="bin/ContC.Repositories.Mapping.dll">
-      <publishTime>10/03/2015 16:18:34</publishTime>
+      <publishTime>10/07/2015 18:05:48</publishTime>
     </File>
     <File Include="bin/de/Npgsql.resources.dll">
       <publishTime>09/01/2015 15:31:48</publishTime>
@@ -145,10 +145,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2015 17:56:16</publishTime>
     </File>
     <File Include="bin/Repository.Pattern.Ef6.dll">
-      <publishTime>10/03/2015 16:18:37</publishTime>
+      <publishTime>10/07/2015 18:05:50</publishTime>
     </File>
     <File Include="bin/Service.Pattern.dll">
-      <publishTime>09/03/2015 17:56:20</publishTime>
+      <publishTime>10/07/2015 18:05:45</publishTime>
     </File>
     <File Include="bin/System.Data.DataSetExtensions.dll">
       <publishTime>08/12/2013 23:19:06</publishTime>
@@ -2374,7 +2374,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2015 23:37:34</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>09/29/2015 15:52:29</publishTime>
+      <publishTime>10/07/2015 19:20:42</publishTime>
     </File>
     <File Include="Views/Home/Index3.cshtml">
       <publishTime>08/05/2015 23:36:13</publishTime>
@@ -2404,7 +2404,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2015 23:37:41</publishTime>
     </File>
     <File Include="Views/Receitas/Chart.cshtml">
-      <publishTime>10/03/2015 16:14:28</publishTime>
+      <publishTime>10/07/2015 12:10:24</publishTime>
     </File>
     <File Include="Views/Receitas/FiltrarConsulta.cshtml">
       <publishTime>10/03/2015 15:53:03</publishTime>
@@ -2431,7 +2431,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2015 23:37:34</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/01/2015 19:33:02</publishTime>
+      <publishTime>10/07/2015 19:27:59</publishTime>
     </File>
   </ItemGroup>
 </Project>
