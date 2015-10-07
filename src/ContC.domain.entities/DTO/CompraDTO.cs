@@ -14,5 +14,5 @@ namespace ContC.domain.entities.DTO
         public decimal Valor { get; set; }
         public int EmpresaId { get; set; }
         public int Id { get; set; }
-    }
+    } 
 }
