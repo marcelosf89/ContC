@@ -25,7 +25,7 @@ namespace ContC.domain.services.Implementations
             return ((IBoletoRepository)_repository).GetContasByDashboard(empresaId, quantidadesDia);
         }
 
-        public void Insert(Boleto boleto, FileInfo fi)
+        public void Insert(Boleto boleto, FileInfo fi, string pathBoleto)
         {
             if (!fi.Exists)
             {
@@ -37,6 +37,12 @@ namespace ContC.domain.services.Implementations
             }
 
             base.Insert(boleto);
+            fi.CopyTo(Path.Combine(pathBoleto, boleto.Id + ".pdf"));
+
+            if (!File.Exists(Path.Combine(pathBoleto, boleto.Id + ".pdf")))
+            {
+                throw new Exception("O Arquivo não foi copiado para o servidor. Favor carrege o arquivo corretamente e tente de novo");
+            }
         }
 
 

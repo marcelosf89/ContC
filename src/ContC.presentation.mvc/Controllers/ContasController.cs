@@ -1,10 +1,12 @@
-﻿using ContC.domain.entities.DTO;
+﻿using ContC.CorssCutting.Exceptions;
+using ContC.domain.entities.DTO;
 using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using ContC.presentation.mvc.Config;
 using ContC.presentation.mvc.Extension;
 using ContC.presentation.mvc.Models.ContasModels;
 using ContC.presentation.mvc.Models.ExceptionModels;
+using ContC.Repositories.Mapping.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -152,9 +154,26 @@ namespace ContC.presentation.mvc.Controllers
                     throw new Exception("O Arquivo não foi carregado");
                 }
                 FileInfo fi = new FileInfo(Path.Combine(ConfigurationFactory.Instance.PastaTemp, model.TempId + ".pdf"));
-                fi.CopyTo(Path.Combine(ConfigurationFactory.Instance.PastaBoleto, model.Id + ".pdf"));
 
-                _boletoService.Insert(b, new FileInfo(Path.Combine(ConfigurationFactory.Instance.PastaBoleto, model.TempId + ".pdf")));
+
+
+                try
+                {
+                    UnitOfWorkNHibernate.GetInstancia().IniciarTransacao();
+                    _boletoService.Insert(b, fi, ConfigurationFactory.Instance.PastaBoleto);
+                    UnitOfWorkNHibernate.GetInstancia().ConfirmarTransacao();
+                }
+                catch (ExceptionMessage em)
+                {
+                    UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                    throw em;
+                }
+                catch (Exception ex)
+                {
+                    UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                    throw new StatusException("Erro interno . Favor informe ao administrador.");
+                }
+                
             }
             catch (Exception ex)
             {

@@ -13,7 +13,7 @@ namespace ContC.domain.services.Contracts
     {
         IList<ContasDTO> GetContasByDashboard(int empresaId, int quantidadesDia);
 
-        void Insert(Boleto b, System.IO.FileInfo fileInfo);
+        void Insert(Boleto b, System.IO.FileInfo fileInfo , string pathBoleto);
 
         IList<ContasDTO> GetContasByEmpresaPeriodo(int empresaId, DateTime dateTime1, DateTime dateTime2);
 
