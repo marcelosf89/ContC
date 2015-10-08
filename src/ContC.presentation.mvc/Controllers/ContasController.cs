@@ -147,12 +147,12 @@ namespace ContC.presentation.mvc.Controllers
                 b.Numero = model.NumeroConta.Replace(".", "").Replace(" ", "");
                 b.Valor = model.Valor;
 
-                if (model.UploadFile)
+                if (!model.UploadFile)
                 {
                     throw new Exception("O Arquivo não foi carregado");
                 }
                 FileInfo fi = new FileInfo(Path.Combine(ConfigurationFactory.Instance.PastaTemp, model.TempId + ".pdf"));
-                fi.CopyTo(Path.Combine(ConfigurationFactory.Instance.PastaBoleto, model.TempId + ".pdf"));
+                fi.CopyTo(Path.Combine(ConfigurationFactory.Instance.PastaBoleto, model.Id + ".pdf"));
 
                 _boletoService.Insert(b, new FileInfo(Path.Combine(ConfigurationFactory.Instance.PastaBoleto, model.TempId + ".pdf")));
             }
