@@ -16,6 +16,7 @@ namespace ContC.Repositories.Mapping
             Id(p => p.Id).GeneratedBy.Identity();
             Map(p => p.Validade);
             Map(p => p.Valor);
+            Map(p => p.BaseICMS);
             Map(p => p.Quantidade);
             Map(p => p.TipoQuantidade);
             Map(p => p.QuantidadeCaixa);

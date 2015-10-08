@@ -35,6 +35,12 @@
         </label>
     </section>
     <section class="col col-md-1">
+        <label class="label-control" title="Base ICMS">B. ICMS: $</label>
+        <label class="input">
+            <input type="number" id="txtBaseICMS" value="0" min="0" />
+        </label>
+    </section>
+    <section class="col col-md-1">
         <label class="label-control">ICMS:</label>
         <label class="input">
             <i class="icon-append">%</i>
@@ -64,9 +70,10 @@
                         <th class="col-md-1">Valor</th>
                         <th class="col-md-1" data-override="Quantidade">Qtd.</th>
                         <th class="col-md-1" data-override="TipoQuantidade">Tp.</th>
-                        <th class="col-md-1" data-override="ICMS">ICMS</th>
-                        <th class="col-md-1" data-override="IPI">IPI</th>
-                        <th class="col-md-2" data-override="ValorTotal">Valor Total</th>
+                        <th class="col-md-1">BaseICMS</th>
+                        <th class="col-md-1" data-override="ICMS">ICMS %</th>
+                        <th class="col-md-1" data-override="IPI">IPI %</th>
+                        <th class="col-md-1" data-override="ValorTotal">Valor Total</th>
                         <th class="col-md-1"></th>
                     </tr>
                 </thead>
@@ -98,9 +105,10 @@
                                         @item.TipoQuantidade
                                     }
                                 </td>
+                                <td class="col-md-1" data-item='desc'>@item.BaseICMS.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1" data-item='icms'>@item.ICMS.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1" data-item='ipi'>@item.IPI.ToString().Replace(",", ".")</td>
-                                <td class="col-md-2" data-item='valTot'>@item.ValorTotal.ToString().Replace(",", ".")</td>
+                                <td class="col-md-1" data-item='valTot'>@item.ValorTotal.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1">
                                     <a href='javascript:RemoverProduto("@id")' class='btn btn-danger'>
                                         <i class='fa fa-remove'></i>
@@ -167,8 +175,9 @@
             url: "@Url.Action("AddProduto", "Compras")?produto="+$("#txtProduto").val()
                 +"&qtd="+parseFloat($("#txtQtd").val())
                 +"&valor="+parseFloat($("#txtValor").val())
+                +"&baseIcms="+parseFloat($("#txtBaseICMS").val())
                 +"&empresaId="+@Model.EmpresaId
-                + "&tpqtd="+$("#slTipo").val()
+                +"&tpqtd="+$("#slTipo").val()
                 +"&icms="+parseFloat($("#txtICMS").val())
                 +"&qtdCaixa="+qtdCaixa
                 +"&ipi="+parseFloat($("#txtIPI").val()),  //Server script to process data
@@ -194,6 +203,7 @@
                     str +=";<span class='label pull-right bg-color-darken txt-color-white' style='padding:5px' data-item='qtdCaixa'>"+data.QuantidadeCaixa+"</span>";
                 }
                 str +="</td>";
+                str += "<td data-item='desc'>"+ data.BaseICMS +"</td>";
                 str += "<td data-item='icms'>"+ data.ICMS +"</td>";
                 str += "<td data-item='ipi'>"+ data.IPI +"</td>";
                 str += "<td data-item='valTot'>"+ data.ValorTotal +"</td>";
@@ -223,6 +233,7 @@
                 $("#txtProduto").val('');
                 $("#txtQtd").val('')
                 $("#txtValor").val('')
+                $("#txtBaseICMS").val('')
                 $("#txtProduto").focus();
 
             },
@@ -298,6 +309,7 @@
         $("#txtProduto").val($('tr[data-id=' + id + '] > td[data-item="des"]').html());
         $("#txtQtd").val($('tr[data-id=' + id + '] > td[data-item="qtd"]').html())
         $("#txtValor").val($('tr[data-id=' + id + '] > td[data-item="val"]').html())
+        $("#txtBaseICMS").val($('tr[data-id=' + id + '] > td[data-item="desc"]').html())
         $("#slTipo").val($('tr[data-id=' + id + '] > td[data-item="tpQtd"]').attr("data-val"))
 
         debugger;

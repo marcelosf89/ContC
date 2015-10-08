@@ -31,5 +31,7 @@ namespace ContC.presentation.mvc.Models.CompraModels
         public decimal ValorTotalComImposto { get; set; }
 
         public int QuantidadeCaixa { get; set; }
+
+        public decimal BaseICMS { get; set; }
     }
 }

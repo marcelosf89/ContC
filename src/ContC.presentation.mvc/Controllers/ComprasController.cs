@@ -81,11 +81,12 @@ namespace ContC.presentation.mvc.Controllers
                 pm.ProdutoId = pro.Produto.Id;
                 pm.Quantidade = Convert.ToInt32(pro.Quantidade);
                 pm.Valor = pro.Valor;
+                pm.BaseICMS = pro.BaseICMS;
                 pm.TipoQuantidade = pro.TipoQuantidade;
                 pm.QuantidadeCaixa = pro.QuantidadeCaixa;
                 pm.Descricao = pro.Produto.Nome;
                 pm.ValorTotal = pro.Valor * pro.Quantidade;
-                pm.ValorICMS = pm.ValorTotal * (pro.ICMS / 100);
+                pm.ValorICMS = (pro.BaseICMS > 0 ? pro.BaseICMS : pm.ValorTotal) * (pro.ICMS / 100);
                 pm.ValorIPI = pm.ValorTotal * (pro.IPI / 100);
                 pm.ValorTotalComImposto = pm.ValorTotal + pm.ValorICMS + pm.ValorIPI;
                 pm.IPI = pro.IPI;
@@ -135,7 +136,7 @@ namespace ContC.presentation.mvc.Controllers
             return Json(lfor, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddProduto(string produto, decimal qtd, decimal valor, int empresaId, string tpqtd, decimal icms, int qtdCaixa, decimal ipi)
+        public JsonResult AddProduto(string produto, decimal qtd, decimal valor, decimal baseIcms, int empresaId, string tpqtd, decimal icms, int qtdCaixa, decimal ipi)
         {
             ValidarAddProduto(produto, qtd, valor);
 
@@ -146,7 +147,7 @@ namespace ContC.presentation.mvc.Controllers
                 pro = new Produto();
                 pro.Descricao = produto.ToUpper();
                 pro.Nome = produto.ToUpper();
-                pro.ValorMedio =  valor;
+                pro.ValorMedio = valor;
                 _iprodutosService.Insert(pro, empresaId);
             }
 
@@ -158,9 +159,10 @@ namespace ContC.presentation.mvc.Controllers
             pm.TipoQuantidade = tpqtd;
             pm.QuantidadeCaixa = qtdCaixa;
             pm.Valor = valor;
+            pm.BaseICMS = baseIcms;
             pm.ValorTotal = qtd * valor;
-            pm.ValorICMS = pm.ValorTotal * (icms / 100);
-            pm.ValorIPI = pm.ValorTotal * (ipi / 100);            
+            pm.ValorICMS = (baseIcms > 0 ? baseIcms : pm.ValorTotal) * (icms / 100);
+            pm.ValorIPI = pm.ValorTotal * (ipi / 100);
             pm.ValorTotalComImposto = pm.ValorTotal + pm.ValorICMS + pm.ValorIPI;
 
             pm.ICMS = icms;
@@ -197,7 +199,7 @@ namespace ContC.presentation.mvc.Controllers
             if (!ModelState.IsValid)
             {
                 model.ValorIPINota = prods.Sum(p => ((p.Valor * p.Quantidade) * (p.IPI / 100)));
-                model.ValorICMSNota = prods.Sum(p => ((p.Valor * p.Quantidade) * (p.ICMS / 100)));
+                model.ValorICMSNota = prods.Sum(p => ((p.BaseICMS > 0 ? p.BaseICMS : (p.Valor * p.Quantidade)) * (p.ICMS / 100)));
                 model.ValorTotalNota = (model.Valor + model.ValorIPINota + model.ValorICMSNota + model.ValorFrete + model.ValorSeguro) - model.Desconto;
 
 
@@ -223,9 +225,9 @@ namespace ContC.presentation.mvc.Controllers
 
             IList<ProdutoCompra> lpc = CapturarProdutoCompra(model, cp);
 
-            
+
             cp.ValorIPINota = lpc.Sum(p => ((p.Valor * p.Quantidade) * (p.IPI / 100)));
-            cp.ValorICMSNota = lpc.Sum(p => ((p.Valor * p.Quantidade) * (p.ICMS / 100)));
+            cp.ValorICMSNota = lpc.Sum(p => (p.BaseICMS > 0 ? p.BaseICMS : (p.Valor * p.Quantidade)) * (p.ICMS / 100));
             cp.ValorTotalNota = (cp.ValorTotal + cp.ValorIPINota + cp.ValorICMSNota + cp.ValorFrete + cp.ValorSeguro) - cp.Desconto;
 
             IList<Boleto> lb = CapturarBoletos(model, cp);
@@ -262,6 +264,7 @@ namespace ContC.presentation.mvc.Controllers
                 ProdutoCompra pc = new ProdutoCompra() { Id = item.Id };
                 pc.Produto = new Produto() { Id = item.ProdutoId };
                 pc.Valor = item.Valor;
+                pc.BaseICMS = item.BaseICMS;
                 pc.Quantidade = item.Quantidade;
 
                 String[] tipo = item.TipoQuantidade.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);

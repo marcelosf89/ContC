@@ -23,6 +23,7 @@ namespace ContC.domain.entities.Models
 
         public virtual decimal IPI { get; set; }
         public virtual decimal ICMS { get; set; }
+        public virtual decimal BaseICMS { get; set; }
 
         public override int GetHashCode()
         {
@@ -32,6 +33,8 @@ namespace ContC.domain.entities.Models
         {
             return GetHashCode().Equals(obj.GetHashCode());
         }
+
+
 
 
         
