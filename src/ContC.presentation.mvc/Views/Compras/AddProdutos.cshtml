@@ -88,10 +88,14 @@
                                 <td class="col-md-1" data-item='val'>@item.Valor.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1" data-item='qtd'>@item.Quantidade</td>
                                 <td class="col-md-1" data-item='tpQtd' data-val="@item.TipoQuantidade">
-                                    @(item.TipoQuantidade + ";")
+                                    
                                     @if (item.QuantidadeCaixa > 0)
                                     {
+                                        @(item.TipoQuantidade + ";")
                                         <span class='label pull-right bg-color-darken txt-color-white' style='padding:5px' data-item="qtdCaixa">@item.QuantidadeCaixa</span>
+                                    }
+                                    else{
+                                        @item.TipoQuantidade
                                     }
                                 </td>
                                 <td class="col-md-1" data-item='icms'>@item.ICMS.ToString().Replace(",", ".")</td>
@@ -119,8 +123,10 @@
             debugger;
             if($(this).val() == 'cx'){
                 $("#txtQtdCaixa").removeAttr("disabled");
+                $("#txtQtdCaixa").css("background-color","#fff");
             }else{
                 $("#txtQtdCaixa").attr("disabled","disabled");
+                $("#txtQtdCaixa").css("background-color","#E2E0E0");
                 $("#txtQtdCaixa").val(0);
             }
         });
@@ -288,15 +294,19 @@
         a = a - b;
         $("#lblValTotNota").text(a);
 
-        debugger;
+        
         $("#txtProduto").val($('tr[data-id=' + id + '] > td[data-item="des"]').html());
         $("#txtQtd").val($('tr[data-id=' + id + '] > td[data-item="qtd"]').html())
         $("#txtValor").val($('tr[data-id=' + id + '] > td[data-item="val"]').html())
         $("#slTipo").val($('tr[data-id=' + id + '] > td[data-item="tpQtd"]').attr("data-val"))
 
+        debugger;
         $("#txtQtdCaixa").val("0");
         var item = $('tr[data-id=' + id + '] > td[data-item="tpQtd"] > span[data-item="qtdCaixa"]');
-        if(item.lenght >0){
+        if(item.length >0){
+
+            $("#txtQtdCaixa").removeAttr("disabled");
+            $("#txtQtdCaixa").css("background-color","#fff");
             $("#txtQtdCaixa").val(item.html());
         }
         $("#txtIPI").val($('tr[data-id=' + id + '] > td[data-item="ipi"]').html());
