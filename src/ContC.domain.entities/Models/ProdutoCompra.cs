@@ -17,6 +17,7 @@ namespace ContC.domain.entities.Models
         public virtual decimal Valor { get; set; }
         public virtual decimal Quantidade { get; set; }
         public virtual string TipoQuantidade { get; set; }
+        public virtual int QuantidadeCaixa { get; set; }
         public virtual Produto Produto { get; set; }
         public virtual Compra Compra { get; set; }
 
@@ -32,5 +33,7 @@ namespace ContC.domain.entities.Models
             return GetHashCode().Equals(obj.GetHashCode());
         }
 
+
+        
     }
 }

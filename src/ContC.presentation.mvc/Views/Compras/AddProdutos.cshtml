@@ -13,39 +13,43 @@
             <input type="number" id="txtQtd" value="1" min="1" />
         </label>
     </section>
-    <section class="col col-md-1">
-        <label class="label-control">Tipo:</label>
-        <label class="select">
+    <section class="col col-md-2">
+        <label class="label-control">Tipo:</label><p></p>
+        <label class="select" style="width:60%; float:left">
             <select id="slTipo">
                 <option value="Un" selected="selected">Un</option>
                 <option value="Kg">Kg</option>
                 <option value="g">g</option>
+                <option value="cx">cx</option>
             </select>
+        </label>
+        <label class="input" style="width:40%; float:right">
+            <input type="number" id="txtQtdCaixa" value="0" min="0" class="disabled" disabled="disabled" />
         </label>
     </section>
     <section class="col col-md-2">
         <label class="label-control">Valor:</label>
         <label class="input">
             <i class="icon-append-left fa fa-dollar"></i>
-            <input type="number" id="txtValor"  value="0" min="0" />
+            <input type="number" id="txtValor" value="0" min="0" />
         </label>
     </section>
-    <section class="col col-md-2">
+    <section class="col col-md-1">
         <label class="label-control">ICMS:</label>
         <label class="input">
             <i class="icon-append">%</i>
             <input type="number" id="txtICMS" value="0" min="0" />
         </label>
     </section>
-    <section class="col col-md-2">
+    <section class="col col-md-1">
         <label class="label-control">IPI:</label>
         <label class="input">
             <i class="icon-append">%</i>
             <input type="number" id="txtIPI" value="0" min="0" />
         </label>
     </section>
-    <section class="col col-md-1">
-        <a href="javascript:Add();" class="btn btn-primary" id="btnAdd"><i class="fa fa-plus"></i> Add</a>
+    <section class="col col-md-1 pull-right">
+        <a href="javascript:Add();" class="btn btn-primary" id="btnAdd"><i class="fa fa-plus"></i></a>
     </section>
 </div>
 <div class="row">
@@ -83,7 +87,13 @@
                                 <td class="col-md-3" data-item='des'>@item.Descricao</td>
                                 <td class="col-md-1" data-item='val'>@item.Valor.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1" data-item='qtd'>@item.Quantidade</td>
-                                <td class="col-md-1" data-item='tpQtd'>@item.TipoQuantidade</td>
+                                <td class="col-md-1" data-item='tpQtd' data-val="@item.TipoQuantidade">
+                                    @item.TipoQuantidade
+                                    @if (item.QuantidadeCaixa > 0)
+                                    {
+                                        <samp>(</samp><span data-item="qtdCaixa">item.QuantidadeCaixa</span><samp>)</samp>
+                                    }
+                                </td>
                                 <td class="col-md-1" data-item='icms'>@item.ICMS.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1" data-item='ipi'>@item.IPI.ToString().Replace(",", ".")</td>
                                 <td class="col-md-2" data-item='valTot'>@item.ValorTotal.ToString().Replace(",", ".")</td>
@@ -105,7 +115,15 @@
 </div>
 <script>
     $(document).ready(function () {
-
+        $("#slTipo").change(function(){
+            debugger;
+            if($(this).val() == 'cx'){
+                $("#txtQtdCaixa").removeAttr("disabled");
+            }else{
+                $("#txtQtdCaixa").attr("disabled","disabled");
+                $("#txtQtdCaixa").val(0);
+            }
+        });
         $("#txtProduto").autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -134,13 +152,19 @@
     });
     function Add(){
 
+        var qtdCaixa = 0;
+        if($("#txtQtdCaixa").val()!=""){
+            qtdCaixa = parseInt($("#txtQtdCaixa").val());
+        }
+
         $.ajax({
             url: "@Url.Action("AddProduto", "Compras")?produto="+$("#txtProduto").val()
                 +"&qtd="+parseFloat($("#txtQtd").val())
                 +"&valor="+parseFloat($("#txtValor").val())
-                +"&empresaId="+@Model.EmpresaId 
-                + "&tpqtd="+$("#slTipo").val()   
+                +"&empresaId="+@Model.EmpresaId
+                + "&tpqtd="+$("#slTipo").val()
                 +"&icms="+parseFloat($("#txtICMS").val())
+                +"&qtdCaixa="+qtdCaixa
                 +"&ipi="+parseFloat($("#txtIPI").val()),  //Server script to process data
             data: {
                 produto: $("#txtProduto").val(),
@@ -159,7 +183,11 @@
                 str += "<td data-item='des'>"+ data.Descricao +"</td>";
                 str += "<td data-item='val'>"+ data.Valor +"</td>";
                 str += "<td data-item='qtd'>"+ data.Quantidade +"</td>";
-                str += "<td data-item='tpQtd'>"+ data.TipoQuantidade +"</td>";
+                str += "<td data-item='tpQtd' 'data-val='"+data.TipoQuantidade +"')>"+ data.TipoQuantidade
+                if(data.QuantidadeCaixa > 0) {
+                    str +="(<span data-item='qtdCaixa'>"+data.QuantidadeCaixa+"</span>)";
+                }
+                str +="</td>";
                 str += "<td data-item='icms'>"+ data.ICMS +"</td>";
                 str += "<td data-item='ipi'>"+ data.IPI +"</td>";
                 str += "<td data-item='valTot'>"+ data.ValorTotal +"</td>";
@@ -260,16 +288,21 @@
         a = a - b;
         $("#lblValTotNota").text(a);
 
-
+        debugger;
         $("#txtProduto").val($('tr[data-id=' + id + '] > td[data-item="des"]').html());
         $("#txtQtd").val($('tr[data-id=' + id + '] > td[data-item="qtd"]').html())
         $("#txtValor").val($('tr[data-id=' + id + '] > td[data-item="val"]').html())
-        $("#slTipo").val($('tr[data-id=' + id + '] > td[data-item="tpQtd"]').html())
+        $("#slTipo").val($('tr[data-id=' + id + '] > td[data-item="tpQtd"]').attr("data-val"))
 
+        $("#txtQtdCaixa").val("0");
+        var item = $('tr[data-id=' + id + '] > td[data-item="tpQtd"] > span[data-item="qtdCaixa"]');
+        if(item.lenght >0){
+            $("#txtQtdCaixa").val(item.html());
+        }
         $("#txtIPI").val($('tr[data-id=' + id + '] > td[data-item="ipi"]').html());
         $("#txtICMS").val($('tr[data-id=' + id + '] > td[data-item="icms"]').html())
 
-        
+
         $("#txtProduto").focus();
 
         tr.remove();

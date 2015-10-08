@@ -18,6 +18,7 @@ namespace ContC.Repositories.Mapping
             Map(p => p.Valor);
             Map(p => p.Quantidade);
             Map(p => p.TipoQuantidade);
+            Map(p => p.QuantidadeCaixa);
             Map(p => p.IPI);
             Map(p => p.ICMS);
 

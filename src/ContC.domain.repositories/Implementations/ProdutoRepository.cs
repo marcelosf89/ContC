@@ -32,7 +32,7 @@ namespace ContC.domain.services.Implementations
             startsWith = startsWith.ToUpper();
 
             IEnumerable<Produto> prod = (from a in this.SessaoAtual.Query<Produto>()
-                                         where a.Descricao.ToUpper().StartsWith(startsWith) && a.Grupo.Id == emp.Grupo.Id
+                                         where a.Descricao.ToUpper().Contains(startsWith) && a.Grupo.Id == emp.Grupo.Id
                                          select a).Take(maxRows);
 
             return prod.ToList();

@@ -82,6 +82,7 @@ namespace ContC.presentation.mvc.Controllers
                 pm.Quantidade = Convert.ToInt32(pro.Quantidade);
                 pm.Valor = pro.Valor;
                 pm.TipoQuantidade = pro.TipoQuantidade;
+                pm.QuantidadeCaixa = pro.QuantidadeCaixa;
                 pm.Descricao = pro.Produto.Nome;
                 pm.ValorTotal = pro.Valor * pro.Quantidade;
                 pm.ValorICMS = pm.ValorTotal * (pro.ICMS / 100);
@@ -134,7 +135,7 @@ namespace ContC.presentation.mvc.Controllers
             return Json(lfor, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddProduto(string produto, decimal qtd, decimal valor, int empresaId, string tpqtd, decimal icms, decimal ipi)
+        public JsonResult AddProduto(string produto, decimal qtd, decimal valor, int empresaId, string tpqtd, decimal icms, int qtdCaixa, decimal ipi)
         {
             ValidarAddProduto(produto, qtd, valor);
 
@@ -155,6 +156,7 @@ namespace ContC.presentation.mvc.Controllers
             pm.Descricao = pro.Descricao;
             pm.Quantidade = qtd;
             pm.TipoQuantidade = tpqtd;
+            pm.QuantidadeCaixa = qtdCaixa;
             pm.Valor = valor;
             pm.ValorTotal = qtd * valor;
             pm.ValorICMS = pm.ValorTotal * (icms / 100);
@@ -262,6 +264,7 @@ namespace ContC.presentation.mvc.Controllers
                 pc.Valor = item.Valor;
                 pc.Quantidade = item.Quantidade;
                 pc.TipoQuantidade = item.TipoQuantidade;
+                pc.QuantidadeCaixa = item.QuantidadeCaixa;
                 pc.Compra = cp;
                 pc.Id = item.Id;
                 pc.IPI = item.IPI;

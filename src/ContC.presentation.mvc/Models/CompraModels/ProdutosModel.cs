@@ -29,5 +29,7 @@ namespace ContC.presentation.mvc.Models.CompraModels
         public decimal ValorIPI { get; set; }
 
         public decimal ValorTotalComImposto { get; set; }
+
+        public int QuantidadeCaixa { get; set; }
     }
 }
