@@ -263,8 +263,13 @@ namespace ContC.presentation.mvc.Controllers
                 pc.Produto = new Produto() { Id = item.ProdutoId };
                 pc.Valor = item.Valor;
                 pc.Quantidade = item.Quantidade;
-                pc.TipoQuantidade = item.TipoQuantidade;
-                pc.QuantidadeCaixa = item.QuantidadeCaixa;
+
+                String[] tipo = item.TipoQuantidade.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                pc.TipoQuantidade = tipo[0];
+                if (tipo.Length > 1)
+                {
+                    pc.QuantidadeCaixa = Convert.ToInt32(tipo[1]);
+                }
                 pc.Compra = cp;
                 pc.Id = item.Id;
                 pc.IPI = item.IPI;

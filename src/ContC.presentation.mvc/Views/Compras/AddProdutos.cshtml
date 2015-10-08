@@ -91,7 +91,7 @@
                                     @item.TipoQuantidade
                                     @if (item.QuantidadeCaixa > 0)
                                     {
-                                        <samp>(</samp><span data-item="qtdCaixa">item.QuantidadeCaixa</span><samp>)</samp>
+                                        ;<span class='label pull-right bg-color-darken txt-color-white' style='padding:5px' data-item="qtdCaixa">@item.QuantidadeCaixa</span>
                                     }
                                 </td>
                                 <td class="col-md-1" data-item='icms'>@item.ICMS.ToString().Replace(",", ".")</td>
@@ -183,9 +183,9 @@
                 str += "<td data-item='des'>"+ data.Descricao +"</td>";
                 str += "<td data-item='val'>"+ data.Valor +"</td>";
                 str += "<td data-item='qtd'>"+ data.Quantidade +"</td>";
-                str += "<td data-item='tpQtd' 'data-val='"+data.TipoQuantidade +"')>"+ data.TipoQuantidade
+                str += "<td data-item='tpQtd' data-val='"+data.TipoQuantidade +"'>"+ data.TipoQuantidade
                 if(data.QuantidadeCaixa > 0) {
-                    str +="(<span data-item='qtdCaixa'>"+data.QuantidadeCaixa+"</span>)";
+                    str +=";<span class='label pull-right bg-color-darken txt-color-white' style='padding:5px' data-item='qtdCaixa'>"+data.QuantidadeCaixa+"</span>";
                 }
                 str +="</td>";
                 str += "<td data-item='icms'>"+ data.ICMS +"</td>";
