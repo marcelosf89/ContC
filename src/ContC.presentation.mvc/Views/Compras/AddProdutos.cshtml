@@ -88,10 +88,10 @@
                                 <td class="col-md-1" data-item='val'>@item.Valor.ToString().Replace(",", ".")</td>
                                 <td class="col-md-1" data-item='qtd'>@item.Quantidade</td>
                                 <td class="col-md-1" data-item='tpQtd' data-val="@item.TipoQuantidade">
-                                    @item.TipoQuantidade
+                                    @(item.TipoQuantidade + ";")
                                     @if (item.QuantidadeCaixa > 0)
                                     {
-                                        ;<span class='label pull-right bg-color-darken txt-color-white' style='padding:5px' data-item="qtdCaixa">@item.QuantidadeCaixa</span>
+                                        <span class='label pull-right bg-color-darken txt-color-white' style='padding:5px' data-item="qtdCaixa">@item.QuantidadeCaixa</span>
                                     }
                                 </td>
                                 <td class="col-md-1" data-item='icms'>@item.ICMS.ToString().Replace(",", ".")</td>
