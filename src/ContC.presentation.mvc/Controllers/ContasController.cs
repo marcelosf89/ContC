@@ -147,7 +147,7 @@ namespace ContC.presentation.mvc.Controllers
                 b.Numero = model.NumeroConta.Replace(".", "").Replace(" ", "");
                 b.Valor = model.Valor;
 
-                if (!model.UploadFile)
+                if (model.UploadFile)
                 {
                     throw new Exception("O Arquivo não foi carregado");
                 }
