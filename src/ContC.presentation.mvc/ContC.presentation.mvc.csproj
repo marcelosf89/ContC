@@ -265,6 +265,7 @@
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NotasController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReceitasController.cs" />
     <Compile Include="Extension\ControllerException.cs" />
@@ -286,6 +287,8 @@
     <Compile Include="Models\FuncionarioModels\FuncionarioManterModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\NotasModels\NotasModel.cs" />
+    <Compile Include="Models\NotasModels\NotasNovoModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ReceitaModels\ReceitaEmpresaModel.cs" />
     <Compile Include="Models\ReceitaModels\ReceitasChartModel.cs" />
@@ -1049,6 +1052,10 @@
     <Content Include="Views\Receitas\Index.cshtml" />
     <Content Include="Views\Receitas\FiltrarConsulta.cshtml" />
     <Content Include="Views\Receitas\Chart.cshtml" />
+    <Content Include="Views\Notas\Novo.cshtml" />
+    <Content Include="Views\Notas\NotasAtivas.cshtml" />
+    <Content Include="Views\Notas\Index.cshtml" />
+    <Content Include="Views\Notas\ItensNota.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,28 @@
+﻿ @model IList<ContC.domain.entities.Models.Nota>
+
+@{
+    bool frist = true;
+    int notaId = 0;
+  }
+@foreach (var nota in Model)
+{
+    if (frist)
+    {
+        notaId = nota.Id;
+        <h5 class="todo-group-title action">
+            <i class="fa fa-warning"></i> @nota.Titulo  @*(<small class="num-of-tasks">1</small>)*@
+            <a class="button-icon-contc" data-ajax="true" rel="tooltip" title="Nova Item" data-placement="bottom" data-original-title="Novo Fornecedor" data-ajax-begin="$('.jquery-waiting-base-container').showing({ modo: 'slow' });" data-ajax-complete="$('.jquery-waiting-base-container').closing({ modo: 'slow' });" data-ajax-mode="replace" data-ajax-update="#content" href="/Grupo/Novo"><i class="fa fa-plus "></i></a>
+        </h5>
+    }
+    else
+    {
+        <h5 class="todo-group-title"><i class="fa fa-exclamation"></i> @nota.Titulo</h5>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        loadItemNota(@notaId);
+
+    });
+</script>

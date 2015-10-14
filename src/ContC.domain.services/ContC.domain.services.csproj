@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstraperService.cs" />
+    <Compile Include="Contracts\INotaService.cs" />
     <Compile Include="Contracts\IReceitaService.cs" />
     <Compile Include="Contracts\IBancoService.cs" />
     <Compile Include="Contracts\ICategoriaService.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Contracts\ICompraService.cs" />
     <Compile Include="Contracts\IUsuarioService.cs" />
     <Compile Include="Contracts\IProdutoService.cs" />
+    <Compile Include="Implementations\NotaService.cs" />
     <Compile Include="Implementations\ReceitaService.cs" />
     <Compile Include="Implementations\CategoriaService.cs" />
     <Compile Include="Implementations\FuncionarioEnderecoService.cs" />

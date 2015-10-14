@@ -58,6 +58,9 @@
     <Compile Include="Models\EstoqueProduto.cs" />
     <Compile Include="Models\Estoque.cs" />
     <Compile Include="Models\Funcionario.cs" />
+    <Compile Include="Models\NotaUsuario.cs" />
+    <Compile Include="Models\Nota.cs" />
+    <Compile Include="Models\NotaItem.cs" />
     <Compile Include="Models\Pagamento.cs" />
     <Compile Include="Models\PagamentoDireto.cs" />
     <Compile Include="Models\Receita.cs" />

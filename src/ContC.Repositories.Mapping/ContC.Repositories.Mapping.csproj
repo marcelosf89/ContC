@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NotaItemMap.cs" />
+    <Compile Include="NotaUsuarioMap.cs" />
+    <Compile Include="NotaMap.cs" />
     <Compile Include="Configuration\INHibernateFactory.cs" />
     <Compile Include="Configuration\NHibernateSessionPerRequest.cs" />
     <Compile Include="Configuration\NHibernateWebSessionFactory.cs" />

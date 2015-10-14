@@ -278,7 +278,46 @@ input[type=number].form-control {
 }
 
 .disabled-with-tooltip {
-    cursor: not-allowed; 
-    filter: alpha(opacity=65); 
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
     opacity: .65;
+}
+
+
+.button-icon-contc {
+    min-width: 30px;
+    height: 32px;
+    float: right;
+    position: relative;
+    font-family: Arial,Helvetica,sans-serif;
+    border-left: 1px solid rgba(0,0,0,.09);
+}
+
+    .button-icon-contc > i.fa {
+        margin-left: 9px;
+    }
+
+.todo {
+    background-color: #FFFCD8;
+    border-left: 1px #AFADAD solid;
+}
+
+
+.todo-group-title.action {
+    background-color: #282E38;
+}
+
+.loading-field {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(238, 240, 241, 0.64);
+    position: absolute;
+    z-index: 9;
+    color: #000;
+    vertical-align: middle;
+    text-align: center;
+    font-size: xx-large;
+    padding-top: 3%;
 }

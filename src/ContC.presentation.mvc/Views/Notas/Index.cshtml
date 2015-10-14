@@ -1,0 +1,67 @@
+﻿@model int
+
+<div class="jarviswidget jarviswidget-color-blueDark" id="wid-lista-4" data-widget-editbutton="false" data-widget-colorbutton="false">
+    <header>
+        <span class="widget-icon"> <i class="fa fa-check txt-color-white"></i> </span>
+        <h2> Notas </h2>
+        <div class="jarviswidget-ctrls" role="menu">
+            <a class="button-icon jarviswidget-toggle-btn" data-ajax="true" rel="tooltip" title="Nova Lista" data-placement="bottom" data-original-title="Nova Lista" data-ajax-begin="$('.jquery-waiting-base-container').showing({ modo: 'slow' });" data-ajax-complete="$('.jquery-waiting-base-container').closing({ modo: 'slow' });" data-ajax-mode="replace" data-ajax-update="#modalContent" href="/Notas/Novo"><i class="fa fa-plus "></i></a>
+        </div>
+    </header>
+    <div>
+        <div class="widget-body no-padding smart-form">
+            <div id="notasLoad">
+                <div class="loading-field"><i class="fa fa-cog fa-spin"></i> Loading....</div>
+            </div>
+            <article id="listaNotas" class="col-sm-12 col-md-12 col-lg-4"></article>
+            <article id="listaItensNota" class="col-sm-12 col-md-12 col-lg-8"></article>
+        </div>
+    </div>
+</div>
+<div id="modalContent"></div>
+
+<script>
+    $(document).ready(function () {
+        var dvListaNotas = $("#listaNotas");
+        var dvNotasLoad = $("#notasLoad");
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("NotasAtivas", "Notas")",
+            data: {
+                "empresaId": @Model
+                },
+            success: function (data) {
+                dvListaNotas.html('');
+                dvListaNotas.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            }
+        });
+    });
+
+    function loadItemNota(notaId){
+        var dvItensNotas = $("#listaItensNota");
+        var dvNotasLoad = $("#notasLoad");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("ItensNota", "Notas")",
+            data: {
+                "notaId": notaId
+            },
+            success: function (data) {
+                dvItensNotas.html('');
+                dvItensNotas.html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            },
+            complete: function(){
+                dvNotasLoad.html('');
+            }
+        });
+    }
+</script>

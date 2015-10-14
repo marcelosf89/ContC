@@ -37,5 +37,13 @@ namespace ContC.Repositories.Mapping
         public const string ID_BANCO = "id_banco";
 
         public const string ID_USUARIO_CANCELAMENTO = "id_usuario_cancelamento";
+
+        public const string ID_CONCLUIDO_POR = "id_concluido_por";
+
+        public const string ID_CADASTRADO_POR = "id_cadastrado_por";
+
+        public const string ID_NOTA = "id_nota";
+
+        public const string ID_CADASTRADO = "id_cadastrado";
     }
 }

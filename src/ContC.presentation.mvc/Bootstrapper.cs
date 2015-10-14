@@ -53,6 +53,7 @@ namespace ContC.presentation.mvc
             container.RegisterType<ICategoriaService, CategoriaService>();
             container.RegisterType<ICompraService, CompraService>();
             container.RegisterType<IReceitaService, ReceitaService>();
+            container.RegisterType<INotaService, NotaService>();
             
 
 

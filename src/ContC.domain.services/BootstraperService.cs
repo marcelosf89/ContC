@@ -30,6 +30,8 @@ namespace ContC.domain.services
             container.RegisterType<IReceitaRepository, ReceitaRepository>();
             container.RegisterType<ITipoReceitaRepository, TipoReceitaRepository>();
             container.RegisterType<IPagamentoDiretoRepository, PagamentoDiretoRepository>();
+            container.RegisterType<INotaRepository, NotaRepository>();
+            container.RegisterType<INotaItemRepository, NotaItemRepository>();
 
             
             

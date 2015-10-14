@@ -1,0 +1,26 @@
+﻿@model    IList<ContC.domain.entities.Models.NotaItem>
+
+<ul id="sortable2" class="todo">
+    @foreach (ContC.domain.entities.Models.NotaItem item in Model)
+    {
+        bool ischecked = item.Concluido.HasValue;
+        <li>
+            <span class="handle">
+                <label class="checkbox">
+                    @if (ischecked)
+                    {
+                        <input type="checkbox" name="checkbox-inline" checked="checked">
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="checkbox-inline">
+                    }
+                    <i></i>
+                </label>
+            </span>
+            <p>
+                @item.Titulo
+            </p>
+        </li>
+    }
+</ul>
