@@ -45,5 +45,6 @@ namespace ContC.Repositories.Mapping
         public const string ID_NOTA = "id_nota";
 
         public const string ID_CADASTRADO = "id_cadastrado";
+        public const string ID_CANCELADO_POR = "id_cancelado_por";
     }
 }

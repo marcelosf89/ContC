@@ -1,19 +1,94 @@
-﻿@model    IList<ContC.domain.entities.Models.NotaItem>
+﻿@model    ContC.presentation.mvc.Models.NotasModels.ItemsNotasModel
 
-<ul id="sortable2" class="todo">
-    @foreach (ContC.domain.entities.Models.NotaItem item in Model)
-    {
-        bool ischecked = item.Concluido.HasValue;
+<form class="form-horizontal" role="form">
+    <ul class="todo">
         <li>
             <span class="handle">
-                <label class="checkbox">
+            </span>
+            <p style="width:85%">
+                <input type="hidden" id="hfId" value="0" />
+                <textarea rows="3" id="txtTitle" cols="50" style="width:99%" class="form-control"></textarea>
+            </p>
+            <p style="width:5%;margin:0;border-left: 0px;" class="pull-right">
+                <a id="btnAddItemNota" class="btn btn-primary">
+                    <i class="fa fa-plus" style="
+    color: #fff;
+"></i>
+                </a>
+                <a class="btn btn-default itenUndo hidden"><i class="fa fa-undo"></i></a>
+            </p>
+        </li>
+    </ul>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#btnAddItemNota").click(function () {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("SalvarItem", "Notas")",
+                data: {
+                    "notaId": @Model.NotaId,
+                    "title":$("#txtTitle").val(),
+                    "itemNotaId":parseInt($("#hfId").val())
+                },
+                success: function (data) {
+
+                    var isEdit = $("#hfId").val() != "0";
+                    $("#txtTitle").val("");
+                    $("#hfId").val("0");
+                    $("#txtTitle").focus();
+                    if(isEdit){
+                        $("li[data-id="+ data.Id +"]>p").html(data.Titulo);
+
+                        $(".itenUndo").addClass("hidden");
+                        $("li[data-id="+ data.Id +"]").css("background-color","#FFFCD8");
+                        $(".checkbox[data-id="+ data.Id +"]").removeClass("hidden");
+                        return;
+                    }
+
+                    var str ='<li class="tag" data-id="'+data.Id+'"><span class="handle"><label class="checkbox" data-id="'+data.Id+'">';
+                    str +='<input type="checkbox" name="checkbox-inline" class="cbx">';
+                    str +='</label></span>';
+                    str +='<p>' +data.Titulo +'</p>';
+                    str +='<div class="pull-right btn-group hidden" data-id="'+data.Id+'">';
+                    str +='<a class="btn btn-default itenEdit"><i class="fa fa-edit"></i></a>';
+                    str +='<a class="btn btn-default itenRemove"><i class="fa fa-remove"></i></a>';
+                    str +='</div>';
+                    str +='</li>';
+
+                    $("ul#sortable2").append(str);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#txtTitle").focus();
+                    alert('Failed to retrieve.');
+                }
+            });
+
+        });
+    });
+</script>
+<ul id="sortable2" class="todo">
+    @foreach (ContC.domain.entities.Models.NotaItem item in Model.Itens)
+    {
+        bool ischecked = item.Concluido.HasValue;
+        string textcheck = "";
+        if (ischecked)
+        {
+            textcheck = "node-ok";
+        }
+        <li class="tag @textcheck" data-id="@item.Id">
+
+            <span class="handle">
+                <label class="checkbox" data-id="@item.Id">
                     @if (ischecked)
                     {
-                        <input type="checkbox" name="checkbox-inline" checked="checked">
+                        <input type="checkbox" name="checkbox-inline" class="cbx" checked="checked">
                     }
                     else
                     {
-                        <input type="checkbox" name="checkbox-inline">
+                        <input type="checkbox" name="checkbox-inline" class="cbx">
                     }
                     <i></i>
                 </label>
@@ -21,6 +96,79 @@
             <p>
                 @item.Titulo
             </p>
+                <div class="pull-right btn-group hidden csc" data-id="@item.Id">
+                    <a class="btn btn-default itenEdit"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-default itenRemove"><i class="fa fa-remove"></i></a>
+                </div>
         </li>
     }
 </ul>
+<script>
+    $(document).ready(function(){
+        $(".tag").hover(function(){
+            $(".btn-group[data-id="+ $(this).attr("data-id")+"]").removeClass("hidden");
+        }, function() {
+            $(".btn-group[data-id="+ $(this).attr("data-id")+"]").addClass("hidden");
+        });
+
+        $(".itenEdit").click(function(){
+            var id =$(this).parent().attr("data-id");
+            $("#hfId").val(id);
+            $("#txtTitle").val($.trim($("li[data-id="+ id +"]>p").html()));
+            $("#txtTitle").focus();
+            $("li[data-id="+ id +"]").css("background-color","#fff");
+            $(".itenUndo").removeClass("hidden");
+            $(".checkbox[data-id="+ id +"]").addClass("hidden");
+        });
+
+        $(".itenUndo").click(function(){
+            $(this).addClass("hidden");
+            $("li[data-id="+ $("#hfId").val() +"]").css("background-color","#FFFCD8");
+            $(".checkbox[data-id="+ $("#hfId").val() +"]").removeClass("hidden");
+            $("#hfId").val("0");
+            $("#txtTitle").val("");
+            $("#txtTitle").focus();
+        });
+
+        $(".itenRemove").click(function(){
+            var id =$(this).parent().attr("data-id");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("RemoverItem", "Notas")",
+                data: {
+                    "itemNotaId":parseInt(id)
+                },
+                success: function (data) {
+                    $("li[data-id="+ id +"]").remove();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve.');
+                }
+            });
+        });
+
+        $(".cbx").click(function(){
+            var id =$(this).parent().attr("data-id");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("CheckItem", "Notas")",
+                data: {
+                    "itemNotaId":parseInt(id), 
+                    "ischecked":$(this).is(":checked")
+                },
+                success: function (data) {
+                    if(data){
+                        $("li[data-id="+ id +"]").addClass("node-ok");
+                    }else{
+                        $("li[data-id="+ id +"]").removeClass("node-ok");
+                    }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve.');
+            }
+        });
+        });
+    });
+</script>

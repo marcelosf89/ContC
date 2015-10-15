@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ContC.presentation.mvc.Models.NotasModels
 {
-    public class NotasNovoModel
+    public class ListaNotasModel
     {
-        public string Titulo { get; set; }
-        public int Id { get; set; }
+        public int NotaSelecionadaId { get; set; }
         public int EmpresaId { get; set; }
     }
 }

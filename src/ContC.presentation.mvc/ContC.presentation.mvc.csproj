@@ -287,6 +287,9 @@
     <Compile Include="Models\FuncionarioModels\FuncionarioManterModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\NotasModels\ItemsNotasModel.cs" />
+    <Compile Include="Models\NotasModels\ListaItemNotasModel.cs" />
+    <Compile Include="Models\NotasModels\ListaNotasModel.cs" />
     <Compile Include="Models\NotasModels\NotasModel.cs" />
     <Compile Include="Models\NotasModels\NotasNovoModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1056,6 +1059,7 @@
     <Content Include="Views\Notas\NotasAtivas.cshtml" />
     <Content Include="Views\Notas\Index.cshtml" />
     <Content Include="Views\Notas\ItensNota.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

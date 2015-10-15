@@ -291,6 +291,7 @@ input[type=number].form-control {
     position: relative;
     font-family: Arial,Helvetica,sans-serif;
     border-left: 1px solid rgba(0,0,0,.09);
+    text-decoration: none;
 }
 
     .button-icon-contc > i.fa {
@@ -300,6 +301,7 @@ input[type=number].form-control {
 .todo {
     background-color: #FFFCD8;
     border-left: 1px #AFADAD solid;
+    border-bottom: 1px #FFE1EB solid;
 }
 
 
@@ -320,4 +322,32 @@ input[type=number].form-control {
     text-align: center;
     font-size: xx-large;
     padding-top: 3%;
+}
+
+a.nota,
+a.nota:hover, a.nota.action:focus {
+    text-decoration: none;
+    color: rgb(86, 131, 255);
+}
+
+a.action,
+a.action:hover, a.action:focus {
+    text-decoration: none;
+    color: rgb(229, 231, 234);
+}
+
+
+.over-point {
+    visibility:hidden;
+}
+.over-point:hover, .over-point:focus {
+    visibility:visible;
+}
+
+.node-ok>p {
+    text-decoration: line-through;
+}
+
+.node-ok > .csc {
+    visibility:hidden;
 }

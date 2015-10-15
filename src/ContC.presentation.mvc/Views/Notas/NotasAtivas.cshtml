@@ -1,28 +1,56 @@
-﻿ @model IList<ContC.domain.entities.Models.Nota>
+﻿@model ContC.presentation.mvc.Models.NotasModels.ListaItemNotasModel
 
 @{
-    bool frist = true;
-    int notaId = 0;
-  }
-@foreach (var nota in Model)
+    bool frist = Model.NotaSelecionadaId == 0;
+    int notaId = Model.NotaSelecionadaId;
+}
+@if (Model.Notas.Count <= 0)
 {
-    if (frist)
+    <h5>Não Existe Notas para o Usuario</h5>
+}
+
+@foreach (var nota in Model.Notas)
+{
+    if (frist || notaId == nota.Id)
     {
         notaId = nota.Id;
-        <h5 class="todo-group-title action">
-            <i class="fa fa-warning"></i> @nota.Titulo  @*(<small class="num-of-tasks">1</small>)*@
-            <a class="button-icon-contc" data-ajax="true" rel="tooltip" title="Nova Item" data-placement="bottom" data-original-title="Novo Fornecedor" data-ajax-begin="$('.jquery-waiting-base-container').showing({ modo: 'slow' });" data-ajax-complete="$('.jquery-waiting-base-container').closing({ modo: 'slow' });" data-ajax-mode="replace" data-ajax-update="#content" href="/Grupo/Novo"><i class="fa fa-plus "></i></a>
-        </h5>
+        frist = false;
+        <a href="#" id="btnNota" data-id="@nota.Id" class="nota">
+            <h5 class="todo-group-title action" data-id="@nota.Id">
+                @nota.Titulo  @*(<small class="num-of-tasks">1</small>)*@
+            </h5>
+        </a>
     }
     else
     {
-        <h5 class="todo-group-title"><i class="fa fa-exclamation"></i> @nota.Titulo</h5>
+        <a href="#" id="btnNota" data-id="@nota.Id" class="nota">
+            <h5 class="todo-group-title" data-id="@nota.Id">
+                @nota.Titulo
+            </h5>
+        </a>
     }
 }
+@if (Model.Notas.Count > 0)
+{
+    <script>
+        $(document).ready(function () {
+            loadItemNota(@notaId);
 
-<script>
-    $(document).ready(function () {
-        loadItemNota(@notaId);
+            $(".nota").click(function () {
+                $("h5.action").removeClass("action");
+                $("h5[data-id=" + $(this).attr("data-id") + "]").addClass("action");
+                loadItemNota($(this).attr("data-id"));
 
-    });
-</script>
+            });
+        });
+    </script>
+}
+else
+{
+    <script>
+        $(document).ready(function () {
+            var dvNotasLoad = $("#notasLoad");
+            dvNotasLoad.html('');
+        });
+    </script>
+}

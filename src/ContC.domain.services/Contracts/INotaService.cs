@@ -14,5 +14,13 @@ namespace ContC.domain.services.Contracts
         IList<Nota> GetNotasByEmpresaUsuario(int empresaId, string email);
 
         IList<NotaItem> GetItensByNotas(int notaId);
+
+        void InsertNota(Nota nota, string email);
+
+        void InsertItem(NotaItem ni, string email);
+
+        NotaItem CheckItem(int itemNotaId, bool ischecked, string email);
+
+        void RemoveItem(int itemNotaId, string p);
     }
 }

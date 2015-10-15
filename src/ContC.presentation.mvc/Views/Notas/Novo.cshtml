@@ -1,4 +1,4 @@
-﻿@model ContC.presentation.mvc.Models.NotasModels.ListasNovoModel
+﻿@model ContC.presentation.mvc.Models.NotasModels.NotasNovoModel
 
 @{
     ViewBag.Title = "Log in";
@@ -6,11 +6,11 @@
     {
         OnBegin = "$('.jquery-waiting-base-container').showing({ modo: 'slow' });",
         OnFailure = "ErroModal",
-        OnSuccess = "fecharModal();",
+        OnSuccess = "SuccessModal",
     };
 
 }
-@using (Ajax.BeginForm("Remover", "Contas", new { }, ao, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("Salvar", "Notas", new { }, ao, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -25,6 +25,7 @@
                     <div id="dvErro">
                     </div>
                     @Html.HiddenFor(p => p.Id)
+                    @Html.HiddenFor(p => p.EmpresaId)
                     <div class="row">
                         <div class="col-md-12">
                             <label class="control-label">Titulo</label>
@@ -40,6 +41,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar
                     </button>
+                    <input id="btnSalvar" type="submit" class="btn btn-primary" value="Salvar!" />
                 </div>
             </div>
         </div>
@@ -53,6 +55,11 @@
         function fecharModal() {
             $("#myModal").modal('hide');
             $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+        }
+        function SuccessModal(data) {
+            fecharModal();
+
+            refreshNota(data.EmpresaId, data.NotaSelecionadaId);
         }
         function ErroModal(data) {
 

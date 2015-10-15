@@ -1,0 +1,27 @@
+﻿@model int
+
+<article class="col-sm-12 col-md-12 col-lg-12 hidden">
+    <div class="jarviswidget jarviswidget-color-red" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-check txt-color-white"></i> </span>
+            <h2> Alertas Sistema</h2>
+        </header>
+        <div>
+            <div class="widget-body no-padding smart-form">
+                <h5 class="todo-group-title"><i class="fa fa-warning"></i> Tarefas Critica  (<small class="num-of-tasks">0</small>)</h5>
+                <ul id="sortable1" class="todo">
+                    <li>
+                    </li>
+                </ul>
+                <h5 class="todo-group-title"><i class="fa fa-exclamation"></i> Tarefas Importantes (<small class="num-of-tasks">0</small>)</h5>
+                <ul id="sortable" class="todo">
+                    <li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+<article class="col-sm-12 col-md-12 col-lg-12">
+    @{Html.RenderAction("Index", "Notas", new { empresaId = Model });}
+</article>

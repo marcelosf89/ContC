@@ -24,7 +24,7 @@ namespace ContC.presentation.mvc.Controllers
         [Authorize(Roles = "USR")]
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -47,6 +47,11 @@ namespace ContC.presentation.mvc.Controllers
             IList<Empresa> emps = _es.GetAllEmpresaByUser(User.Identity.Name);
 
             return View(emps);
+        }
+
+        public ActionResult Dashboard(int empresaId)
+        {
+            return View(empresaId);
         }
     }
 }

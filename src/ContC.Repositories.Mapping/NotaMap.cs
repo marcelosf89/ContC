@@ -19,6 +19,12 @@ namespace ContC.Repositories.Mapping
             Map(p => p.Concluido);
             References(p => p.Empresa).Column(Constantes.ID_EMPRESA);
             References(p => p.Cadastrado).Column(Constantes.ID_CADASTRADO);
+
+
+            Map(p => p.Cancelado);
+            References(p => p.CanceladoPor).Column(Constantes.ID_CANCELADO_POR);
+
+            Where("cancelado is null");
         }
     }
 }

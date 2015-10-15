@@ -200,8 +200,14 @@
         </div>
         <nav>
             <ul>
-                <li class="active">
-                    <a href="index.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                <li>
+                    <a data-ajax="true" title="Home"
+                       data-ajax-begin="$('.jquery-waiting-base-container').showing({ modo: 'slow' });"
+                       data-ajax-complete="$('.jquery-waiting-base-container').closing({ modo: 'slow' });"
+                       data-ajax-mode="replace" data-ajax-update="#content" href="/Home/Dashboard?empresaId=4">
+                        <i class="fa fa-lg fa-fw fa-home"></i>
+                        <span class="menu-item-parent">Home</span>
+                    </a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-lg fa-fw fa-cog"></i> <span class="menu-item-parent">Administrativo</span></a>
@@ -260,7 +266,7 @@
 
     <div id="main" role="main">
         <div id="content">
-            @{Html.RenderPartial("_Index");}
+            @{Html.RenderPartial("Dashboard", 4);}
         </div>
     </div>
     <div class="page-footer">
