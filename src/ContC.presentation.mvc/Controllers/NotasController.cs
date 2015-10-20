@@ -132,7 +132,7 @@ namespace ContC.presentation.mvc.Controllers
                 UnitOfWorkNHibernate.GetInstancia().IniciarTransacao();
                 _iNotasServices.ConcluirNota(notaId, User.Identity.Name);
                 UnitOfWorkNHibernate.GetInstancia().ConfirmarTransacao();
-                return notaId;
+                return notaId; 
             }
             catch (ExceptionMessage em)
             {
