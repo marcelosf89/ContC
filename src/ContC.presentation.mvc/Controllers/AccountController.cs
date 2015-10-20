@@ -14,7 +14,7 @@ using ContC.presentation.mvc.Extension;
 
 namespace ContC.presentation.mvc.Controllers
 {
-    [Authorize]
+    [Authorize] 
     public class AccountController : ControllerException
     {
         private ApplicationSignInManager _signInManager;
