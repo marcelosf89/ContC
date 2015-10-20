@@ -43,6 +43,12 @@
         });
     });
 
+    function cleanItenNota(){
+        var dvItensNotas = $("#listaItensNota");
+        var dvListaNotas = $("#listaNotas");
+        dvItensNotas.html("");
+        dvListaNotas.html("<h5>Não Existe Notas para o Usuario</h5>");
+    }
     function loadItemNota(notaId){
         var dvItensNotas = $("#listaItensNota");
         var dvNotasLoad = $("#notasLoad");

@@ -14,7 +14,7 @@ namespace ContC.domain.entities.Models
         public virtual Usuario Cadastrado { get; set; }
         public virtual Empresa Empresa { get; set; }
         public virtual DateTime Cadastro { get; set; }
-        public virtual DateTime Concluido { get; set; }
+        public virtual DateTime? Concluido { get; set; }
 
         public virtual DateTime? Cancelado { get; set; }
         public virtual Usuario CanceladoPor { get; set; }

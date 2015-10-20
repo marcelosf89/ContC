@@ -124,5 +124,27 @@ namespace ContC.presentation.mvc.Controllers
         {
             _iNotasServices.RemoveItem(itemNotaId,  User.Identity.Name);
         }
+
+        public int Concluir(int notaId)
+        {
+            try
+            {
+                UnitOfWorkNHibernate.GetInstancia().IniciarTransacao();
+                _iNotasServices.ConcluirNota(notaId, User.Identity.Name);
+                UnitOfWorkNHibernate.GetInstancia().ConfirmarTransacao();
+                return notaId;
+            }
+            catch (ExceptionMessage em)
+            {
+                UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                throw em;
+            }
+            catch (Exception ex)
+            {
+                UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                throw new StatusException("Erro interno . Favor informe ao administrador.");
+            }
+            
+        }
     }
 }

@@ -22,5 +22,7 @@ namespace ContC.domain.services.Contracts
         NotaItem CheckItem(int itemNotaId, bool ischecked, string email);
 
         void RemoveItem(int itemNotaId, string p);
+
+        void ConcluirNota(int notaId, string p);
     }
 }

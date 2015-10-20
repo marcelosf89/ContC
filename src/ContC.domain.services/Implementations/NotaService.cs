@@ -82,5 +82,16 @@ namespace ContC.domain.services.Implementations
             ni.CanceladoPor = user;
             _iNotaItemRepository.Update(ni);
         }
+
+
+        public void ConcluirNota(int notaId, string email)
+        {
+            Nota ni = _repository.Find(notaId);
+            Usuario user = _usuarioService.GetUsuario(email);
+            ni.CanceladoPor = user;
+            ni.Concluido = DateTime.Now;
+
+            _repository.Update(ni);
+        }
     }
 }

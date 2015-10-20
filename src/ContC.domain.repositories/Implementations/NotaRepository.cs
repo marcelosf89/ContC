@@ -20,6 +20,7 @@ namespace ContC.domain.services.Implementations
 
             return (from a in this.SessaoAtual.Query<Nota>()
                     where a.Empresa.Id == empresaId && a.Cadastrado.Email.ToUpper().Equals(email)
+                    && a.Concluido == null
                     select a).ToList();
         }
     }
