@@ -12,5 +12,7 @@ namespace ContC.domain.services.Contracts
     {
 
         Usuario GetUsuario(string userName);
+
+        IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows);
     }
 }

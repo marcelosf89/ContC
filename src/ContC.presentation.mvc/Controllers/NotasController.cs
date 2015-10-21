@@ -1,4 +1,5 @@
 ﻿using ContC.CorssCutting.Exceptions;
+using ContC.domain.entities.DTO;
 using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using ContC.presentation.mvc.Extension;
@@ -16,10 +17,11 @@ namespace ContC.presentation.mvc.Controllers
     public class NotasController : ControllerException
     {
         private INotaService _iNotasServices;
-        public NotasController(INotaService iNotasServices)
+        private IUsuarioService _usuarioService;
+        public NotasController(INotaService iNotasServices, IUsuarioService usuarioService)
         {
             _iNotasServices = iNotasServices;
-
+            _usuarioService = usuarioService;
         }
 
         // GET: Listas
@@ -122,7 +124,7 @@ namespace ContC.presentation.mvc.Controllers
 
         public void RemoverItem(int itemNotaId)
         {
-            _iNotasServices.RemoveItem(itemNotaId,  User.Identity.Name);
+            _iNotasServices.RemoveItem(itemNotaId, User.Identity.Name);
         }
 
         public int Concluir(int notaId)
@@ -132,7 +134,7 @@ namespace ContC.presentation.mvc.Controllers
                 UnitOfWorkNHibernate.GetInstancia().IniciarTransacao();
                 _iNotasServices.ConcluirNota(notaId, User.Identity.Name);
                 UnitOfWorkNHibernate.GetInstancia().ConfirmarTransacao();
-                return notaId; 
+                return notaId;
             }
             catch (ExceptionMessage em)
             {
@@ -144,7 +146,79 @@ namespace ContC.presentation.mvc.Controllers
                 UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
                 throw new StatusException("Erro interno . Favor informe ao administrador.");
             }
-            
+
+        }
+
+        public ActionResult ModalCompartilhar(int notaSelecionada, int empresaId)
+        {
+            IList<UsuarioDTO> usuarios = _iNotasServices.GetUsuariosByNota(notaSelecionada);
+            Nota nota = _iNotasServices.Find(notaSelecionada);
+            ListaUsuarioNotasModel lnm = new ListaUsuarioNotasModel();
+            lnm.Usuarios = usuarios;
+            lnm.EmpresaId = empresaId;
+            lnm.NotaSelecionadaId = notaSelecionada;
+            lnm.NotaNome = nota.Titulo;
+
+            return View(lnm);
+        }
+
+        public JsonResult RemoverUsuarioNota(int notaId, int usuarioId)
+        {
+            try
+            {
+                UnitOfWorkNHibernate.GetInstancia().IniciarTransacao();
+                _iNotasServices.RemoverNotaUsuarios(notaId, usuarioId);
+                UnitOfWorkNHibernate.GetInstancia().ConfirmarTransacao();
+
+                RemoverUsuarioNotasModel rum = new RemoverUsuarioNotasModel();
+                rum.UsuarioId = usuarioId;
+                rum.NotaId = notaId;
+                return Json(rum);
+            }
+            catch (ExceptionMessage em)
+            {
+                UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                throw em;
+            }
+            catch (Exception ex)
+            {
+                UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                throw new StatusException("Erro interno . Favor informe ao administrador.");
+            }
+        }
+
+        public JsonResult AdicionarUsuarioNota(int notaId, string usuario)
+        {
+            try
+            {
+                UnitOfWorkNHibernate.GetInstancia().IniciarTransacao();
+                NotaUsuario nu = _iNotasServices.AdicionarNotaUsuario(notaId, usuario);
+                UnitOfWorkNHibernate.GetInstancia().ConfirmarTransacao();
+
+                AdicionarUsuarioNotasModel rum = new AdicionarUsuarioNotasModel();
+                rum.UsuarioId = nu.Usuario.Id;
+                rum.UsuarioNome = nu.Usuario.Nome;
+                rum.UsuarioEmail = nu.Usuario.Email;
+                rum.NotaId = notaId;
+                return Json(rum);
+            }
+            catch (ExceptionMessage em)
+            {
+                UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                throw em;
+            }
+            catch (Exception ex)
+            {
+                UnitOfWorkNHibernate.GetInstancia().DesfazerTransacao();
+                throw new StatusException("Erro interno . Favor informe ao administrador.");
+            }
+
+        }
+
+        public JsonResult GetUsuarios(int maxRows, string startsWith, int empresaId)
+        {
+            IList<Funcionario> lfor = _usuarioService.GetAllByUsuarios(startsWith, empresaId, maxRows);
+            return Json(lfor, JsonRequestBehavior.AllowGet);
         }
     }
 }

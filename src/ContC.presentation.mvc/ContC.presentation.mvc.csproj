@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -287,12 +288,15 @@
     <Compile Include="Models\FuncionarioModels\FuncionarioManterModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\NotasModels\AdicionarUsuarioNotasModel.cs" />
     <Compile Include="Models\NotasModels\ItemsNotasModel.cs" />
     <Compile Include="Models\NotasModels\ListaItemNotasModel.cs" />
     <Compile Include="Models\NotasModels\ListaNotasModel.cs" />
+    <Compile Include="Models\NotasModels\ListaUsuarioNotasModel.cs" />
     <Compile Include="Models\NotasModels\NotasModel.cs" />
     <Compile Include="Models\NotasModels\NotasNovoModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NotasModels\RemoverUsuarioNotasModel.cs" />
     <Compile Include="Models\ReceitaModels\ReceitaEmpresaModel.cs" />
     <Compile Include="Models\ReceitaModels\ReceitasChartModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1061,6 +1065,7 @@
     <Content Include="Views\Notas\Index.cshtml" />
     <Content Include="Views\Notas\ItensNota.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Notas\ModalCompartilhar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

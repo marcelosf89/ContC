@@ -11,5 +11,7 @@ namespace ContC.domain.services.Contracts
     public interface IUsuarioService : IService<Usuario>
     {
         Usuario GetUsuario(String userName);
+
+        IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows);
     }
 }

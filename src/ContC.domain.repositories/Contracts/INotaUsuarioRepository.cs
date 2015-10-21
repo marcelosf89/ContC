@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ContC.domain.services.Contracts
 {
-    public interface INotaRepository : IRepository<Nota>
+    public interface INotaUsuarioRepository : IRepository<NotaUsuario>
     {
-        IList<Nota> GetNotasByEmpresaUsuario(int empresaId, string email);
-
-        IList<entities.DTO.UsuarioDTO> GetUsuariosByNota(int notaSelecionada);
+        NotaUsuario GetNotaUsuario(int notaId, int usuarioId);
     }
 }

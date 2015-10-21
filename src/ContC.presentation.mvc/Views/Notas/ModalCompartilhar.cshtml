@@ -1,0 +1,207 @@
+﻿@model ContC.presentation.mvc.Models.NotasModels.ListaUsuarioNotasModel
+@{
+    ViewBag.Title = "Log in";
+}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Lista Numero <b>@Model.NotaNome </b></h4>
+            </div>
+            <div class="modal-body">
+                <div id="dvErroModal">
+                </div>
+                @Html.HiddenFor(p => p.NotaSelecionadaId)
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label">Usuario:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="txtUsuario" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btnAdd" type="button"><i class="fa fa-plus"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-4">
+                                        Nome
+                                    </th>
+                                    <th class="col-md-6">
+                                        Email
+                                    </th>
+                                    <th class="col-md-2">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (ContC.domain.entities.DTO.UsuarioDTO user in Model.Usuarios)
+                                {
+                                    <tr data-id="@user.Usuario.Id">
+                                        <td>@user.Usuario.Nome</td>
+                                        <td>@user.Usuario.Email</td>
+                                        <td>
+                                            @if (!user.ECriador)
+                                            {
+                                                <a href="javascript:RemoverUsuario(@user.Usuario.Id, @Model.NotaSelecionadaId);" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#myModal").modal();
+
+        $("#MotivoCancelamento").keyup(function () {
+            if ($(this).val().length > 0) {
+                $("#btnRemover").show();
+            } else {
+                $("#btnRemover").hide();
+            }
+        });
+
+        $("#txtUsuario").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetUsuarios","Notas")",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        startsWith: request.term,
+                        empresaId: @Model.EmpresaId
+                        },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.Email,
+                                value: item.Email,
+                                id:item.Id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2
+        });
+
+        $(".btnAdd").click(function () {
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("AdicionarUsuarioNota", "Notas")",
+                data: {
+                    "usuario": $("#txtUsuario").val(),
+                    "notaId":@Model.NotaSelecionadaId
+                    },
+                success: function (data) {
+
+                    var str = '<tr data-id="'+data.UsuarioId+'">';
+                    str += '<td>'+data.UsuarioNome+'</td>';
+                    str += '<td>'+data.UsuarioEmail+'</td>';
+                    str += '<td>';
+                    str += '<a href="javascript:RemoverUsuario('+data.UsuarioId+', '+data.NotaId+');" class="btn btn-danger"><i class="fa fa-remove"></i></a>';
+                    str += '</td>';
+                    str += '</tr>';
+
+                    $("tbody").append(str);
+                    dvListaNotas.html('');
+                    dvListaNotas.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var err = '<div id="dvErroModal2" class="alert alert-danger fade in">';
+                    err = err + '<button class="close" data-dismiss="alert">';
+                    err = err + '×';
+                    err = err + '</button>';
+                    err = err + '<i class="fa-fw fa fa-times"></i>';
+                    err = err + '<strong>Error!</strong> ' + thrownError;
+                    err = err + '</div>';
+
+                    $("#dvErroModal").html('');
+                    $("#dvErroModal").html(err);
+
+
+                }
+            });
+
+        });
+    });
+
+    function fecharModal() {
+        $("#myModal").modal('hide');
+        $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+    }
+    function ErroModal(data) {
+
+        var err = '<div id="dvErroModal" class="alert alert-danger fade in">';
+        err = err + '<button class="close" data-dismiss="alert">';
+        err = err + '×';
+        err = err + '</button>';
+        err = err + '<i class="fa-fw fa fa-times"></i>';
+        err = err + '<strong>Error!</strong> ' + data.statusText;
+        err = err + '</div>';
+
+        $("#dvErroModal").html('');
+        $("#dvErroModal").html(err);
+        $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+    }
+
+    function RemoverUsuario(id, nota) {
+        $('.jquery-waiting-base-container').showing({ modo: 'slow' });
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("RemoverUsuarioNota", "Notas")",
+            data: {
+                "notaId": nota,
+                "usuarioId": id
+            },
+            success: function (data) {
+                $("tr[data-id='" + data.UsuarioId + "']").remove();
+                SuccessConcluir(data.NotaId);
+                $("#txtUsuario").focus();
+                $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $("#txtUsuario").focus();
+                $('.jquery-waiting-base-container').closing({ modo: 'slow' });
+                alert('Failed to retrieve.');
+            }
+        });
+
+    }
+
+
+
+    //var str = '<li class="tag" data-id="' + data.Id + '"><span class="handle"><label class="checkbox" data-id="' + data.Id + '">';
+    //str += '<input type="checkbox" name="checkbox-inline" class="cbx">';
+    //str += '</label></span>';
+    //str += '<p>' + data.Titulo + '</p>';
+    //str += '<div class="pull-right btn-group hidden" data-id="' + data.Id + '">';
+    //str += '<a class="btn btn-default itenEdit"><i class="fa fa-edit"></i></a>';
+    //str += '<a class="btn btn-default itenRemove"><i class="fa fa-remove"></i></a>';
+    //str += '</div>';
+    //str += '</li>';
+
+    //$("ul#sortable2").append(str);
+</script>

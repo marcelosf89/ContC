@@ -18,10 +18,28 @@ namespace ContC.domain.services.Implementations
         {
             email = email.ToUpper();
 
-            return (from a in this.SessaoAtual.Query<Nota>()
-                    where a.Empresa.Id == empresaId && a.Cadastrado.Email.ToUpper().Equals(email)
-                    && a.Concluido == null
-                    select a).ToList();
+            List<Nota> notas = (from a in this.SessaoAtual.Query<Nota>()
+                                where a.Empresa.Id == empresaId && a.Cadastrado.Email.ToUpper().Equals(email)
+                                && a.Concluido == null
+                                select a).ToList();
+
+            notas.AddRange((from a in this.SessaoAtual.Query<NotaUsuario>()
+                            where a.Usuario.Email.ToUpper().Equals(email) && a.Lista.Empresa.Id == empresaId
+                            && a.Lista.Concluido == null
+                            select a.Lista).ToList());
+
+            return notas;
+        }
+
+
+        public IList<UsuarioDTO> GetUsuariosByNota(int notaSelecionada)
+        {
+
+            return (from a in this.SessaoAtual.Query<NotaUsuario>()
+                            where a.Lista.Id == notaSelecionada
+                            select new UsuarioDTO(){Usuario = a.Usuario, ECriador=false}).ToList();
+
+            
         }
     }
 }

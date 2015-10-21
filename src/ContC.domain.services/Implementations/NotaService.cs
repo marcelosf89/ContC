@@ -1,4 +1,5 @@
-﻿using ContC.domain.entities.Models;
+﻿using ContC.CorssCutting.Exceptions;
+using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using Repository.Pattern.Repositories;
 using Service.Pattern;
@@ -14,11 +15,14 @@ namespace ContC.domain.services.Implementations
     {
         INotaItemRepository _iNotaItemRepository;
         IUsuarioService _usuarioService;
-        public NotaService(INotaRepository repository, INotaItemRepository iNotaItemRepository, IUsuarioService usuarioService)
+        INotaUsuarioRepository _iUsuarioNotaRepository;
+
+        public NotaService(INotaRepository repository, INotaItemRepository iNotaItemRepository, IUsuarioService usuarioService, INotaUsuarioRepository iUsuarioNotaRepository)
         {
             base._repository = repository;
             _iNotaItemRepository = iNotaItemRepository;
             _usuarioService = usuarioService;
+            _iUsuarioNotaRepository = iUsuarioNotaRepository;
         }
 
 
@@ -92,6 +96,50 @@ namespace ContC.domain.services.Implementations
             ni.Concluido = DateTime.Now;
 
             _repository.Update(ni);
+        }
+
+
+        public IList<entities.DTO.UsuarioDTO> GetUsuariosByNota(int notaSelecionada)
+        {
+            Nota ni = _repository.Find(notaSelecionada);
+            List<entities.DTO.UsuarioDTO> users = new List<entities.DTO.UsuarioDTO>();
+            users.Add(new entities.DTO.UsuarioDTO() { ECriador = true, Usuario = ni.Cadastrado });
+
+            users.AddRange(((INotaRepository)_repository).GetUsuariosByNota(notaSelecionada));
+
+            return users;
+        }
+
+        public void RemoverNotaUsuarios(int notaId, int usuarioId)
+        {
+            NotaUsuario nu = _iUsuarioNotaRepository.GetNotaUsuario(notaId, usuarioId);
+            _iUsuarioNotaRepository.Delete(nu);
+        }
+
+        public NotaUsuario AdicionarNotaUsuario(int notaId, string usuario)
+        {
+            Usuario user = _usuarioService.GetUsuario(usuario);
+            if (user == null)
+            {
+                throw new ExceptionMessage("O Usuario não Existe");
+            }
+            NotaUsuario nu = _iUsuarioNotaRepository.GetNotaUsuario(notaId, user.Id);
+            if (nu != null)
+            {
+                throw new ExceptionMessage("Esse Usuario já esta cadastrado nessa lista");
+            }
+
+
+            Nota nota = _repository.Find(notaId);
+            nu = new NotaUsuario()
+            {
+                Usuario = user,
+                Lista = nota
+            };
+
+            _iUsuarioNotaRepository.Insert(nu);
+
+            return nu;
         }
     }
 }

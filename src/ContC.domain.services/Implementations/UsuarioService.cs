@@ -16,10 +16,16 @@ namespace ContC.domain.services.Implementations
         {
             base._repository = repository;
         }
-    
-public Usuario GetUsuario(string userName)
-{
-    return ((IUsuarioRepository)base._repository).GetUsuario(userName);
-}
-}
+
+        public Usuario GetUsuario(string userName)
+        {
+            return ((IUsuarioRepository)base._repository).GetUsuario(userName);
+        }
+
+
+        public IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows)
+        {
+            return ((IUsuarioRepository)base._repository).GetAllByUsuarios(startsWith, empresaId, maxRows);
+        }
+    }
 }

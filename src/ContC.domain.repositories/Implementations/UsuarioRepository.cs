@@ -25,5 +25,13 @@ namespace ContC.domain.services.Implementations
                 .Where(p => p.Email.ToUpper().Equals(userName.ToUpper()))
                 .SingleOrDefault();
         }
+
+
+        public IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows)
+        {
+            return this.SessaoAtual.Query<FuncionarioEndereco>()
+                            .Where(p => p.Funcionario.Email.ToUpper().Contains(startsWith.ToUpper()) && p.Empresa.Id == empresaId)
+                            .Take(maxRows).Select(a => a.Funcionario).ToList();
+        }
     }
 }

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\INotaUsuarioRepository.cs" />
     <Compile Include="Contracts\INotaItemRepository.cs" />
     <Compile Include="Contracts\INotaRepository.cs" />
     <Compile Include="Contracts\ITipoReceitaRepository.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Contracts\IUsuarioRepository.cs" />
     <Compile Include="Contracts\IEmpresaRepository.cs" />
     <Compile Include="Contracts\IProdutoRepository.cs" />
+    <Compile Include="Implementations\NotaUsuarioRepository.cs" />
     <Compile Include="Implementations\NotaItemRepository.cs" />
     <Compile Include="Implementations\NotaRepository.cs" />
     <Compile Include="Implementations\TipoReceitaRepository.cs" />

@@ -24,5 +24,11 @@ namespace ContC.domain.services.Contracts
         void RemoveItem(int itemNotaId, string p);
 
         void ConcluirNota(int notaId, string p);
+
+        IList<UsuarioDTO> GetUsuariosByNota(int notaSelecionada);
+
+        void RemoverNotaUsuarios(int notaId, int usuarioId);
+
+        NotaUsuario AdicionarNotaUsuario(int notaId, string usuario);
     }
 }
