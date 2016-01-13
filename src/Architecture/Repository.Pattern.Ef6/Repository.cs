@@ -1,19 +1,6 @@
-#region
-
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using LinqKit;
-using Repository.Pattern.DataContext;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
-using Repository.Pattern.UnitOfWork;
-using NHibernate;
 using ContC.Repositories.Mapping.UnitOfWork;
 
 #endregion
@@ -50,8 +37,6 @@ namespace Repository.Pattern.Ef6
         {
             entity.ObjectState = ObjectState.Added;
             SessaoAtual.Save(entity);
-            SessaoAtual.Flush();
-            //SessaoAtual.syn.SyncObjectState(entity);
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
@@ -66,8 +51,6 @@ namespace Repository.Pattern.Ef6
         {
             entity.ObjectState = ObjectState.Modified;
             SessaoAtual.SaveOrUpdate(entity);
-            SessaoAtual.Flush();
-            //_context.SyncObjectState(entity);
         }
 
         public virtual void UpdateRange(IEnumerable<TEntity> entities)

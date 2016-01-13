@@ -102,15 +102,11 @@
       <Project>{ea71728d-6775-423a-869f-bfda31146dcf}</Project>
       <Name>ContC.Communication.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ContC.CorssCutting.Exception\ContC.CorssCutting.Exceptions.csproj">
-      <Project>{cfbeb365-611e-4f98-b556-50035b30a645}</Project>
-      <Name>ContC.CorssCutting.Exceptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ContC.crosscutting.utilities.RabbitMq\ContC.crosscutting.utilities.RabbitMq.csproj">
       <Project>{e4321a5e-1961-4823-9a2d-00e48c968894}</Project>
       <Name>ContC.crosscutting.utilities.RabbitMq</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ContC.crosscutting.utilities\ContC.crosscutting.utilities.csproj">
+    <ProjectReference Include="..\ContC.crosscutting\ContC.crosscutting.csproj">
       <Project>{40bd6a2e-ca96-45a3-bb86-d51f08d57d25}</Project>
       <Name>ContC.crosscutting.utilities</Name>
     </ProjectReference>

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Architecture", "0 - Architecture", "{5B0EEB88-4198-4E94-82B5-84A9A925B50B}"
 EndProject
@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.tests", "ContC.tests\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - CrossCutting", "5 - CrossCutting", "{69CBBD12-A320-40BB-B96C-4090B881D4D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.crosscutting.utilities", "ContC.crosscutting.utilities\ContC.crosscutting.utilities.csproj", "{40BD6A2E-CA96-45A3-BB86-D51F08D57D25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.crosscutting", "ContC.crosscutting\ContC.crosscutting.csproj", "{40BD6A2E-CA96-45A3-BB86-D51F08D57D25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.presentation.mvc", "ContC.presentation.mvc\ContC.presentation.mvc.csproj", "{1EB3D7C9-5FEE-4244-B8C6-2A1E09809609}"
 EndProject
@@ -47,8 +47,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.Console", "ContC.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity.Pattern", "Entity.Pattern\Entity.Pattern.csproj", "{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.CorssCutting.Exceptions", "ContC.CorssCutting.Exception\ContC.CorssCutting.Exceptions.csproj", "{CFBEB365-611E-4F98-B556-50035B30A645}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Communication", "6 - Communication", "{95E519D1-9A70-4F56-AA16-746C88EA59FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.Communication.Model", "ContC.Communication.Model\ContC.Communication.Model.csproj", "{EA71728D-6775-423A-869F-BFDA31146DCF}"
@@ -56,8 +54,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.servicebus.application.Extension.restful", "ContC.servicebus.application.Extension.restful\ContC.servicebus.application.Extension.restful.csproj", "{8CFB32F6-4CBD-48FD-BDED-3BD6A5DE508C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Unityprovider", "Infrastructure.Unityprovider\Infrastructure.Unityprovider.csproj", "{CC470218-9033-4A5E-8BC6-A84C8E2B6F1B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContC.crosscutting.utilities.RabbitMq", "ContC.crosscutting.utilities.RabbitMq\ContC.crosscutting.utilities.RabbitMq.csproj", "{E4321A5E-1961-4823-9A2D-00E48C968894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,12 +137,6 @@ Global
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A}.Release|x86.ActiveCfg = Release|Any CPU
-		{CFBEB365-611E-4F98-B556-50035B30A645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFBEB365-611E-4F98-B556-50035B30A645}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFBEB365-611E-4F98-B556-50035B30A645}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CFBEB365-611E-4F98-B556-50035B30A645}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFBEB365-611E-4F98-B556-50035B30A645}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFBEB365-611E-4F98-B556-50035B30A645}.Release|x86.ActiveCfg = Release|Any CPU
 		{EA71728D-6775-423A-869F-BFDA31146DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA71728D-6775-423A-869F-BFDA31146DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA71728D-6775-423A-869F-BFDA31146DCF}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -165,12 +155,6 @@ Global
 		{CC470218-9033-4A5E-8BC6-A84C8E2B6F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC470218-9033-4A5E-8BC6-A84C8E2B6F1B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC470218-9033-4A5E-8BC6-A84C8E2B6F1B}.Release|x86.ActiveCfg = Release|Any CPU
-		{E4321A5E-1961-4823-9A2D-00E48C968894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4321A5E-1961-4823-9A2D-00E48C968894}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4321A5E-1961-4823-9A2D-00E48C968894}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E4321A5E-1961-4823-9A2D-00E48C968894}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4321A5E-1961-4823-9A2D-00E48C968894}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4321A5E-1961-4823-9A2D-00E48C968894}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,11 +171,9 @@ Global
 		{808E8808-7D38-46C7-98DC-26122D4461F1} = {5D7D043C-D6FD-451E-B8FE-CE630821297A}
 		{3FCA8CF1-A4F1-41C6-87B4-FC5D88FBAB6A} = {50BEA947-88A6-409A-B008-B9C68DC828C4}
 		{C8030444-2B0C-4B3C-930D-3DCD1B8DA50A} = {5B0EEB88-4198-4E94-82B5-84A9A925B50B}
-		{CFBEB365-611E-4F98-B556-50035B30A645} = {69CBBD12-A320-40BB-B96C-4090B881D4D8}
 		{EA71728D-6775-423A-869F-BFDA31146DCF} = {95E519D1-9A70-4F56-AA16-746C88EA59FE}
 		{8CFB32F6-4CBD-48FD-BDED-3BD6A5DE508C} = {50BEA947-88A6-409A-B008-B9C68DC828C4}
 		{CC470218-9033-4A5E-8BC6-A84C8E2B6F1B} = {5B0EEB88-4198-4E94-82B5-84A9A925B50B}
-		{E4321A5E-1961-4823-9A2D-00E48C968894} = {69CBBD12-A320-40BB-B96C-4090B881D4D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45

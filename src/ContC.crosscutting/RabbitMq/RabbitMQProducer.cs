@@ -1,23 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RabbitMQ.Client;
 
 namespace ContC.crosscutting.utilities.RabbitMq
 {
     public class RabbitMQProducer : IDisposable
     {
-        #region Properties
-
-        public string ExchangeName { get; set; }
-        public string RoutingKey { get; set; }
-        public IConnection Connection { get; set; }
-        public IModel Channel { get; set; }
-
-        #endregion Properties
-
         public RabbitMQProducer(string hostName, string userName, string password, string exchangeName, string routingKey)
         {
             ExchangeName = exchangeName;
@@ -51,5 +37,14 @@ namespace ContC.crosscutting.utilities.RabbitMq
         {
             this.Dispose();
         }
+
+        public string ExchangeName { get; set; }
+
+        public string RoutingKey { get; set; }
+
+        public IConnection Connection { get; set; }
+
+        public IModel Channel { get; set; }
+
     }
 }
