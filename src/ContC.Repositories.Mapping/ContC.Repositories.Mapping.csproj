@@ -68,7 +68,6 @@
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkNHibernate.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkNHibernate.cs" />
-    <Compile Include="FuncionarioEnderecoMap.cs" />
     <Compile Include="FuncionarioMap.cs" />
     <Compile Include="TipoReceitaMap.cs" />
     <Compile Include="ReceitaMap.cs" />

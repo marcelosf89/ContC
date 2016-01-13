@@ -14,27 +14,26 @@ namespace ContC.domain.services
 
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterType<IProdutoRepository, ProdutoRepository>();
-            container.RegisterType<IEmpresaRepository, EmpresaRepository>();
-            container.RegisterType<IFuncionarioRepository, FuncionarioRepository>();
-            container.RegisterType<IGrupoRepository, GrupoRepository>();
-            container.RegisterType<IUsuarioRepository, UsuarioRepository>();
-            container.RegisterType<IFornecedorRepository, FornecedorRepository>();
-            container.RegisterType<IBoletoRepository, BoletoRepository>();
-            container.RegisterType<IFuncionarioEnderecoRepository, FuncionarioEnderecoRepository>();
-            container.RegisterType<IBancoRepository, BancoRepository>();
-            container.RegisterType<IContaRepository, ContaRepository>();
-            container.RegisterType<ICategoriaRepository, CategoriaRepository>();
-            container.RegisterType<ICompraRepository, CompraRepository>();
-            container.RegisterType<IProdutoCompraRepository, ProdutoCompraRepository>();
-            container.RegisterType<IReceitaRepository, ReceitaRepository>();
-            container.RegisterType<ITipoReceitaRepository, TipoReceitaRepository>();
-            container.RegisterType<IPagamentoDiretoRepository, PagamentoDiretoRepository>();
-            container.RegisterType<INotaRepository, NotaRepository>();
-            container.RegisterType<INotaItemRepository, NotaItemRepository>();
-            container.RegisterType<INotaUsuarioRepository, NotaUsuarioRepository>();
-
-            
+            container.RegisterType<IProdutoRepository, ProdutoRepository>()
+                     .RegisterType<IEmpresaRepository, EmpresaRepository>()
+                     .RegisterType<IFuncionarioRepository, FuncionarioRepository>()
+                     .RegisterType<IGrupoRepository, GrupoRepository>()
+                     .RegisterType<IUsuarioRepository, UsuarioRepository>()
+                     .RegisterType<IFornecedorRepository, FornecedorRepository>()
+                     .RegisterType<IBoletoRepository, BoletoRepository>()
+                     .RegisterType<IFuncionarioEnderecoRepository, FuncionarioEnderecoRepository>()
+                     .RegisterType<IBancoRepository, BancoRepository>()
+                     .RegisterType<IContaRepository, ContaRepository>()
+                     .RegisterType<ICategoriaRepository, CategoriaRepository>()
+                     .RegisterType<ICompraRepository, CompraRepository>()
+                     .RegisterType<IProdutoCompraRepository, ProdutoCompraRepository>()
+                     .RegisterType<IReceitaRepository, ReceitaRepository>()
+                     .RegisterType<ITipoReceitaRepository, TipoReceitaRepository>()
+                     .RegisterType<IPagamentoDiretoRepository, PagamentoDiretoRepository>()
+                     .RegisterType<INotaRepository, NotaRepository>()
+                     .RegisterType<INotaItemRepository, NotaItemRepository>()
+                     .RegisterType<INotaUsuarioRepository, NotaUsuarioRepository>()
+                     .RegisterType<IFuncionarioBuilder, FuncionarioBuilder>();
             
         }
 

@@ -24,6 +24,7 @@ namespace ContC.Repositories.Mapping
 
             References(p => p.TipoPagamento);
             References(p => p.TipoRegimeFuncionario);
+            HasManyToMany(p => p.Empresas).ParentKeyColumn(Constantes.ID_FUNCIONARIO).ChildKeyColumn(Constantes.ID_EMPRESA).Cascade.All().Table(Constantes.FUNCIONARIOS_ENDERECOS);
             Map(p => p.Valor);
 
             Map(p => p.Identificacao2);

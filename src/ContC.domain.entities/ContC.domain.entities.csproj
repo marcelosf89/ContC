@@ -78,7 +78,6 @@
     <Compile Include="Models\TipoPagamento.cs" />
     <Compile Include="Models\TipoReceita.cs" />
     <Compile Include="Models\Grupo.cs" />
-    <Compile Include="Models\FuncionarioEndereco.cs" />
     <Compile Include="Models\Usuario.cs">
       <SubType>Code</SubType>
     </Compile>

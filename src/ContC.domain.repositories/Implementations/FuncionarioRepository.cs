@@ -1,13 +1,10 @@
 ﻿using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Repositories;
 using System;
 using System.Collections.Generic;
 using NHibernate.Linq;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ContC.domain.entities.DTO;
 
 namespace ContC.domain.services.Implementations
@@ -22,17 +19,18 @@ namespace ContC.domain.services.Implementations
 
         public IList<Funcionario> GetByEmpresa(int empresaId)
         {
-            return this.SessaoAtual.Query<FuncionarioEndereco>()
-                .Where(p => p.Empresa.Id == empresaId)
-                .Select(p => p.Funcionario).ToList();
+            return (from f in this.SessaoAtual.Query<Funcionario>()
+                    from e in f.Empresas
+                    where e.Id == empresaId
+                    select f).ToList();
         }
 
         public FuncionariosDTO GetByEmpresaTipoPagamentoLider(int empresaId)
         {
-            FuncionariosDTO fdto = new FuncionariosDTO();
-            fdto.EmpresaId = empresaId;
+            FuncionariosDTO retorno = new FuncionariosDTO();
+            retorno.EmpresaId = empresaId;
 
-            fdto.TipoRegimeFuncionarios = this.SessaoAtual.Query<TipoRegimeFuncionario>()
+            retorno.TipoRegimeFuncionarios = this.SessaoAtual.Query<TipoRegimeFuncionario>()
                  .Select(p =>
                      new FuncionarioTipoRegimeFuncionarioDTO()
                      {
@@ -40,7 +38,7 @@ namespace ContC.domain.services.Implementations
                          Nome = p.Nome
                      }).ToList();
 
-            fdto.TipoPagamentos = this.SessaoAtual.Query<TipoPagamento>()
+            retorno.TipoPagamentos = this.SessaoAtual.Query<TipoPagamento>()
                  .Select(p =>
                      new FuncionarioTipoPagamentoDTO()
                      {
@@ -48,16 +46,17 @@ namespace ContC.domain.services.Implementations
                          Nome = p.Nome
                      }).ToList();
 
-            fdto.Lideres = (from a in this.SessaoAtual.Query<FuncionarioEndereco>()
-                            where a.Funcionario.Lider == null && a.Empresa.Id == empresaId
+            retorno.Lideres = (from f in this.SessaoAtual.Query<Funcionario>()
+                            from e in f.Empresas
+                            where f.Lider == null && e.Id == empresaId
                             select
                                 new FuncionarioLiderDTO()
                                 {
-                                    Id = a.Funcionario.Id,
-                                    Nome = a.Funcionario.Nome
+                                    Id = f.Id,
+                                    Nome = f.Nome
                                 }).ToList();
 
-            return fdto;
+            return retorno;
 
         }
 
@@ -68,22 +67,36 @@ namespace ContC.domain.services.Implementations
             {
                 case "0":
                     return
-                        this.SessaoAtual.Query<FuncionarioEndereco>()
-                    .Where(p => p.Empresa.Id == empresaId && p.Funcionario.TipoPagamento.Id == tipoPagamento)
-                    .Select(p => p.Funcionario).ToList();
+                        (from f in SessaoAtual.Query<Funcionario>()
+                         from e in f.Empresas
+                        where e.Id == empresaId && f.TipoPagamento.Id == tipoPagamento
+                        select f).ToList();
+                           
                 case "":
                 case null:
-                    return
-                        this.SessaoAtual.Query<FuncionarioEndereco>()
-                    .Where(p => p.Empresa.Id == empresaId && p.Funcionario.TipoPagamento.Id == tipoPagamento && p.Funcionario.Lider == null)
-                    .Select(p => p.Funcionario).ToList();
+                    return 
+                        (from f in SessaoAtual.Query<Funcionario>()
+                         from e in f.Empresas
+                        where e.Id == empresaId && f.TipoPagamento.Id == tipoPagamento && f.Lider == null
+                       select f).ToList();
                 default:
                     return
-                        this.SessaoAtual.Query<FuncionarioEndereco>()
-                     .Where(p => p.Empresa.Id == empresaId && p.Funcionario.TipoPagamento.Id == tipoPagamento && p.Funcionario.Lider != null && p.Funcionario.Lider.Id == Convert.ToInt32(liderId))
-                     .Select(p => p.Funcionario).ToList();
+                        (from f in SessaoAtual.Query<Funcionario>()
+                         from e in f.Empresas
+                         where e.Id == empresaId && f.TipoPagamento.Id == tipoPagamento && f.Lider != null && f.Lider.Id == Convert.ToInt32(liderId)
+                         select f).ToList();
             }
 
+        }
+
+        public TipoRegimeFuncionario GetRegime(int id)
+        {
+            return SessaoAtual.Get<TipoRegimeFuncionario>(id);
+        }
+
+        public TipoPagamento GetTipoPagamento(int id)
+        {
+            return SessaoAtual.Get<TipoPagamento>(id);
         }
     }
 }

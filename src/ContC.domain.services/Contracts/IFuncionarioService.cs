@@ -1,11 +1,8 @@
-﻿using ContC.domain.entities.DTO;
+﻿using ContC.crosscutting.DataContracts;
+using ContC.domain.entities.DTO;
 using ContC.domain.entities.Models;
 using Service.Pattern;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContC.domain.services.Contracts
 {
@@ -17,6 +14,8 @@ namespace ContC.domain.services.Contracts
 
         IList<Funcionario> GetByEmpresa(int empresaId, int tipoPagamento, string liderId);
 
-        void Insert(Funcionario func, Conta conta, int empresaId);
+        void Save(FuncionarioContaContract contract);
+
+
     }
 }

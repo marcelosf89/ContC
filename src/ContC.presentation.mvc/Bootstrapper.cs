@@ -9,6 +9,8 @@ using ContC.presentation.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ContC.presentation.mvc.Controllers;
+using ContC.crosscutting.Authentication.Interface;
+using ContC.crosscutting.Authentication;
 
 namespace ContC.presentation.mvc
 {
@@ -54,7 +56,7 @@ namespace ContC.presentation.mvc
             container.RegisterType<ICompraService, CompraService>();
             container.RegisterType<IReceitaService, ReceitaService>();
             container.RegisterType<INotaService, NotaService>();
-            
+            container.RegisterType<IGerenciadorAutenticacao, GerenciadorAutenticacaoCookie>();
 
 
             container.RegisterType<DbContext, ApplicationDbContext>(

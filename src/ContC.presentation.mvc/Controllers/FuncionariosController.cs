@@ -76,22 +76,23 @@ namespace ContC.presentation.mvc.Controllers
 
         public ActionResult Novo(int empresaId)
         {
-            FuncionarioManterModel fmm = new FuncionarioManterModel();
-            fmm.EmpresaId = empresaId;
+            FuncionarioManterModel model = new FuncionarioManterModel();
 
-            GetSelects(empresaId, fmm);
+            model.FuncionarioContaContract.EmpresaId = empresaId;
 
-            return View(fmm);
+            GetSelects(empresaId, model);
+
+            return View(model);
         }
 
         private void GetSelects(int empresaId, FuncionarioManterModel fmm)
         {
-            FuncionariosDTO fdto = _ifuncionarioService.GetByEmpresaTipoPagamentoLider(empresaId);
-            fmm.Lideres = fdto.Lideres.Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.Nome }).ToList();
+            FuncionariosDTO funcionariosDTO = _ifuncionarioService.GetByEmpresaTipoPagamentoLider(empresaId);
+            fmm.Lideres = funcionariosDTO.Lideres.Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.Nome }).ToList();
             ((IList<SelectListItem>)fmm.Lideres).Add(new SelectListItem() { Value = "0", Text = " ----- ", Selected = true });
 
-            fmm.TipoPagamentos = fdto.TipoPagamentos.Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.Nome });
-            fmm.TipoRegimeFuncionarios = fdto.TipoRegimeFuncionarios.Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.Nome });
+            fmm.TipoPagamentos = funcionariosDTO.TipoPagamentos.Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.Nome });
+            fmm.TipoRegimeFuncionarios = funcionariosDTO.TipoRegimeFuncionarios.Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.Nome });
             fmm.Bancos = _iBancoService.GetAll().Select(p => new SelectListItem() { Value = p.Id.ToString(), Text = p.DescricaoCompleta });
         }
 
@@ -100,7 +101,7 @@ namespace ContC.presentation.mvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                GetSelects(model.EmpresaId, model);
+                GetSelects(model.FuncionarioContaContract.EmpresaId, model);
                 return PartialView("Novo", model);
             }
 
