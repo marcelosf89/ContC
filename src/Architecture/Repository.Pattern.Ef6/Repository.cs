@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.Repositories;
 using ContC.Repositories.Mapping.UnitOfWork;
-
-#endregion
+using NHibernate;
 
 namespace Repository.Pattern.Ef6
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitMQ.Client;
+using System;
 
 namespace ContC.crosscutting.utilities.RabbitMq
 {
