@@ -36,6 +36,17 @@ namespace ContC.domain.entities.Models
 
         public virtual DateTime Nascimento { get; set; }
 
-        public IList<Empresa> Empresas { get; set; }
+        public virtual IList<Empresa> Empresas { get; set; }
+
+        public virtual void AdicionarEmpresa(Empresa empresa)
+        {
+            if (Empresas == null)
+            {
+                Empresas = new List<Empresa>();
+            }
+
+            Empresas.Add(empresa);
+        }
+
     }
 }

@@ -1,12 +1,7 @@
 ﻿using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
-using Repository.Pattern.Repositories;
 using Service.Pattern;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContC.domain.services.Implementations
 {
@@ -19,13 +14,26 @@ namespace ContC.domain.services.Implementations
 
         public Usuario GetUsuario(string userName)
         {
-            return ((IUsuarioRepository)base._repository).GetUsuario(userName);
+            return _usuarioRepository.Get(userName);
         }
 
+        public Usuario GetUsuarioFetchFuncionario(string userName)
+        {
+            return _usuarioRepository.GetFetchingFuncionario(userName);
+        }
 
         public IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows)
         {
-            return ((IUsuarioRepository)base._repository).GetAllByUsuarios(startsWith, empresaId, maxRows);
+            return _usuarioRepository.GetAllByUsuarios(startsWith, empresaId, maxRows);
         }
+
+        private IUsuarioRepository _usuarioRepository
+        {
+            get
+            {
+                return (IUsuarioRepository)_repository;
+            }
+        }
+
     }
 }

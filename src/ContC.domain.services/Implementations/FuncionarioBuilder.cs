@@ -9,9 +9,10 @@ namespace ContC.domain.services.Implementations
 {
     public class FuncionarioBuilder : IFuncionarioBuilder
     {
-        public FuncionarioBuilder(IFuncionarioRepository funcionariorepository)
+        public FuncionarioBuilder(IFuncionarioRepository funcionariorepository, IEmpresaRepository empresaRepository)
         {
             this._funcionariorepository = funcionariorepository;
+            _empresaRepository = empresaRepository;
         }
 
         public Funcionario BuildBasedOn(FuncionarioContaContract contract)
@@ -39,6 +40,7 @@ namespace ContC.domain.services.Implementations
                    .SetTipoPagamento(contract.TipoPagamentoId)
                    .SetTipoRegime(contract.TipoRegimeFuncionarioId)
                    .SetNascimento(contract.Nascimento.Value)
+                   .SetEmpresa(contract.EmpresaId)
                    .Build();
         }
 
@@ -111,6 +113,17 @@ namespace ContC.domain.services.Implementations
             return this;
         }
 
+        public IFuncionarioBuilder SetEmpresa(int idEmpresa)
+        {
+            Empresa empresa = _empresaRepository.Find(idEmpresa);
+            if (empresa == null)
+            {
+                throw new ConstrucaoObjetoException(string.Format("Empresa {0} não encontrada", empresa));
+            }
+            _funcionario.AdicionarEmpresa(empresa);
+            return this;
+        }
+
         public IFuncionarioBuilder SetValor(decimal valor)
         {
             _funcionario.Valor = valor;
@@ -131,5 +144,6 @@ namespace ContC.domain.services.Implementations
 
         private Funcionario _funcionario;
 
+        private IEmpresaRepository _empresaRepository;
     }
 }

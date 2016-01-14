@@ -55,8 +55,11 @@
     <Compile Include="Common\DataBaseProvider.cs" />
     <Compile Include="DataContracts\FuncionarioContaContract.cs" />
     <Compile Include="DataContracts\UsuarioSessao.cs" />
-    <Compile Include="Exceptions\ContCException.cs" />
+    <Compile Include="Exceptions\ConstrucaoObjetoException.cs" />
+    <Compile Include="Exceptions\ContCNegocioException.cs" />
+    <Compile Include="Exceptions\EntidadeNaoEncontradaException.cs" />
     <Compile Include="Exceptions\ExceptionMessage.cs" />
+    <Compile Include="OperacaoStatus.cs" />
     <Compile Include="RabbitMq\RabbitMQConfiguration.cs" />
     <Compile Include="RabbitMq\RabbitMQConsumer.cs" />
     <Compile Include="RabbitMq\RabbitMQProducer.cs" />

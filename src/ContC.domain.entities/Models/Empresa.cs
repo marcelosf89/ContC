@@ -15,8 +15,7 @@ namespace ContC.domain.entities.Models
         public virtual string NomeFantasia { get; set; }
 
         public virtual Grupo Grupo { get; set; }
-
-
+        
         public virtual string CNPJ { get; set; }
 
         public virtual string Email { get; set; }

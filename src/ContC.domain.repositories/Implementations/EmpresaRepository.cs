@@ -1,13 +1,9 @@
 ﻿using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContC.domain.services.Implementations
 {
@@ -36,9 +32,10 @@ namespace ContC.domain.services.Implementations
 
         public IList<Empresa> GetAllEmpresaByUser(string email)
         {
-            return (from a in this.SessaoAtual.Query<FuncionarioEndereco>()
-                    where a.Funcionario.Email.ToUpper().Equals(email.ToUpper())
-                    select a.Empresa).Distinct().ToList();
+            return (from a in this.SessaoAtual.Query<Funcionario>()
+                    from e in a.Empresas
+                   where a.Email.ToUpper().Equals(email.ToUpper())
+                  select e).ToList();
         }
     }
 }

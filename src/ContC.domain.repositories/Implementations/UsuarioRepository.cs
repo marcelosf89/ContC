@@ -1,13 +1,10 @@
 ﻿using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using Repository.Pattern.Ef6;
-using Repository.Pattern.Repositories;
-using System;
 using System.Collections.Generic;
 using NHibernate.Linq;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace ContC.domain.services.Implementations
 {
@@ -17,21 +14,50 @@ namespace ContC.domain.services.Implementations
         {
 
         }
-
-
-        public Usuario GetUsuario(string userName)
+        
+        public Usuario Get(string userName)
         {
             return this.SessaoAtual.Query<Usuario>()
-                .Where(p => p.Email.ToUpper().Equals(userName.ToUpper()))
+                .Where(p => p.Funcionario.Email.ToUpper().Equals(userName.ToUpper()))
                 .SingleOrDefault();
         }
 
 
+        // TODO: Testar repositório
         public IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows)
         {
-            return this.SessaoAtual.Query<FuncionarioEndereco>()
-                            .Where(p => p.Funcionario.Email.ToUpper().Contains(startsWith.ToUpper()) && p.Empresa.Id == empresaId)
-                            .Take(maxRows).Select(a => a.Funcionario).ToList();
+            return (from f in SessaoAtual.Query<Funcionario>().Take(maxRows)
+                    from e in f.Empresas
+                   where f.Email.ToUpper().Contains(startsWith.ToUpper()) && e.Id == empresaId
+                  select f).ToList();
+        }
+
+        public Usuario GetFetchingFuncionario(string userName)
+        {
+            return this.SessaoAtual.Query<Usuario>().Fetch(p => p.Funcionario)
+                .Where(p => p.Funcionario.Email.ToUpper().Equals(userName.ToUpper()))
+                .SingleOrDefault();
+        }
+
+        public IList<int> GetGruposIds(string email)
+        {
+
+            string consulta = 
+                @"SELECT DISTINCT e.id_grupo
+                    FROM usuarios u
+                    JOIN funcionarios f
+                      ON u.funcionario_id = f.id_funcionario
+                    JOIN funcionarioenderecos fe
+                      ON u.funcionario_id = fe.id_funcionario
+                    JOIN empresas e 
+                      ON fe.id_empresa = e.id_empresa
+                   WHERE f.email = lower(:email)";
+
+            return
+                   SessaoAtual.CreateSQLQuery(consulta)
+                              .SetParameter("email", email.ToLower())
+                              .List<int>();
+                   
         }
     }
 }

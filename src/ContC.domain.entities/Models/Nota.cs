@@ -10,13 +10,19 @@ namespace ContC.domain.entities.Models
     public class Nota : Entidade
     {
         public virtual int Id { get; set; }
+
         public virtual String Titulo { get; set; }
+
         public virtual Usuario Cadastrado { get; set; }
+
         public virtual Empresa Empresa { get; set; }
+
         public virtual DateTime Cadastro { get; set; }
+
         public virtual DateTime? Concluido { get; set; }
 
         public virtual DateTime? Cancelado { get; set; }
+
         public virtual Usuario CanceladoPor { get; set; }
     }
 }

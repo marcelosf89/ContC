@@ -118,7 +118,8 @@ namespace ContC.domain.services.Implementations
 
         public NotaUsuario AdicionarNotaUsuario(int notaId, string usuario)
         {
-            Usuario user = _usuarioService.GetUsuario(usuario);
+            // TODO: Testar
+            Usuario user = _usuarioService.GetUsuarioFetchFuncionario(usuario);
             if (user == null)
             {
                 throw new ExceptionMessage("O Usuario não Existe");

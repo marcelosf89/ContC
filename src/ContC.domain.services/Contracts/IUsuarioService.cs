@@ -2,9 +2,6 @@
 using Service.Pattern;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContC.domain.services.Contracts
 {
@@ -13,5 +10,7 @@ namespace ContC.domain.services.Contracts
         Usuario GetUsuario(String userName);
 
         IList<Funcionario> GetAllByUsuarios(string startsWith, int empresaId, int maxRows);
+
+        Usuario GetUsuarioFetchFuncionario(string userName);
     }
 }

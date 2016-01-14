@@ -42,21 +42,21 @@ namespace ContC.presentation.mvc
         {
             BootstraperService.RegisterTypes(container);
 
-            container.RegisterType<IProdutoService, ProdutoService>();
-            container.RegisterType<IFuncionarioService, FuncionarioService>();
-            container.RegisterType<IGrupoService, GrupoService>();
-            container.RegisterType<IUsuarioService, UsuarioService>();
-            container.RegisterType<IEmpresaService, EmpresaService>();
-            container.RegisterType<IFornecedorService, FornecedorService>();
-            container.RegisterType<IBoletoService, BoletoService>();
-            container.RegisterType<IFuncionarioEnderecoService, FuncionarioEnderecoService>();
-            container.RegisterType<IContaService, ContaService>();
-            container.RegisterType<IBancoService, BancoService>();
-            container.RegisterType<ICategoriaService, CategoriaService>();
-            container.RegisterType<ICompraService, CompraService>();
-            container.RegisterType<IReceitaService, ReceitaService>();
-            container.RegisterType<INotaService, NotaService>();
-            container.RegisterType<IGerenciadorAutenticacao, GerenciadorAutenticacaoCookie>();
+            container.RegisterType<IProdutoService, ProdutoService>()
+                     .RegisterType<IFuncionarioService, FuncionarioService>()
+                     .RegisterType<IGrupoService, GrupoService>()
+                     .RegisterType<IUsuarioService, UsuarioService>()
+                     .RegisterType<IEmpresaService, EmpresaService>()
+                     .RegisterType<IFornecedorService, FornecedorService>()
+                     .RegisterType<IBoletoService, BoletoService>()
+                     .RegisterType<IContaService, ContaService>()
+                     .RegisterType<IBancoService, BancoService>()
+                     .RegisterType<ICategoriaService, CategoriaService>()
+                     .RegisterType<ICompraService, CompraService>()
+                     .RegisterType<IReceitaService, ReceitaService>()
+                     .RegisterType<INotaService, NotaService>()
+                     .RegisterType<IGerenciadorAutenticacao, GerenciadorAutenticacaoCookie>()
+                     .RegisterType<IAutenticacaoService, AutenticacaoService>();
 
 
             container.RegisterType<DbContext, ApplicationDbContext>(
@@ -66,8 +66,6 @@ namespace ContC.presentation.mvc
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
                 new HierarchicalLifetimeManager());
 
-            container.RegisterType<AccountController>(
-                new InjectionConstructor());
 
         }
     }

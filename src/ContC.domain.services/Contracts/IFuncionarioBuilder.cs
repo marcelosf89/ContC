@@ -29,8 +29,10 @@ namespace ContC.domain.services.Contracts
 
         IFuncionarioBuilder SetValor(decimal valor);
 
+        IFuncionarioBuilder SetEmpresa(int idEmpresa);
+
         OperacaoStatus Validar();
 
         Funcionario Build();
-
+    }
 }

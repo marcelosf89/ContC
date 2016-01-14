@@ -1,4 +1,5 @@
-﻿using Entity.Pattern;
+﻿using ContC.crosscutting.DataContracts;
+using Entity.Pattern;
 using System;
 
 namespace ContC.domain.entities.Models
@@ -16,5 +17,6 @@ namespace ContC.domain.entities.Models
         public virtual String  Extensao {get;set;}
 
         public virtual Funcionario Funcionario { get; set; }
+
     }
 }

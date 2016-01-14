@@ -107,6 +107,10 @@
       <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
       <Name>Repository.Pattern</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ContC.crosscutting\ContC.crosscutting.csproj">
+      <Project>{40bd6a2e-ca96-45a3-bb86-d51f08d57d25}</Project>
+      <Name>ContC.crosscutting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entity.Pattern\Entity.Pattern.csproj">
       <Project>{c8030444-2b0c-4b3c-930d-3dcd1b8da50a}</Project>
       <Name>Entity.Pattern</Name>

@@ -66,7 +66,6 @@
     <Compile Include="Contracts\ICategoriaRepository.cs" />
     <Compile Include="Contracts\IContaRepository.cs" />
     <Compile Include="Contracts\IBoletoRepository.cs" />
-    <Compile Include="Contracts\IFuncionarioEnderecoRepository.cs" />
     <Compile Include="Contracts\IFornecedorRepository.cs" />
     <Compile Include="Contracts\IGrupoRepository.cs" />
     <Compile Include="Contracts\IFuncionarioRepository.cs" />
@@ -84,7 +83,6 @@
     <Compile Include="Implementations\ReceitaRepository.cs" />
     <Compile Include="Implementations\CategoriaRepository.cs" />
     <Compile Include="Implementations\ContaRepository.cs" />
-    <Compile Include="Implementations\FuncionarioEnderecoRepository.cs" />
     <Compile Include="Implementations\FornecedorRepository.cs" />
     <Compile Include="Implementations\EmpresaRepository.cs" />
     <Compile Include="Implementations\GrupoRepository.cs" />

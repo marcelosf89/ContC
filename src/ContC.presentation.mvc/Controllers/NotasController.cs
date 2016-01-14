@@ -197,8 +197,8 @@ namespace ContC.presentation.mvc.Controllers
 
                 AdicionarUsuarioNotasModel rum = new AdicionarUsuarioNotasModel();
                 rum.UsuarioId = nu.Usuario.Id;
-                rum.UsuarioNome = nu.Usuario.Nome;
-                rum.UsuarioEmail = nu.Usuario.Email;
+                rum.UsuarioNome = nu.Usuario.Funcionario.Nome;
+                rum.UsuarioEmail = nu.Usuario.Funcionario.Email;
                 rum.NotaId = notaId;
                 return Json(rum);
             }

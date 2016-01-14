@@ -49,8 +49,7 @@ namespace ContC.crosscutting.DataContracts
 
         public string Digito { get; set; }
 
-        public String Erro { get; set; }
-
         public int ContaId { get; set; }
+
     }
 }

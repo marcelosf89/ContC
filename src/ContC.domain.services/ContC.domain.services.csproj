@@ -55,11 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstraperService.cs" />
+    <Compile Include="Contracts\IAutenticacaoService.cs" />
+    <Compile Include="Contracts\IFuncionarioBuilder.cs" />
     <Compile Include="Contracts\INotaService.cs" />
     <Compile Include="Contracts\IReceitaService.cs" />
     <Compile Include="Contracts\IBancoService.cs" />
     <Compile Include="Contracts\ICategoriaService.cs" />
-    <Compile Include="Contracts\IFuncionarioEnderecoService.cs" />
     <Compile Include="Contracts\IFornecedorService.cs" />
     <Compile Include="Contracts\IEmpresaService.cs" />
     <Compile Include="Contracts\IGrupoService.cs" />
@@ -69,10 +70,11 @@
     <Compile Include="Contracts\ICompraService.cs" />
     <Compile Include="Contracts\IUsuarioService.cs" />
     <Compile Include="Contracts\IProdutoService.cs" />
+    <Compile Include="Implementations\AutenticacaoService.cs" />
+    <Compile Include="Implementations\FuncionarioBuilder.cs" />
     <Compile Include="Implementations\NotaService.cs" />
     <Compile Include="Implementations\ReceitaService.cs" />
     <Compile Include="Implementations\CategoriaService.cs" />
-    <Compile Include="Implementations\FuncionarioEnderecoService.cs" />
     <Compile Include="Implementations\FornecedorService.cs" />
     <Compile Include="Implementations\EmpresaService.cs" />
     <Compile Include="Implementations\GrupoService.cs" />

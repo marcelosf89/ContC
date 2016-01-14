@@ -23,15 +23,15 @@
         <div class="widget-body no-padding">
             @using (Ajax.BeginForm("Salvar", "Funcionarios", new { ReturnUrl = ViewBag.ReturnUrl }, ao, new { @class = "smart-form", role = "form", novalidate = "novalidate" }))
             {
-                @Html.HiddenFor(p => p.EmpresaId)
-                @Html.HiddenFor(p => p.Id)
-                @Html.HiddenFor(p => p.ContaId)
+                @Html.HiddenFor(p => p.FuncionarioContaContract.EmpresaId)
+                @Html.HiddenFor(p => p.FuncionarioContaContract.Id)
+                @Html.HiddenFor(p => p.FuncionarioContaContract.ContaId)
                 <fieldset>
                     <section>
                         <label class="input">
                             <i class="icon-append fa fa-user"></i>
-                            @Html.TextBoxFor(p => p.Nome, new { placeholder = "Nome Completo" })
-                            @Html.ValidationMessageFor(model => model.Nome)
+                            @Html.TextBoxFor(p => p.FuncionarioContaContract.Nome, new { placeholder = "Nome Completo" })
+                            @Html.ValidationMessageFor(model => model.FuncionarioContaContract.Nome)
                             <b class="tooltip tooltip-bottom-right">Incluir o Nome do funcionario</b>
                         </label>
                     </section>
@@ -39,22 +39,22 @@
                         <section class="col col-4">
                             <label class="input">
                                 <i class="icon-append fa fa-user"></i>
-                                @Html.TextBoxFor(p => p.Identificacao1, new { placeholder = "CPF", data_mask="999.999.999-99", data_mask_placeholder= "*" })
-                                @Html.ValidationMessageFor(model => model.Identificacao1)
+                                @Html.TextBoxFor(p => p.FuncionarioContaContract.Identificacao1, new { placeholder = "CPF", data_mask="999.999.999-99", data_mask_placeholder= "*" })
+                                @Html.ValidationMessageFor(model => model.FuncionarioContaContract.Identificacao1)
                             </label>
                         </section>
                         <section class="col col-4">
                             <label class="input">
                                 <i class="icon-append fa fa-user"></i>
-                                @Html.TextBoxFor(p => p.Identificacao2, new { placeholder = "Identidade" })
-                                @Html.ValidationMessageFor(model => model.Identificacao2)
+                                @Html.TextBoxFor(p => p.FuncionarioContaContract.Identificacao2, new { placeholder = "Identidade" })
+                                @Html.ValidationMessageFor(model => model.FuncionarioContaContract.Identificacao2)
                             </label>
                         </section>
                         <section class="col col-4">
                             <label class="input">
                                 <i class="icon-append fa fa-calendar"></i>
-                                @Html.TextBoxFor(p => p.Nascimento, new { placeholder="Select a date",  @class="form-control datepicker", data_dateformat="dd/mm/yy", value="" })
-                                @Html.ValidationMessageFor(model => model.Nascimento)
+                                @Html.TextBoxFor(p => p.FuncionarioContaContract.Nascimento, new { placeholder="Select a date",  @class="form-control datepicker", data_dateformat="dd/mm/yy", value="" })
+                                @Html.ValidationMessageFor(model => model.FuncionarioContaContract.Nascimento)
                             </label>
                         </section>
                     </div>
@@ -62,14 +62,14 @@
                         <label class="input">
                             <i class="icon-append fa fa-envelope-o"></i>
                             @Html.TextBoxFor(p => p.Email, new { placeholder = "Email" })
-                            @Html.ValidationMessageFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.FuncionarioContaContract.Email)
                             <b class="tooltip tooltip-bottom-right">Incluir o Email</b>
                         </label>
                     </section>
                     <section>
                         <label class="input">
                             @Html.TextBoxFor(p => p.Telefone, new { placeholder = "Telefone" })
-                            @Html.ValidationMessageFor(model => model.Telefone)
+                            @Html.ValidationMessageFor(model => model.FuncionarioContaContract.Telefone)
                         </label>
                     </section>
                 </fieldset>
@@ -77,7 +77,7 @@
                     <section>
                         <div class="input-group">
                             <label class="label-control">Lider:</label>
-                            @Html.DropDownListFor(p => p.LiderId, Model.Lideres, new { placeholder = "Lideres", @class = "form-control" })
+                            @Html.DropDownListFor(p => p.FuncionarioContaContract.LiderId, Model.Lideres, new { placeholder = "Lideres", @class = "form-control" })
                             <b class="tooltip tooltip-bottom-right">Incluir o Nome do funcionario</b>
                         </div>
                     </section>
@@ -89,7 +89,7 @@
                                 <label class=" label-control">Valor:</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                    @Html.TextBoxFor(p => p.Valor, new { placeholder = "Pagamento", type = "number", @class="form-control" })
+                                    @Html.TextBoxFor(p => p.FuncionarioContaContract.Valor, new { placeholder = "Pagamento", type = "number", @class="form-control" })
                                     @Html.ValidationMessageFor(model => model.Valor)
                                 </div>
                                 <b class="tooltip tooltip-bottom-right">Incluir o Valor do pagamento referente ao tipo de pagamento</b>
@@ -98,14 +98,14 @@
                         <section class="col col-4">
                             <div class="input-group">
                                 <label class="label-control">Tipo Pagamento:</label>
-                                @Html.DropDownListFor(p => p.TipoPagamentoId, Model.TipoPagamentos, new { placeholder = "Tipo de Pagamento", @class = "form-control" })
+                                @Html.DropDownListFor(p => p.FuncionarioContaContract.TipoPagamentoId, Model.TipoPagamentos, new { placeholder = "Tipo de Pagamento", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.TipoPagamentoId)
                             </div>
                         </section>
                         <section class="col col-4">
                             <div class="input-group">
                                 <label class="label-control">Regime:</label>
-                                @Html.DropDownListFor(p => p.TipoRegimeFuncionarioId, Model.TipoRegimeFuncionarios, new { placeholder = "Regime", @class = "form-control" })
+                                @Html.DropDownListFor(p => p.FuncionarioContaContract.TipoRegimeFuncionarioId, Model.TipoRegimeFuncionarios, new { placeholder = "Regime", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.TipoRegimeFuncionarioId)
                             </div>
                         </section>
@@ -117,7 +117,7 @@
                             <label class="input">                                
                                 <div class="form-group">
                                     <label class=" label-control">Banco :</label>
-                                    @Html.DropDownListFor(p => p.BancoId, Model.Bancos, new { placeholder = "Banco", @class = "select2" })
+                                    @Html.DropDownListFor(p => p.FuncionarioContaContract.BancoId, Model.Bancos, new { placeholder = "Banco", @class = "select2" })
                                 </div>
                                 <b class="tooltip tooltip-bottom-right">Incluir o Valor do pagamento referente ao tipo de pagamento</b>
                             </label>
@@ -126,7 +126,7 @@
                             <label class="input">
                                 <div class="input-group">
                                     <label class="label-control">Agencia:</label>
-                                    @Html.TextBoxFor(p => p.Agencia, new { placeholder = "AG" })
+                                    @Html.TextBoxFor(p => p.FuncionarioContaContract.Agencia, new { placeholder = "AG" })
                                 </div>
                             </label>
                         </section>
@@ -135,11 +135,11 @@
                                 <div class="input-group">
                                     <label class=" col-md-12 label-control">Conta:</label>
                                     <div class="col-md-6">
-                                        @Html.TextBoxFor(p => p.Conta, new { placeholder = "Conta", @class = "col-md-3" })
+                                        @Html.TextBoxFor(p => p.FuncionarioContaContract.Conta, new { placeholder = "Conta", @class = "col-md-3" })
                                     </div>
                                     <label class=" col-md-1 label-control">-</label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(p => p.Digito, new { placeholder = "D", @class = "col-md-1" })
+                                        @Html.TextBoxFor(p => p.FuncionarioContaContract.Digito, new { placeholder = "D", @class = "col-md-1" })
                                     </div>
                                 </div>
                             </label>
@@ -148,7 +148,7 @@
 
                 </fieldset>
                 <footer>
-                    @Ajax.ActionLink("Voltar", "Index", new { empresaId = Model.EmpresaId }, ao, new { @class = "btn btn-default" })
+                    @Ajax.ActionLink("Voltar", "Index", new { empresaId = Model.FuncionarioContaContract.EmpresaId }, ao, new { @class = "btn btn-default" })
                     <button type="submit" class="btn btn-primary">
                         Salvar
                     </button>

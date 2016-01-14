@@ -1,4 +1,5 @@
-﻿using ContC.domain.entities.DTO;
+﻿using ContC.crosscutting.DataContracts;
+using ContC.domain.entities.DTO;
 using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
 using ContC.presentation.mvc.Models.FuncionarioModels;
@@ -46,31 +47,12 @@ namespace ContC.presentation.mvc.Controllers
             FuncionarioManterModel model = new FuncionarioManterModel();
             GetSelects(empresaId, model);
 
-            model.EmpresaId = empresaId;
-            Funcionario func = _ifuncionarioService.Find(funcionarioId);
-
-            model.Id = func.Id;
-            model.Nome = func.Nome;
-            model.Email = func.Email;
-            model.Telefone = func.Telefone;
-            model.Nascimento = func.Nascimento;
-            model.Identificacao1 = func.Identificacao1;
-            model.Identificacao2 = func.Identificacao2;
-            model.LiderId = func.Lider == null ? 0 : func.Lider.Id;
-            model.TipoPagamentoId = func.TipoPagamento.Id;
-            model.TipoRegimeFuncionarioId = func.TipoRegimeFuncionario.Id;
-            model.Valor = func.Valor;
-
+            model.FuncionarioContaContract.EmpresaId = empresaId;
+            Funcionario funcionario = _ifuncionarioService.Find(funcionarioId);
             Conta conta = _iContaService.GetByFuncionario(funcionarioId);
-            if (conta != null)
-            {
-                model.ContaId = conta.Id;
-                model.Agencia = conta.Agencia;
-                model.Conta = conta.NumeroConta;
-                model.Digito = conta.Extensao;
-                model.BancoId = conta.Banco.Id;
-            }
 
+            model.FillFuncionarioContaContractBasedOn(funcionario, conta);
+            
             return View("Novo", model);
         }
 
@@ -104,43 +86,19 @@ namespace ContC.presentation.mvc.Controllers
                 GetSelects(model.FuncionarioContaContract.EmpresaId, model);
                 return PartialView("Novo", model);
             }
-
-            Funcionario func = new Funcionario() { Id = model.Id, DataInicio = DateTime.Now.Date };
-            if (model.Id > 0) { func = _ifuncionarioService.Find(model.Id); }
-
-            func.Nome = model.Nome;
-            func.Email = model.Email;
-            func.Telefone = model.Telefone;
-            func.Nascimento = model.Nascimento.Value;
-            func.Identificacao1 = model.Identificacao1;
-            func.Identificacao2 = model.Identificacao2;
-            if (model.LiderId > 0)
-            {
-                func.Lider = new Funcionario() { Id = model.LiderId };
-            }
-            func.TipoPagamento = new TipoPagamento() { Id = model.TipoPagamentoId };
-            func.TipoRegimeFuncionario = new TipoRegimeFuncionario() { Id = model.TipoRegimeFuncionarioId };
-            func.Valor = model.Valor;
-
-
-            Conta conta = new Conta() { Id = model.ContaId };
-            conta.Agencia = model.Agencia;
-            conta.NumeroConta = model.Conta;
-            conta.Extensao = model.Digito;
-            conta.Banco = new Banco() { Id = model.BancoId };
-
+            
             try
             {
-                _ifuncionarioService.Insert(func, conta, model.EmpresaId);
+                _ifuncionarioService.Save(model.FuncionarioContaContract);
             }
             catch (Exception ex)
             {
                 model.Erro = ex.Message;
-                GetSelects(model.EmpresaId, model);
+                GetSelects(model.FuncionarioContaContract.EmpresaId, model);
                 return PartialView("Novo", model);
             }
 
-            FuncionariosDTO fdto = _ifuncionarioService.GetByEmpresaTipoPagamentoLider(model.EmpresaId);
+            FuncionariosDTO fdto = _ifuncionarioService.GetByEmpresaTipoPagamentoLider(model.FuncionarioContaContract.EmpresaId);
             return View("Index", fdto);
         }
     }

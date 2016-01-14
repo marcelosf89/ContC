@@ -1,9 +1,5 @@
 ﻿using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ContC.presentation.mvc.Controllers
@@ -36,7 +32,7 @@ namespace ContC.presentation.mvc.Controllers
 
         public ActionResult Salvar(Grupo g)
         {
-            g.Responsavel = _usuarioService.GetUsuario(User.Identity.Name);
+            g.Responsavel = _usuarioService.GetUsuarioFetchFuncionario(User.Identity.Name).Funcionario;
             _grupoService.Insert(g);
 
             return View("Index", _grupoService.GetAllGrupo(g.Responsavel));

@@ -21,7 +21,6 @@ namespace ContC.domain.services
                      .RegisterType<IUsuarioRepository, UsuarioRepository>()
                      .RegisterType<IFornecedorRepository, FornecedorRepository>()
                      .RegisterType<IBoletoRepository, BoletoRepository>()
-                     .RegisterType<IFuncionarioEnderecoRepository, FuncionarioEnderecoRepository>()
                      .RegisterType<IBancoRepository, BancoRepository>()
                      .RegisterType<IContaRepository, ContaRepository>()
                      .RegisterType<ICategoriaRepository, CategoriaRepository>()
@@ -33,7 +32,8 @@ namespace ContC.domain.services
                      .RegisterType<INotaRepository, NotaRepository>()
                      .RegisterType<INotaItemRepository, NotaItemRepository>()
                      .RegisterType<INotaUsuarioRepository, NotaUsuarioRepository>()
-                     .RegisterType<IFuncionarioBuilder, FuncionarioBuilder>();
+                     .RegisterType<IFuncionarioBuilder, FuncionarioBuilder>()
+                     .RegisterType<IAutenticacaoService, AutenticacaoService>();
             
         }
 
