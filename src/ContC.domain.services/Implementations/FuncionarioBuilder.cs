@@ -142,7 +142,7 @@ namespace ContC.domain.services.Implementations
 
         private IFuncionarioRepository _funcionariorepository;
 
-        private Funcionario _funcionario;
+        private Funcionario _funcionario = new Funcionario();
 
         private IEmpresaRepository _empresaRepository;
     }
