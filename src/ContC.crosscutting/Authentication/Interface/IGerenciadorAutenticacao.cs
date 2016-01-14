@@ -6,5 +6,6 @@ namespace ContC.crosscutting.Authentication.Interface
     {
         void Registrar(UsuarioSessao usuario);
         UsuarioSessao Get();
+        void Logoff();
     }
 }

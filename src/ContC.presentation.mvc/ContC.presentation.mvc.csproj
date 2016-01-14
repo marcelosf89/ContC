@@ -1104,7 +1104,7 @@
     </ProjectReference>
     <ProjectReference Include="..\ContC.crosscutting\ContC.crosscutting.csproj">
       <Project>{40bd6a2e-ca96-45a3-bb86-d51f08d57d25}</Project>
-      <Name>ContC.crosscutting.utilities</Name>
+      <Name>ContC.crosscutting</Name>
     </ProjectReference>
     <ProjectReference Include="..\ContC.domain.entities\ContC.domain.entities.csproj">
       <Project>{f32e1431-09ed-4821-9629-b3bc170b69bc}</Project>

@@ -1,4 +1,3 @@
-using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using ContC.domain.services;
 using ContC.domain.services.Contracts;
@@ -9,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ContC.crosscutting.Authentication.Interface;
 using ContC.crosscutting.Authentication;
+using System.Web.Mvc;
 using Microsoft.Practices.Unity.Mvc;
 
 namespace ContC.presentation.mvc
@@ -18,6 +18,8 @@ namespace ContC.presentation.mvc
         public static IUnityContainer Initialise()
         {
             var container = BuildUnityContainer();
+
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
             return container;
         }
@@ -48,7 +50,7 @@ namespace ContC.presentation.mvc
                      .RegisterType<ICompraService, CompraService>()
                      .RegisterType<IReceitaService, ReceitaService>()
                      .RegisterType<INotaService, NotaService>()
-                     .RegisterType<IGerenciadorAutenticacao, GerenciadorAutenticacaoCookie>()
+                     .RegisterType<IGerenciadorAutenticacao, GerenciadorAutenticacaoRedis>()
                      .RegisterType<IAutenticacaoService, AutenticacaoService>();
 
 

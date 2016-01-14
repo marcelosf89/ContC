@@ -1,4 +1,5 @@
-﻿using ContC.domain.services.Contracts;
+﻿using ContC.crosscutting.Redis;
+using ContC.domain.services.Contracts;
 using ContC.domain.services.Implementations;
 using Microsoft.Practices.Unity;
 
@@ -29,6 +30,8 @@ namespace ContC.domain.services
                      .RegisterType<INotaUsuarioRepository, NotaUsuarioRepository>()
                      .RegisterType<IFuncionarioBuilder, FuncionarioBuilder>()
                      .RegisterType<IAutenticacaoService, AutenticacaoService>();
+
+            container.RegisterType<IRedisOperacao, RedisOperacao>();
             
         }
 

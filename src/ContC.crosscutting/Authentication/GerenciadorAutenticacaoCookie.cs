@@ -20,6 +20,13 @@ namespace ContC.crosscutting.Authentication
             return new UsuarioSessao();
         }
 
+        public void Logoff()
+        {
+            HttpResponse response = HttpContext.Current.Response;
+            HttpCookie cookie = new HttpCookie("contc");
+            cookie.Expires = new DateTime(1, 1, 1, 1, 1, 1);
+        }
+
         public void Registrar(UsuarioSessao usuario)
         {
             if (usuario != null && usuario.Autenticado)

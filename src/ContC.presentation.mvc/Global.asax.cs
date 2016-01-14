@@ -13,19 +13,15 @@ namespace ContC.presentation.mvc
     {
         protected void Application_Start()
         {
-
-            
+                       
             AreaRegistration.RegisterAllAreas();
-            IUnityContainer container = new UnityContainer();
-            Bootstrapper.RegisterTypes(container);
-
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            IUnityContainer container = Bootstrapper.Initialise();
+            
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(container));
-
-
+            
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
