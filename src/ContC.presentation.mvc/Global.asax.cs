@@ -1,11 +1,11 @@
 ﻿using ContC.presentation.mvc.Extension.ModelBinder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Mvc;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Linq;
+
 
 namespace ContC.presentation.mvc
 {
@@ -13,11 +13,21 @@ namespace ContC.presentation.mvc
     {
         protected void Application_Start()
         {
+
+            
             AreaRegistration.RegisterAllAreas();
+            IUnityContainer container = new UnityContainer();
+            Bootstrapper.RegisterTypes(container);
+
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
+            FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(container));
+
+
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Bootstrapper.Initialise();
             ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
         }
     }

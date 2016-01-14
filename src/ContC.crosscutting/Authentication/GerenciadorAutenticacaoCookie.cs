@@ -1,8 +1,8 @@
-﻿using System;
-using ContC.crosscutting.Authentication.Interface;
+﻿using ContC.crosscutting.Authentication.Interface;
 using ContC.crosscutting.DataContracts;
 using System.Web;
 using Newtonsoft.Json;
+using System;
 
 namespace ContC.crosscutting.Authentication
 {
@@ -10,9 +10,9 @@ namespace ContC.crosscutting.Authentication
     {
         public UsuarioSessao Get()
         {
-            HttpResponse response = HttpContext.Current.Response;
-            HttpCookie cookie = response.Cookies["contc"];
-            if (cookie != null)
+            HttpRequest request = HttpContext.Current.Request;
+            HttpCookie cookie = request.Cookies.Get("contc");
+            if (cookie != null && !(string.IsNullOrEmpty(cookie.Value)))
             {
                 return JsonConvert.DeserializeObject<UsuarioSessao>(cookie.Value);
             }
@@ -26,6 +26,7 @@ namespace ContC.crosscutting.Authentication
             {
                 HttpResponse response = HttpContext.Current.Response;
                 HttpCookie cookie = new HttpCookie("contc");
+                cookie.Expires = DateTime.Now.AddDays(1);
                 cookie.Value = JsonConvert.SerializeObject(usuario);
                 response.Cookies.Add(cookie);
             }

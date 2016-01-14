@@ -1,11 +1,6 @@
 ﻿using ContC.domain.services.Contracts;
 using ContC.domain.services.Implementations;
 using Microsoft.Practices.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContC.domain.services
 {

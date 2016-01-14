@@ -9,7 +9,7 @@ namespace ContC.domain.services.Implementations
 {
     public class ContaService : Service<Conta>, IContaService
     {
-        public ContaService(IContaRepository repository, IFuncionarioService funcionarioService, IBancoRepository bancoRepository)
+        public ContaService(IContaRepository repository, IBancoRepository bancoRepository)
         {
             base._repository = repository;
             _bancoRepository = bancoRepository;

@@ -1,27 +1,24 @@
-﻿using ContC.domain.entities.Models;
+﻿using ContC.crosscutting.Authentication.Interface;
+using ContC.crosscutting.DataContracts;
+using ContC.domain.entities.Models;
 using ContC.domain.services.Contracts;
-using ContC.presentation.mvc.Models;
-using System;
+using ContC.presentation.mvc.Filters;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ContC.presentation.mvc.Controllers
 {
     public class HomeController : Controller
     {
-        IUsuarioService _us;
-        IGrupoService _gs;
-        IEmpresaService _es;
-        public HomeController(IUsuarioService us, IGrupoService gs, IEmpresaService es)
+        public HomeController(IUsuarioService us, IGrupoService gs, IEmpresaService es, IGerenciadorAutenticacao gerenciadorAutenticacao)
         {
-            _us = us;
-            _gs = gs;
-            _es = es;
+            _usuarioService = us;
+            _grupoService = gs;
+            _empresaService = es;
+            _gerenciadorAutenticacao = gerenciadorAutenticacao;
         }
 
-        [Authorize(Roles = "USR")]
+        [ContCAuthorize]
         public ActionResult Index()
         {
 
@@ -44,7 +41,8 @@ namespace ContC.presentation.mvc.Controllers
 
         public ActionResult ProjectsPartial()
         {
-            IList<Empresa> emps = _es.GetAllEmpresaByUser(User.Identity.Name);
+            UsuarioSessao usuario = _gerenciadorAutenticacao.Get();
+            IList<Empresa> emps = _empresaService.GetAllEmpresaByUser(usuario.Login);
 
             return View(emps);
         }
@@ -53,5 +51,10 @@ namespace ContC.presentation.mvc.Controllers
         {
             return View(empresaId);
         }
+
+        private IUsuarioService _usuarioService;
+        private IGrupoService _grupoService;
+        private IEmpresaService _empresaService;
+        private IGerenciadorAutenticacao _gerenciadorAutenticacao;
     }
 }

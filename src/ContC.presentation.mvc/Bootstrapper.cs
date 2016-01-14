@@ -1,6 +1,5 @@
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
-using Unity.Mvc4;
 using ContC.domain.services;
 using ContC.domain.services.Contracts;
 using ContC.domain.services.Implementations;
@@ -8,9 +7,9 @@ using System.Data.Entity;
 using ContC.presentation.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ContC.presentation.mvc.Controllers;
 using ContC.crosscutting.Authentication.Interface;
 using ContC.crosscutting.Authentication;
+using Microsoft.Practices.Unity.Mvc;
 
 namespace ContC.presentation.mvc
 {
@@ -20,8 +19,6 @@ namespace ContC.presentation.mvc
         {
             var container = BuildUnityContainer();
 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-
             return container;
         }
 
@@ -29,10 +26,6 @@ namespace ContC.presentation.mvc
         {
             var container = new UnityContainer();
 
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-
-            // e.g. container.RegisterType<ITestService, TestService>();    
             RegisterTypes(container);
 
             return container;

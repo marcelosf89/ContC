@@ -22,7 +22,7 @@ namespace ContC.servicebus.application.Extension.restful
             {
                 container = new UnityContainer();
                 container.RegisterType<IReceitaService, ReceitaService>();
-                ContC.domain.services.BootstraperService.RegisterTypes(container);
+             //   ContC.domain.services.BootstraperService.RegisterTypes(container);
             }
             catch (Exception ex)
             {
